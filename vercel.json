@@ -1,5 +1,5 @@
 {
-  "trailingSlash": true,
+      "trailingSlash": true,
   "rewrites": [
     { "source": "/coaching", "destination": "/coaching-home.html" },
     { "source": "/coaching/", "destination": "/coaching-home.html" }
