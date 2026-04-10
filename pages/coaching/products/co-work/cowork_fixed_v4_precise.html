@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cowork | Doing the work.</title>
+  <meta name="description" content="Cowork — לא רק לחשוב, לא רק לדבר, לא רק לתכנן. אשכרה — לעשות את העבודה — ביחד." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0f1014;
+      --bg2:#171922;
+      --bg3:#1d2230;
+      --ink:#f8f6f2;
+      --muted:#cfc8c0;
+      --soft:#ffffff0a;
+      --soft2:#ffffff12;
+      --line:#ffffff18;
+      --accent:#f1b88f;
+      --accent2:#ffd7ba;
+      --mint:#aee7dc;
+      --mint2:#dff8f3;
+      --danger:#ffcfbf;
+      --shadow:0 24px 70px rgba(0,0,0,.28);
+      --radius:14px;
+      --max:1160px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Heebo", Arial, sans-serif;
+      direction:rtl;
+      text-align:right;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(241,184,143,.12), transparent 18%),
+        radial-gradient(circle at 84% 8%, rgba(174,231,220,.10), transparent 16%),
+        radial-gradient(circle at 50% 56%, rgba(255,255,255,.03), transparent 24%),
+        linear-gradient(135deg, var(--bg) 0%, var(--bg2) 48%, var(--bg3) 100%);
+      line-height:1.42;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.45;
+      background:
+        radial-gradient(circle at 18% 26%, rgba(241,184,143,.06), transparent 22%),
+        radial-gradient(circle at 78% 30%, rgba(174,231,220,.05), transparent 22%);
+      filter:blur(28px);
+      animation:ambient 14s ease-in-out infinite alternate;
+      mix-blend-mode:screen;
+    }
+
+    @keyframes ambient{
+      from{transform:translateY(0)}
+      to{transform:translateY(-12px)}
+    }
+
+    .container{
+      width:min(calc(100% - 28px), var(--max));
+      margin-inline:auto;
+      position:relative;
+      z-index:2;
+    }
+
+    section{
+      position:relative;
+      padding:74px 0;
+    }
+
+    h1,h2,h3,p{margin:0}
+
+    .hero{
+      min-height:100svh;
+      display:flex;
+      align-items:center;
+      padding:28px 0 56px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.06fr .94fr;
+      gap:28px;
+      align-items:center;
+    }
+
+
+
+    h1{
+      font-size:clamp(2.9rem, 7.5vw, 5.8rem);
+      line-height:.9;
+      letter-spacing:-.05em;
+      max-width:9ch;
+      margin-bottom:16px;
+      animation:fadeUp .85s .12s ease both;
+    }
+
+    .subhero{
+      font-size:clamp(1.14rem, 2.3vw, 1.48rem);
+      line-height:1.18;
+      color:var(--accent2);
+      font-weight:800;
+      margin-bottom:16px;
+      animation:fadeUp .85s .18s ease both;
+    }
+
+    .lead{
+      color:var(--muted);
+      font-size:clamp(1.02rem, 1.8vw, 1.14rem);
+      line-height:1.36;
+      max-width:720px;
+      animation:fadeUp .85s .26s ease both;
+    }
+
+    .lead strong,
+    .copy strong,
+    .quote strong{
+      color:var(--ink);
+      font-weight:800;
+    }
+
+    .keyline{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px 18px;
+      margin-top:22px;
+      animation:fadeUp .85s .34s ease both;
+    }
+
+    .keyline span{
+      color:var(--mint2);
+      font-size:.95rem;
+      font-weight:800;
+      position:relative;
+      padding-bottom:4px;
+    }
+
+    .keyline span::after{
+      content:"";
+      position:absolute;
+      right:0;left:0;bottom:0;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(174,231,220,.8), transparent);
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:26px;
+      animation:fadeUp .85s .42s ease both;
+    }
+
+    .inline-cta{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .btn{
+      min-height:52px;
+      padding:0 20px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      font-weight:800;
+      font-size:.97rem;
+      border:1px solid transparent;
+      transition:.25s ease;
+      white-space:nowrap;
+    }
+
+    .btn-primary{
+      color:#17120e;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow:0 16px 36px rgba(241,184,143,.18);
+    }
+
+    .btn-secondary{
+      color:var(--ink);
+      background:rgba(255,255,255,.05);
+      border-color:var(--line);
+      backdrop-filter:blur(10px);
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .hero-art{
+      position:relative;
+      min-height:480px;
+      animation:fadeIn 1s .18s ease both;
+    }
+
+    .orbit{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+    }
+
+    .ring{
+      position:absolute;
+      border:1px solid rgba(241,184,143,.14);
+      border-radius:50%;
+      animation:spin 26s linear infinite;
+    }
+    .ring.r1{width:390px;height:390px}
+    .ring.r2{width:290px;height:290px;animation-direction:reverse;animation-duration:18s}
+    .ring.r3{width:190px;height:190px;animation-duration:12s}
+    .ring::before{
+      content:"";
+      position:absolute;
+      top:50%;left:-4px;
+      width:8px;height:8px;border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 16px rgba(241,184,143,.8);
+    }
+
+    .hero-shape{
+      position:absolute;
+      inset:auto 0 24px 0;
+      margin:auto;
+      width:min(94%, 510px);
+      height:280px;
+      filter:drop-shadow(0 24px 50px rgba(0,0,0,.32));
+    }
+
+    .hero-shape svg{width:100%;height:100%}
+
+    .float{
+      position:absolute;
+      color:var(--mint2);
+      font-weight:800;
+      font-size:.94rem;
+      text-shadow:0 0 18px rgba(174,231,220,.16);
+      animation:drift 7s ease-in-out infinite alternate;
+    }
+    .f1{top:18px;left:20px}
+    .f2{top:92px;right:10px;animation-delay:.8s}
+    .f3{bottom:112px;left:0;animation-delay:1.1s}
+    .f4{bottom:18px;right:24px;animation-delay:.5s}
+
+    .path{
+      position:absolute;
+      inset:auto 10% 10px auto;
+      width:70%;
+      height:150px;
+      opacity:.58;
+    }
+    .path path:last-child{
+      stroke-dasharray:12 18;
+      animation:dash 14s linear infinite;
+    }
+
+    .section-title{
+      font-size:clamp(1.9rem, 4vw, 3rem);
+      line-height:.98;
+      letter-spacing:-.04em;
+      margin-bottom:12px;
+      max-width:16ch;
+    }
+
+    .copy p{
+      color:var(--muted);
+      font-size:clamp(1rem,1.7vw,1.06rem);
+      line-height:1.34;
+      margin-bottom:8px;
+      max-width:780px;
+    }
+
+    .big{
+      font-size:clamp(1.34rem,2.9vw,1.96rem);
+      line-height:1.08;
+      letter-spacing:-.03em;
+      color:var(--ink);
+      font-weight:800;
+      margin-bottom:16px;
+      max-width:18ch;
+    }
+
+    .punch{
+      font-size:clamp(1.14rem,2.3vw,1.46rem);
+      line-height:1.16;
+      font-weight:800;
+      color:var(--ink);
+      margin:14px 0 16px;
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:26px;
+      align-items:start;
+    }
+
+    .side-note{
+      padding:14px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      box-shadow:var(--shadow);
+    }
+
+    .side-note p{
+      margin:0;
+      color:var(--muted);
+      font-size:.95rem;
+      line-height:1.42;
+      max-width:none;
+    }
+
+    .side-link{
+      display:inline-flex;
+      margin-top:10px;
+      color:var(--accent2);
+      text-decoration:none;
+      font-weight:800;
+      font-size:.95rem;
+      padding-bottom:3px;
+      border-bottom:1px solid rgba(241,184,143,.34);
+    }
+
+    .match-grid{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .match-item{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:12px;
+      align-items:start;
+      padding-bottom:12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .match-item:last-child{border-bottom:none}
+
+    .mark{
+      width:30px;height:30px;border-radius:50%;
+      display:grid;place-items:center;
+      background:rgba(174,231,220,.08);
+      border:1px solid rgba(174,231,220,.18);
+      color:var(--mint2);
+      font-weight:800;
+      margin-top:2px;
+      font-size:.9rem;
+    }
+
+    .match-item p{
+      margin:0;
+      color:var(--ink);
+      max-width:none;
+      line-height:1.34;
+    }
+
+    .burst{
+      position:relative;
+      width:100%;
+      aspect-ratio:1/1;
+      max-width:360px;
+      margin:auto;
+      display:grid;
+      place-items:center;
+    }
+
+    .burst::before,
+    .burst::after{
+      content:"";
+      position:absolute;
+      inset:12%;
+      border-radius:50%;
+      border:1px solid rgba(174,231,220,.14);
+    }
+    .burst::after{
+      inset:2%;
+      animation:spin 20s linear infinite reverse;
+      opacity:.6;
+    }
+
+    .burst-center{
+      width:68%;
+      aspect-ratio:1/1;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:18px;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(174,231,220,.20), rgba(255,255,255,.04) 55%, rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter:blur(12px);
+      box-shadow:var(--shadow);
+    }
+
+    .burst-center h3{
+      margin:0;
+      font-size:clamp(1.28rem, 3vw, 2rem);
+      line-height:1.04;
+      letter-spacing:-.03em;
+    }
+
+    .burst-center p{
+      margin-top:10px;
+      color:var(--accent2);
+      font-weight:800;
+      max-width:none;
+    }
+
+    .burst-word{
+      position:absolute;
+      font-weight:800;
+      color:var(--mint2);
+      text-shadow:0 0 18px rgba(174,231,220,.14);
+      font-size:.92rem;
+    }
+
+    .bw1{top:8%;right:18%}
+    .bw2{top:24%;left:0}
+    .bw3{bottom:18%;right:4%}
+    .bw4{bottom:8%;left:16%}
+
+    .ribbon{
+      overflow:hidden;
+      border-top:1px solid rgba(255,255,255,.10);
+      border-bottom:1px solid rgba(255,255,255,.10);
+      padding:12px 0;
+      margin:24px 0 8px;
+    }
+
+    .ribbon-track{
+      display:flex;
+      gap:28px;
+      width:max-content;
+      white-space:nowrap;
+      animation:marquee 26s linear infinite;
+      font-weight:800;
+      color:rgba(255,255,255,.9);
+      font-size:1.02rem;
+    }
+
+    .ribbon-track em{
+      font-style:normal;
+      color:var(--accent2);
+    }
+
+    .tag-cloud{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:18px 0 8px;
+    }
+
+    .tag{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--mint2);
+      font-weight:800;
+      font-size:.92rem;
+    }
+
+    .who-emphasis{
+      position:relative;
+      margin-top:22px;
+      padding:14px 0 2px;
+    }
+
+    .who-emphasis::before{
+      content:"";
+      position:absolute;
+      top:0;
+      right:0;
+      width:100%;
+      max-width:520px;
+      height:2px;
+      background:linear-gradient(90deg, rgba(241,184,143,0), rgba(241,184,143,.24) 46%, rgba(241,184,143,.82) 100%);
+      border-radius:2px;
+    }
+
+    .who-emphasis p{
+      margin:14px 0 0;
+      color:var(--ink);
+      font-weight:800;
+      font-size:1.02rem;
+      line-height:1.34;
+    }
+
+    .session-line{
+      display:inline-block;
+      margin:18px 0 12px;
+      color:var(--ink);
+      font-weight:800;
+      font-size:1.02rem;
+      line-height:1.34;
+      position:relative;
+      padding-bottom:8px;
+    }
+
+    .session-line::after{
+      content:"";
+      position:absolute;
+      right:0;
+      bottom:0;
+      width:100%;
+      height:2px;
+      background:linear-gradient(90deg, rgba(174,231,220,0), rgba(174,231,220,.32) 46%, rgba(174,231,220,.86) 100%);
+      border-radius:2px;
+    }
+
+    .product-card{
+      margin-top:18px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.04);
+      box-shadow:var(--shadow);
+      max-width:460px;
+    }
+
+    .product-card h3{
+      margin:0 0 6px;
+      color:var(--accent2);
+      font-size:1.06rem;
+    }
+
+    .product-card p{
+      margin:0 0 12px;
+      max-width:none;
+      font-size:.96rem;
+    }
+
+    .stop{
+      font-size:clamp(2.8rem, 8vw, 6.8rem);
+      line-height:.84;
+      letter-spacing:-.08em;
+      font-weight:800;
+      color:rgba(255,220,204,.96);
+      text-shadow:0 0 24px rgba(255,220,204,.12);
+      margin-bottom:12px;
+    }
+
+    .versus{
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      gap:22px;
+      align-items:start;
+      margin-top:22px;
+    }
+
+    .lane h3{
+      margin:0 0 10px;
+      font-size:clamp(1.18rem,2.2vw,1.48rem);
+      letter-spacing:-.02em;
+    }
+    .lane.left h3{color:var(--danger)}
+    .lane.right h3{color:var(--mint2)}
+
+    .lane ul{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      gap:10px;
+    }
+
+    .lane li{
+      position:relative;
+      padding-inline-start:16px;
+      color:var(--muted);
+      font-size:.98rem;
+      line-height:1.38;
+    }
+
+    .lane li::before{display:none}
+
+    .vs{
+      align-self:center;
+      font-size:1.06rem;
+      font-weight:800;
+      color:rgba(255,255,255,.36);
+      writing-mode:vertical-rl;
+      transform:rotate(180deg);
+      letter-spacing:.18em;
+    }
+
+    .kicker-wrap{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:12px;
+      animation:fadeUp .8s .06s ease both;
+    }
+
+    .hero .kicker{
+      color:var(--accent2);
+      font-size:1.3rem;
+      font-weight:800;
+      letter-spacing:.04em;
+      margin-bottom:0;
+    }
+
+    .kicker-icon{
+      width:82px;
+      height:42px;
+      flex:0 0 auto;
+      opacity:.92;
+      filter:drop-shadow(0 10px 20px rgba(0,0,0,.2));
+    }
+
+    .kicker-icon path,
+    .kicker-icon circle{
+      vector-effect:non-scaling-stroke;
+    }
+
+    .kicker-rise{
+      animation:risePath 4.8s ease-in-out infinite alternate;
+    }
+
+    .kicker-figure-left,
+    .kicker-figure-right{
+      animation:figurePulse 2.6s ease-in-out infinite alternate;
+      transform-origin:center;
+    }
+
+    .kicker-figure-right{animation-delay:.5s}
+
+    .actions .btn-secondary.alt-cta,
+    .inline-cta .btn-secondary.alt-cta{
+      min-height:44px;
+      padding:0 16px;
+      font-size:.9rem;
+      opacity:.96;
+    }
+
+    .promise-list{
+      display:grid;
+      gap:10px;
+      margin:18px 0 4px;
+      max-width:760px;
+    }
+
+    .promise-item{
+      position:relative;
+      padding:10px 42px 10px 0;
+      color:var(--ink);
+      line-height:1.34;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .promise-item::after{
+      content:"";
+      position:absolute;
+      right:0;
+      left:auto;
+      top:50%;
+      width:24px;
+      height:24px;
+      transform:translateY(-50%);
+      border-radius:999px;
+      border:1px solid rgba(174,231,220,.34);
+      background:radial-gradient(circle at 50% 50%, rgba(174,231,220,.14), rgba(255,255,255,.02));
+      box-shadow:0 0 0 1px rgba(255,255,255,.04) inset;
+    }
+
+    .promise-item::before{
+      content:"";
+      position:absolute;
+      right:8px;
+      top:50%;
+      width:8px;
+      height:4px;
+      border-right:2px solid var(--mint2);
+      border-bottom:2px solid var(--mint2);
+      transform:translateY(-65%) rotate(45deg);
+      z-index:1;
+    }
+
+    .remote-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .remote-chip{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:var(--ink);
+      font-weight:700;
+      font-size:.94rem;
+    }
+
+    .fit-frame{
+      margin-top:20px;
+      padding:22px 20px 20px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .fit-frame::before{
+      content:"";
+      position:absolute;
+      inset:0 auto auto 0;
+      width:100%;
+      height:1px;
+      background:linear-gradient(90deg, rgba(241,184,143,.8), rgba(255,255,255,.08), rgba(174,231,220,.72));
+      opacity:.8;
+    }
+
+    .callout .text strong.callout-yalalla{
+      display:block;
+      font-size:clamp(1.8rem, 5vw, 3.2rem);
+      line-height:.9;
+      color:var(--accent2);
+      letter-spacing:-.05em;
+      margin-bottom:6px;
+    }
+
+    .callout .text .callout-together{
+      display:block;
+      font-size:clamp(1.5rem, 4vw, 2.4rem);
+      line-height:1;
+      color:var(--ink);
+      letter-spacing:-.04em;
+    }
+
+    .quote{
+      font-size:clamp(1.38rem,2.75vw,2rem);
+      line-height:1.22;
+      max-width:28ch;
+      color:var(--ink);
+      font-family:"Cormorant Garamond", "Times New Roman", serif;
+      font-weight:600;
+    }
+
+    @keyframes risePath{
+      0%{transform:translateY(0)}
+      100%{transform:translateY(-2px)}
+    }
+
+    @keyframes figurePulse{
+      0%{transform:translateY(0) scale(1)}
+      100%{transform:translateY(-2px) scale(1.03)}
+    }
+
+    .proof-list{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+      max-width:860px;
+    }
+
+    .proof-item{
+      padding:0 18px 0 0;
+      border-right:2px solid rgba(241,184,143,.42);
+    }
+
+    .proof-item strong{
+      color:var(--accent2);
+      display:block;
+      margin-bottom:6px;
+      font-size:1rem;
+    }
+
+    .proof-item .proof-body{
+      display:block;
+      line-height:1.5;
+    }
+
+    .not-fit-followup{
+      margin:20px 0 12px;
+      color:var(--ink);
+      font-weight:800;
+      font-size:1.08rem;
+    }
+
+    .product-card.product-alt{
+      background:linear-gradient(180deg, rgba(174,231,220,.11), rgba(174,231,220,.05));
+      border-color:rgba(174,231,220,.24);
+    }
+
+    .micro-quote{
+      display:block;
+      margin-top:8px;
+      color:var(--ink);
+      font-family:"Cormorant Garamond", "Times New Roman", serif;
+      font-size:1.2rem;
+      line-height:1.1;
+    }
+
+    .emph{
+      color:var(--ink);
+      font-weight:800;
+    }
+
+
+    .steps{
+      display:grid;
+      gap:14px;
+      margin-top:16px;
+    }
+
+    .step{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:12px;
+      align-items:start;
+    }
+
+    .num{
+      width:32px;height:32px;border-radius:50%;
+      display:grid;place-items:center;
+      font-weight:800;
+      color:#15100d;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow:0 0 18px rgba(241,184,143,.16);
+      font-size:.92rem;
+    }
+
+    .step p{margin:0;max-width:none}
+
+    .x-list{
+      display:grid;
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .x-item{
+      position:relative;
+      padding-inline-start:18px;
+      color:var(--muted);
+      font-size:1rem;
+      line-height:1.38;
+    }
+
+    .x-item::before{
+      content:"×";
+      position:absolute;
+      right:0;
+      color:var(--danger);
+      font-weight:800;
+      font-size:1.14rem;
+      line-height:1;
+    }
+
+    .road{
+      margin-top:18px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:var(--radius);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(174,231,220,.10), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      box-shadow:var(--shadow);
+    }
+
+    .road h3{
+      margin:0 0 8px;
+      color:var(--mint2);
+      font-size:1.04rem;
+    }
+
+    .road p{
+      margin:0 0 6px;
+      max-width:none;
+      font-size:.96rem;
+    }
+
+    .callout{
+      margin:24px 0;
+      padding:18px 0;
+      border-top:1px solid rgba(255,255,255,.08);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px 18px;
+    }
+
+    .callout .text{
+      font-size:clamp(1.04rem,2vw,1.24rem);
+      color:var(--ink);
+      font-weight:800;
+      letter-spacing:-.02em;
+    }
+
+    .sticky-buy{
+      display:none;
+      position:fixed;
+      left:50%;
+      bottom:max(14px, env(safe-area-inset-bottom));
+      transform:translate(-50%, 12px);
+      width:min(calc(100% - 28px), 420px);
+      z-index:30;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .24s ease, transform .24s ease;
+    }
+
+    .sticky-buy.is-visible{
+      opacity:1;
+      transform:translate(-50%, 0);
+      pointer-events:auto;
+    }
+
+    .sticky-buy a{
+      min-height:50px;
+      padding:0 18px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#17120e;
+      text-decoration:none;
+      font-weight:800;
+      box-shadow:0 16px 36px rgba(241,184,143,.22);
+      font-size:.96rem;
+    }
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    @keyframes dash{to{stroke-dashoffset:-320}}
+    @keyframes drift{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    @media (max-width: 980px){
+      .hero-grid,
+      .split{
+        grid-template-columns:1fr;
+      }
+      .hero{min-height:auto}
+      .hero-grid{gap:18px}
+      h1{max-width:none}
+      .section-title,
+      .big,
+      .quote{max-width:none}
+    }
+
+    @media (max-width: 700px){
+      section{padding:48px 0}
+      .container{width:min(calc(100% - 20px), var(--max))}
+      .hero{padding-top:14px; padding-bottom:34px}
+      .hero-grid{gap:14px}
+      .hero-art{min-height:260px}
+      .ring.r1{width:260px;height:260px}
+      .ring.r2{width:190px;height:190px}
+      .ring.r3{width:120px;height:120px}
+      .hero-shape{height:170px; inset:auto 0 14px 0}
+      .float{font-size:.82rem}
+      .f1{top:10px;left:10px}
+      .f2{top:62px;right:4px}
+      .f3{bottom:84px;left:4px}
+      .f4{bottom:10px;right:10px}
+      .path{display:none}
+      h1{font-size:clamp(2.3rem, 12vw, 3.4rem); line-height:.92; margin-bottom:12px}
+      .subhero{font-size:1.04rem; line-height:1.2; margin-bottom:12px}
+      .lead{font-size:1rem; line-height:1.48; max-width:none}
+      .keyline{gap:10px 14px; margin-top:18px}
+      .keyline span{font-size:.88rem}
+      .actions,
+      .callout{
+        flex-direction:column;
+        align-items:stretch;
+      }
+      .inline-cta{display:flex; width:100%}
+      .inline-cta .btn{width:100%}
+      .btn{width:100%; min-height:48px; font-size:.95rem; padding:0 16px}
+      .callout{padding:16px 0}
+      .callout .text{font-size:1rem; line-height:1.35}
+      .copy p,
+      .match-item p,
+      .lane li,
+      .x-item,
+      .product-card p,
+      .road p,
+      .side-note p{font-size:.98rem; line-height:1.5}
+      .section-title{font-size:1.85rem; margin-bottom:10px}
+      .big{font-size:1.32rem; line-height:1.15; margin-bottom:14px}
+      .punch{font-size:1.08rem; line-height:1.28; margin:12px 0 14px}
+      .stop{font-size:clamp(2.5rem, 18vw, 4.4rem)}
+      .versus{
+        grid-template-columns:1fr;
+        gap:18px;
+      }
+      .vs{
+        writing-mode:initial;
+        transform:none;
+        justify-self:start;
+        letter-spacing:.08em;
+      }
+      .burst{max-width:260px}
+      .burst-word{font-size:.78rem}
+      .product-card{max-width:none}
+      .sticky-buy{display:block}
+      body{padding-bottom:96px}
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+
+          <div class="copy">
+            <div class="kicker-wrap">
+              <div class="kicker">Cowork</div>
+              <svg class="kicker-icon" viewBox="0 0 120 60" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                <path class="kicker-rise" d="M8 48C28 48 30 34 46 34C60 34 62 20 78 20C92 20 96 8 112 8" fill="none" stroke="rgba(174,231,220,.72)" stroke-width="2.6" stroke-linecap="round"/>
+                <path d="M60 34L78 20L92 8" fill="none" stroke="rgba(241,184,143,.82)" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="2 8"/>
+                <circle class="kicker-figure-left" cx="39" cy="34" r="4" fill="rgba(255,215,186,.96)"/>
+                <circle class="kicker-figure-right" cx="57" cy="30" r="4" fill="rgba(255,215,186,.96)"/>
+                <path class="kicker-figure-left" d="M39 39L39 48M39 41L32 45M39 41L46 45" stroke="rgba(255,215,186,.96)" stroke-width="2.2" stroke-linecap="round"/>
+                <path class="kicker-figure-right" d="M57 35L57 44M57 37L50 41M57 37L64 41" stroke="rgba(255,215,186,.96)" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M46 33C49 30 52 29 57 29" fill="none" stroke="rgba(255,255,255,.72)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h1>Doing the work. ביחד.</h1>
+
+            <div class="subhero">
+              פעולה - ביחד.
+              <br>
+              כיוון, דיוק, התקדמות.
+            </div>
+
+            <p class="lead">
+              אנשים שיודעים מה רוצים. אבל צריכים שיעזרו להם להתפקס, לקבל החלטות, עוד יד לעשות את העבודה, ידע שחסר להם.
+            </p>
+
+            <p class="lead" style="margin-top:16px;">
+              לא רק לחשוב,
+              לא רק לדבר,
+              לא רק לתכנן.
+              <br>
+              <strong>אשכרה - לעשות את העבודה — ביחד.</strong>
+              <br>
+              בכיוון הנכון,
+              בקצב הנכון,
+              <br>
+              מבלי להתפזר ומבלי להתרחק מעצמך.
+            </p>
+
+            <div class="keyline">
+              <span>כיוון</span>
+              <span>דיוק</span>
+              <span>עשייה</span>
+              <span>התקדמות</span>
+            </div>
+
+            <div class="actions">
+              <a href="#purchase-main" class="btn btn-primary">לרכישת Cowork</a>
+              <a href="#fit" class="btn btn-secondary">לראות אם זה מתאים לי</a>
+              <a href="#" class="btn btn-secondary alt-cta">רבע שעה חינם</a>
+            </div>
+          </div>
+
+          <div class="hero-art" aria-hidden="true">
+            <div class="orbit">
+              <div class="ring r1"></div>
+              <div class="ring r2"></div>
+              <div class="ring r3"></div>
+            </div>
+
+            <div class="float f1">פוקוס</div>
+            <div class="float f2">תנועה</div>
+            <div class="float f3">דיוק</div>
+            <div class="float f4">פסגה</div>
+
+            <div class="hero-shape">
+              <svg viewBox="0 0 600 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M45 316L190 148L258 230L344 94L555 316H45Z" fill="url(#mountainFill)" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+                <path d="M190 148L258 230L344 94" stroke="rgba(241,184,143,0.92)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M336 104L344 94L353 104" stroke="rgba(255,255,255,0.92)" stroke-width="3" stroke-linecap="round"/>
+                <defs>
+                  <linearGradient id="mountainFill" x1="300" y1="94" x2="300" y2="316" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="rgba(241,184,143,0.24)"/>
+                    <stop offset="1" stop-color="rgba(255,255,255,0.04)"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+            <svg class="path" viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 140C122 140 102 76 198 76C289 76 272 158 372 158C462 158 472 46 592 46" stroke="rgba(255,255,255,0.08)" stroke-width="2" fill="none"/>
+              <path d="M8 140C122 140 102 76 198 76C289 76 272 158 372 158C462 158 472 46 592 46" stroke="rgba(174,231,220,0.72)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="cowork">
+      <div class="container copy">
+        <h2 class="section-title">מה זה?</h2>
+
+        <div class="big">
+          פעולה - ביחד.
+          <br>
+          כיוון, דיוק, התקדמות.
+        </div>
+
+        <p>לא רק לחשוב, לא רק לדבר, לא רק לתכנן.</p>
+
+        <div class="punch">אשכרה - לעשות את העבודה — ביחד.</div>
+
+        <p>בכיוון הנכון, בקצב הנכון,</p>
+        <p>מבלי להתפזר ומבלי להתרחק מעצמך.</p>
+
+        <p style="margin-top:16px;"><strong>אני השותפה האסטרטגית שלך - פשוט לעשות התקדמות.</strong></p>
+
+        <div class="promise-list">
+          <div class="promise-item">להחזיק אותך במסלול</div>
+          <div class="promise-item">לעזור לך לקבל החלטות תוך כדי תנועה ובקצב נכון לך</div>
+          <div class="promise-item">לשמור על רמה גבוהה</div>
+          <div class="promise-item">לא להתפזר</div>
+          <div class="promise-item">לא להתרחק ממה שבאמת נכון לך</div>
+          <div class="promise-item">לייעץ ולתת ערך מוסף מגובה נסיון, כלים, טכנולוגיה לצד כישורים אימוניים ופסיכולוגיים.</div>
+        </div>
+
+        <div class="session-line">
+          אפשר לבחור למפגש בודד, ואפשר לבחור בסדרה מתמשכת.
+        </div>
+
+        <p>
+          זה אונליין- Remote.
+          ככה שלקבוע לא יהיה קשה במיוחד,
+          בלי נסיעות ובלי להתבלבל בדרך.
+        </p>
+
+        <div class="remote-meta">
+          <div class="remote-chip">משך: לבחירה לפי המסלול שנקבע יחד</div>
+        </div>
+
+        <div class="ribbon">
+          <div class="ribbon-track">
+            <span>לא רק לחשוב</span>
+            <span><em>לעשות</em></span>
+            <span>לא רק לדבר</span>
+            <span><em>להתקדם</em></span>
+            <span>לא רק לתכנן</span>
+            <span><em>לעבוד ביחד</em></span>
+            <span>לא רק לחשוב</span>
+            <span><em>לעשות</em></span>
+            <span>לא רק לדבר</span>
+            <span><em>להתקדם</em></span>
+            <span>לא רק לתכנן</span>
+            <span><em>לעבוד ביחד</em></span>
+          </div>
+        </div>
+
+        <div class="inline-cta">
+          <a id="purchase-main" href="#" class="btn btn-primary">לרכישת Cowork</a>
+          <a href="#" class="btn btn-secondary alt-cta">רבע שעה חינם</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="fit">
+      <div class="container">
+        <h2 class="section-title">מזהה את עצמך?</h2>
+
+        <div class="split">
+          <div class="copy">
+            <div class="match-grid">
+              <div class="match-item">
+                <div class="mark">1</div>
+                <p>יש לך כיוון כלשהו, גם אם לא מושלם</p>
+              </div>
+
+              <div class="match-item">
+                <div class="mark">2</div>
+                <p>רוצה להתקדם בפועל אבל לבד יש קצת פיזור, עודף יצירתיות ורעיונות.</p>
+              </div>
+
+              <div class="match-item">
+                <div class="mark">3</div>
+                <p>חסרה לך מסגרת- חיה וגמישה לעשייה. לא עוד רשימות או בוטים.</p>
+              </div>
+
+              <div class="match-item">
+                <div class="mark">4</div>
+                <p>זיהית שיש פער בין פוטנציאל, כוונה או רעיונות לבין ביצוע עקבי</p>
+              </div>
+
+              <div class="match-item">
+                <div class="mark">5</div>
+                <p>רוצה ליווי שיש בו גם חשיבה, גם דיוק וגם תנועה ממשית</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="burst" aria-hidden="true">
+            <div class="burst-word bw1">כיוון</div>
+            <div class="burst-word bw2">דיוק</div>
+            <div class="burst-word bw3">עשייה</div>
+            <div class="burst-word bw4">תכלס</div>
+
+            <div class="burst-center">
+              <div>
+                <h3>אם זיהית את עצמך באחד מאלה — יש לנו מאץ'.</h3>
+                <p>Let's do it</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline-cta" style="margin-top:22px;">
+          <a href="#purchase-main" class="btn btn-primary">אני רוצה Cowork</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container copy">
+        <div class="fit-frame">
+          <h2 class="section-title">למי זה מתאים?</h2>
+
+          <p>
+            למי שכבר נמצא.ת בתנועה כלשהי או רוצה להיכנס אליה עכשיו אבל לא רוצה לעשות את זה לבד ועוד יותר מזה- לא רוצה להתקע לבד עם הרעיונות מבלי להתקדם.
+          </p>
+
+          <p>
+            למי שרוצה עוד ידיים. ידע טכנולוגי, מנהל מוצר ומנהל פרוייקטים. מי שמבין בלקחת רעיונות ולהביא אותם למציאות.
+          </p>
+
+          <p>
+            למי שצריך עוד זווית ראייה וייעוץ מקצועי פרקטי - שאינו טיפולי.
+          </p>
+
+          <div class="tag-cloud">
+            <span class="tag">לקרייריסטים</span>
+            <span class="tag">יזמים</span>
+            <span class="tag">עצמאים</span>
+            <span class="tag">גם וגם</span>
+            <span class="tag">חובבי AI</span>
+            <span class="tag">אנשי משפחה עמוסים</span>
+            <span class="tag">אנשים שצריכים מחוייבות</span>
+            <span class="tag">אומץ להתקדם</span>
+            <span class="tag">דעות אובייקטיביות</span>
+            <span class="tag">עידוד, תמיכה וחיזוק</span>
+          </div>
+        </div>
+
+        <div class="who-emphasis">
+          <p>כאן אני אדאג שלא נתפזר בתוך העשייה. לעבוד ביחד, ולהתקדם.</p>
+        </div>
+
+        <div class="callout">
+          <div class="text"><strong class="callout-yalalla">יאללה</strong>אם יש לך כבר משהו ביד.<br>עכשיו בואי נעבוד עליו באמת,<br><span class="callout-together">ביחד.</span></div>
+          <a href="#" class="btn btn-primary">לרכישת Cowork</a>
+        </div>
+
+        <p>זה לגמרי שלך. אני פשוט השותפה התותחית שלך במסגרת הזו.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container copy">
+        <h2 class="section-title">מהיכן הבטחון שלי להצהיר על עצמי שאני תותחית?</h2>
+
+        <div class="proof-list">
+          <div class="proof-item">
+            <strong>קואוצ'רית.</strong>
+            <span class="proof-body">אני מגיעה עם כלים אימוניים, הקשבה חדה, ויכולת לזהות מהר איפה צריך דיוק, איפה צריך תנועה, ואיפה פשוט צריך שמישהי תחזיק איתך את הקצב.</span>
+          </div>
+
+          <div class="proof-item">
+            <strong>יוצרת עם AI ומלמדת אחרים.</strong>
+            <span class="proof-body">אני לא רק מדברת על כלים. אני בונה, מנסה, משפרת, מלמדת, ומבינה איך להפוך רעיון מעורפל למשהו עובד.</span>
+          </div>
+
+          <div class="proof-item">
+            <strong>מיינדסט ייחודי של מוצר, עשייה ודיוק.</strong>
+            <span class="proof-body">אני מחזיקה גם חשיבה אסטרטגית, גם ראייה מערכתית, וגם יכולת לרדת לפרטים בלי לאבד את התמונה הגדולה.</span>
+          </div>
+
+          <div class="proof-item">
+            <strong>מכירה אישית את הפער בין לבד לבין ביחד.</strong>
+            <span class="proof-body">פיתחתי לאורך השנים שיטות עבודה שעוזרות להתקדם גם דרך החלקים המשעממים, המאתגרים או המעייפים — בלי לאבד חיבור לעצמך ובלי להישאב לעוד סחרור.</span>
+          </div>
+
+          <div class="proof-item">
+            <strong>נסיון ניהול פרוייקטים ומוצרים מ־0 ל־100.</strong>
+            <span class="proof-body">בעולמות הייטק, בחברות מובילות במשק, ובמקביל גם ביצירה, עיצוב וניהול עסק פרטי. אני יודעת לקחת רעיון, לפרק אותו, לתעדף אותו, ולהביא אותו למציאות.</span>
+          </div>
+        </div>
+
+        <p style="margin-top:16px;"><strong>עוד עליי אפשר להרחיב. אבל כאן — מדובר בך, לא בי.</strong></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container copy">
+        <div class="punch">אז קדימה</div>
+
+        <div class="stop">STOP</div>
+
+        <div class="big">
+          די לעשות מחקר, רשימת משימות, תחילת בדיקות…
+        </div>
+
+        <p>
+          אני מזמינה אותך לעצור את ההתנהלות הזו בה - הכל הופך להיות פרוייקט, הרשימות מעוצבות, מתחילות להתפזר בכמה מקומות, מתחילים משהו, לא מסיימים.
+        </p>
+
+        <p>
+          לא משנה כמה הדבר מורכב, אנחנו לא חיים בעידן ש"לעשות סדר" באמצעות פרוייקט ענק שאין תוצאות במהלכו.
+        </p>
+
+        <p>
+          בעולמות המוצר ופיתוח (יאללה- הייטק)- זה נקרא "אג'ייל".
+        </p>
+
+        <p>תהליך איטראטיבי מהיר שנקרא סייקל.</p>
+        <p>בכל תהליך כזה צריך לראות תוצר, ולו הקטן ביותר, שנועד לתת ערך- של התקדמות.</p>
+
+        <div class="versus">
+          <div class="lane left">
+            <h3>בפרוייקט ענק</h3>
+            <ul>
+              <li><span class="emph">לא מחכים חודשים</span> כדי לראות התקדמות.</li>
+              <li>כי אז <span class="emph">ההשקעה, הזמן והחיים</span> נשרפים על משהו שאולי בכלל לא נכון.</li>
+              <li>נוצרת <span class="emph">שחיקה</span>, <span class="emph">תסכול</span>, ומעגליות שמזינה את עצמה.</li>
+              <li>לכאורה לומדים עוד משהו חדש, מרגישים שיש התקדמות, אבל <span class="emph">המציאות בקושי זזה</span> או אפילו קופאת.</li>
+              <li><span class="micro-quote">"לא הולך לי"</span></li>
+              <li><span class="micro-quote">"הסתיים עוד יום,
+ולא ברור ממש מה עשיתי.
+כל היום לא נחתי."</span></li>
+            </ul>
+          </div>
+
+          <div class="vs">VS</div>
+
+          <div class="lane right">
+            <h3>ההפך הוא הנכון</h3>
+            <ul>
+              <li><span class="emph">מדייקים בצורה בטוחה ומנוהלת</span>, שוב ושוב, לפי תהליך שעובד.</li>
+              <li>בכל <span class="emph">סייקל</span> רואים <span class="emph">התקדמות קטנה</span> אבל ממשית.</li>
+              <li><span class="emph">ריבוי סייקלים</span> של התפתחות מייצר שינוי משמעותי ורחב.</li>
+              <li>כאן <span class="emph">לא נשארים ברמת הדיבור</span>. עושים את העבודה בתכלס.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="quote" style="margin-top:24px;">
+          אז קצת מנת אמפטיה ואהבה עצמית-החלטה עם עצמך:
+          <br><br>
+          <strong>לא אתן לעוד יום להסתיים עם עייפות בהרגשה ובמבחן התוצאה - שלא התקדמתי, למרות שעשיתי ולא נחתי, לא הצלחתי להרגע מרוב טרדות.</strong>
+        </div>
+
+        <div class="inline-cta" style="margin-top:22px;">
+          <a href="#purchase-main" class="btn btn-primary">בואי נעבוד על זה</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container copy">
+        <h2 class="section-title">מה צריך ל- Cowork?</h2>
+
+        <p>
+          כדי שהעבודה המשותפת תהיה אפקטיבית, צריך להגיע עם כיוון מסוים.
+          זה לא חייב להיות מסודר או סגור עד הסוף, אבל כן צריך להיות ברור יחסית על מה עובדים, או לפחות לדעת לתאר את האתגר, המטרה או מה מנסים לקדם.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="num">1</div>
+            <p><strong>יש משהו ביד</strong><br>גם אם הוא עדיין לא סגור עד הסוף.</p>
+          </div>
+          <div class="step">
+            <div class="num">2</div>
+            <p><strong>אפשר לתאר אותו</strong><br>אתגר, מטרה, או מה מנסים לקדם.</p>
+          </div>
+          <div class="step">
+            <div class="num">3</div>
+            <p><strong>יש נכונות לעשייה</strong><br>לעבוד באמת על הדבר עצמו.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container copy">
+        <h2 class="section-title">למי זה לא מתאים</h2>
+
+        <div class="x-list">
+          <div class="x-item">למי שמחפש.ת רק שיחה פתוחה בלי עבודה</div>
+          <div class="x-item">למי שעדיין אין לו.ה בכלל מושג על מה רוצה לעבוד</div>
+          <div class="x-item">למי שמחפש.ת פתרון קסם בלי מחויבות לעשייה</div>
+          <div class="x-item">למי שרוצה שמישהי אחרת תעשה במקומו.ה את העבודה</div>
+          <div class="x-item">למי שכרגע צריך.ה קודם בירור בסיסי מאוד לפני כניסה לעבודה משותפת</div>
+        </div>
+
+        <div style="margin-top:30px;">
+          <div style="font-weight:800;font-size:1.5rem;line-height:1.05;color:var(--ink);">זה חשוב מאוד!</div>
+          <div style="margin-top:10px;font-weight:700;color:var(--ink);">אם עובר לך עכשיו בראש</div>
+        </div>
+
+        <div class="quote" style="margin-top:12px;">
+          “יש לי בלאגן מדי בשביל השלב הזה. נראה לי שקודם כדאי שאתפקס עם החלטות. יש לי מלא דברים על השולחן וקודם כל כדאי שאצא מהערפל שלי”
+        </div>
+
+        <div class="not-fit-followup">אז יותר יתאים לך</div>
+
+        <div class="product-card product-alt">
+          <h3>לצאת מהערפל לבהירות</h3>
+          <a href="#" class="btn btn-secondary">לעבור למוצר הזה</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container copy">
+        <p>
+          אני פשוט מכירה היטב את הקשיים והבעיות של אנשים יצירתיים, מוכשרים, שאפתניים, עם פוטנציאל.
+        </p>
+
+        <p>
+          בין שהם קרייריסטים ובין שלא, יש עומס ויש פער בין איפה שהם נמצאים לאיפה שרוצים להיות.
+        </p>
+
+        <p>
+          ואני רוצה לתת מענה לאותם אנשים. לכן, אני מציעה סל שירותים מקיף לכל שלב - מהכי תכלס לארוך ועמוק - דרך לימוד AI והכי רחוק- ההרים האלפיניים.
+        </p>
+
+        <div class="product-card">
+          <h3>Cowork</h3>
+          <p>Doing the work. פעולה - ביחד. כיוון, דיוק, התקדמות.</p>
+          <a href="#" class="btn btn-primary">לרכישת Cowork</a>
+        </div>
+
+        <p style="margin-top:18px;">
+          אז אם אתה האנשים האלה אבל לא מצאת את העזרה הספציפית - אני מאוד מאוד רוצה לדעת מזה!
+        </p>
+
+        <p>פשוט תלחץ על "רבע שעה חינם".</p>
+        <p>נדבר.</p>
+        <p>נראה אם יש כן דרך שאוכל לעזור או שירות שלא נחשפת אליו.</p>
+
+        <p style="margin-top:24px;"><strong>לא בטוחה? החלופה</strong></p>
+        <p>נסי בינתיים את Lead magnet. או המאמרים שלנו להכיר את עצמך טוב יותר.</p>
+        <p>הפנייה לדף- Lead Magnet Easy</p>
+
+        <div class="actions" style="margin-top:22px;">
+          <a href="#" class="btn btn-secondary">יש שאלות? רוצה לבדוק התאמה? קבע שיחה רבע שעה חינם</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="sticky-buy">
+    <a href="#purchase-main">לרכישת Cowork</a>
+  </div>
+
+
+  <script>
+    (function(){
+      const sticky = document.querySelector('.sticky-buy');
+      const heroActions = document.querySelector('.hero .actions');
+      const mainCta = document.getElementById('purchase-main');
+
+      if (!sticky || !heroActions || !mainCta) return;
+
+      const media = window.matchMedia('(max-width: 700px)');
+
+      function toggleSticky(){
+        if (!media.matches){
+          sticky.classList.remove('is-visible');
+          return;
+        }
+
+        const heroBottom = heroActions.getBoundingClientRect().bottom;
+        const purchaseRect = mainCta.getBoundingClientRect();
+        const shouldShow = heroBottom < 0 && purchaseRect.top > window.innerHeight * 0.35;
+
+        sticky.classList.toggle('is-visible', shouldShow);
+      }
+
+      toggleSticky();
+      window.addEventListener('scroll', toggleSticky, { passive: true });
+      window.addEventListener('resize', toggleSticky);
+    })();
+  </script>
+</body>
+</html>
