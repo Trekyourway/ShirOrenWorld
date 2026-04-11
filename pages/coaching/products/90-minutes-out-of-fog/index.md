@@ -1,5 +1,3 @@
-# 90 Minutes Out Of Fog
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
