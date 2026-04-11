@@ -1,0 +1,85 @@
+{
+  "worlds": [
+    {
+      "slug": "ai",
+      "title": "AI",
+      "entry": "/ai/",
+      "sections": [
+        {
+          "slug": "articles",
+          "title": "Articles",
+          "entry": "/ai/articles/",
+          "discoverChildren": true
+        },
+        {
+          "slug": "learn",
+          "title": "Learn",
+          "entry": "/ai/learn/",
+          "discoverChildren": false
+        },
+        {
+          "slug": "tools",
+          "title": "Tools",
+          "entry": "/ai/tools/",
+          "discoverChildren": false
+        }
+      ]
+    },
+    {
+      "slug": "coaching",
+      "title": "Coaching",
+      "entry": "/coaching/",
+      "sections": [
+        {
+          "slug": "products",
+          "title": "Products",
+          "entry": "/coaching/products/",
+          "discoverChildren": true
+        },
+        {
+          "slug": "articles",
+          "title": "Articles",
+          "entry": "/coaching/articles/",
+          "discoverChildren": true
+        },
+        {
+          "slug": "learn",
+          "title": "Learn",
+          "entry": "/coaching/learn/",
+          "discoverChildren": false
+        },
+        {
+          "slug": "self-check",
+          "title": "Self Check",
+          "entry": "/coaching/self-check/",
+          "discoverChildren": true
+        }
+      ]
+    },
+    {
+      "slug": "treks",
+      "title": "Treks",
+      "entry": "/treks/",
+      "sections": [
+        {
+          "slug": "articles",
+          "title": "Articles",
+          "entry": "/treks/articles/",
+          "discoverChildren": true
+        },
+        {
+          "slug": "learn",
+          "title": "Learn",
+          "entry": "/treks/learn/",
+          "discoverChildren": false
+        },
+        {
+          "slug": "solo-hiking",
+          "title": "Solo Hiking",
+          "entry": "/treks/solo-hiking/",
+          "discoverChildren": false
+        }
+      ]
+    }
+  ]
+}
