@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>פרפקציוניזם: מחקרים, משמעויות ומסקנות</title>
+  <style>
+    :root {
+      --bg-main: #e7f0eb;
+      --bg-deep: #d7e5de;
+      --bg-surface: rgba(255,255,255,0.62);
+      --text-main: #1d2620;
+      --text-soft: #4d6053;
+      --text-muted: #728379;
+      --line-soft: rgba(39, 56, 45, 0.10);
+      --brand: #6f917e;
+      --brand-strong: #4f6e5d;
+      --brand-deep: #385142;
+      --shadow-strong: 0 28px 80px rgba(47, 66, 53, 0.12);
+      --max-width: 860px;
+      --font-main: "Assistant", "Heebo", "Noto Sans Hebrew", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-main);
+      color: var(--text-main);
+      background: linear-gradient(180deg, #f2f7f3 0%, var(--bg-main) 42%, var(--bg-deep) 100%);
+      line-height: 1.7;
+    }
+    .page-shell { min-height: 100vh; padding: 28px 16px 80px; }
+    .article-wrap { width: min(100%, var(--max-width)); margin: 0 auto; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; color: var(--text-soft); font-size: 0.98rem; }
+    .breadcrumb { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .breadcrumb span { opacity: 0.62; }
+    .hero {
+      background: linear-gradient(180deg, rgba(255,255,255,0.80), rgba(241,247,243,0.60));
+      border: 1px solid rgba(255,255,255,0.58);
+      border-radius: 32px;
+      padding: 34px 24px 28px;
+      box-shadow: var(--shadow-strong);
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.54); border: 1px solid rgba(111,145,126,0.14);
+      color: var(--brand-strong); font-size: 0.94rem; font-weight: 700; margin-bottom: 18px;
+    }
+    .hero h1 { font-size: clamp(2rem, 4vw, 3.6rem); line-height: 0.98; margin: 0 0 14px; letter-spacing: -0.045em; color: var(--brand-deep); }
+    .hero-subtitle { font-size: clamp(1.12rem, 2vw, 1.42rem); color: var(--text-soft); max-width: 42ch; margin: 0 0 18px; line-height: 1.45; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .meta-pill { display: inline-flex; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.68); border: 1px solid var(--line-soft); color: var(--text-soft); font-size: 0.96rem; }
+    .lead-card { margin-top: 18px; padding: 18px; border-radius: 22px; background: linear-gradient(180deg, rgba(248,251,249,0.92), rgba(234,243,237,0.78)); border: 1px solid rgba(111,145,126,0.12); }
+    .lead-card p { margin: 0; font-size: 1.08rem; color: var(--text-main); }
+    .toc { margin: 20px 0 0; display: grid; gap: 10px; }
+    .toc-title { font-size: 0.95rem; color: var(--text-muted); margin: 0; font-weight: 700; }
+    .toc-list { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 0; list-style: none; }
+    .toc-list a { display: inline-flex; text-decoration: none; padding: 9px 12px; border-radius: 999px; background: rgba(255,255,255,0.78); border: 1px solid var(--line-soft); color: var(--text-soft); font-weight: 700; }
+    .article-body { display: grid; gap: 18px; margin-top: 22px; }
+    .section-card, .special-block, .quote-block, .cta-block { padding: 28px 22px; background: linear-gradient(180deg, rgba(79,110,93,0.94), rgba(104,138,118,0.94)); color: #f8fcf8; border-radius: 22px; }
+    .section-label { margin: 0 0 10px; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(248,252,248,0.72); }
+    .section-card h2 { margin: 0 0 12px; font-size: clamp(1.5rem, 2.6vw, 2.2rem); line-height: 1.08; color: #f8fcf8; }
+    .rich-paragraph { margin: 0 0 12px; font-size: 1.15rem; line-height: 1.75; color: #f8fcf8; white-space: pre-line; }
+    .regular-paragraph { margin: 0; font-size: 1.02rem; line-height: 1.85; color: rgba(248,252,248,0.88); }
+    .bullets { margin: 16px 0 0; padding-inline-start: 18px; display: grid; gap: 8px; }
+    .bullets li { font-size: 1rem; line-height: 1.8; color: rgba(248,252,248,0.9); }
+    .split-highlight { display: grid; gap: 14px; margin-top: 18px; }
+    .split-highlight > div { padding: 16px; border-radius: 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); }
+    .split-highlight h4 { margin: 0 0 8px; font-size: 1.02rem; color: #f8fcf8; }
+    .split-highlight p { margin: 0; color: rgba(248,252,248,0.88); line-height: 1.75; }
+    .quote-block blockquote { margin: 0; font-size: clamp(1.28rem, 2.4vw, 1.8rem); line-height: 1.5; font-weight: 700; color: #f8fcf8; }
+    .quote-block cite { display: block; margin-top: 14px; font-style: normal; color: rgba(248,252,248,0.72); }
+    .special-block h3, .cta-block h3 { margin: 0 0 8px; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.05; }
+    .special-block p, .cta-block p { margin: 0 0 16px; color: rgba(247,251,247,0.9); white-space: pre-line; line-height: 1.85; }
+    .cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn { appearance: none; border: none; border-radius: 999px; padding: 13px 18px; font: inherit; font-weight: 800; text-decoration: none; cursor: pointer; }
+    .btn-primary { background: #f8fcf8; color: var(--brand-deep); }
+    .btn-secondary { background: rgba(255,255,255,0.08); color: #f7fbf7; border: 1px solid rgba(255,255,255,0.20); }
+    .footer-note { text-align: center; margin-top: 20px; color: var(--text-muted); font-size: 0.82rem; opacity: 0.9; }
+    @media (min-width: 740px) { .hero { padding: 42px 34px 34px; } .split-highlight { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 560px) { .page-shell { padding-top: 16px; } .topbar { font-size: 0.9rem; } .hero { border-radius: 24px; padding: 26px 18px 22px; } .section-card, .special-block, .quote-block, .cta-block { padding: 22px 16px; } .rich-paragraph { font-size: 1.07rem; } .regular-paragraph, .bullets li, .special-block p, .cta-block p { font-size: 1rem; } .cta-actions { flex-direction: column; } .btn { width: 100%; text-align: center; } }
+  </style>
+</head>
+<body>
+  <script>
+    const PAGE = {
+      pageType: 'article',
+      slug: 'perfectionism-research-meaning-and-outcomes',
+      pageTitle: 'פרפקציוניזם: מחקרים, משמעויות ומסקנות',
+      breadcrumbMainLabel: 'ראשי',
+      breadcrumbMainHref: '/',
+      breadcrumbSectionLabel: 'קואוצ׳ינג',
+      breadcrumbSectionHref: '/coaching/',
+      breadcrumbCurrentLabel: 'פרפקציוניזם: מחקרים, משמעויות ומסקנות',
+      meta: {
+        description: 'מאמר עומק בעברית על Perfectionism: ההיסטוריה המחקרית, המחלוקות, הקשר לחרדה, דחיינות, קריירה, כישלון, זוגיות ושביעות רצון.',
+        keywords: 'perfectionism, socially prescribed perfectionism, self-oriented perfectionism, perfectionistic concerns, perfectionistic strivings, פרפקציוניזם, דחיינות, חרדה, קריירה, זוגיות',
+        ogTitle: 'פרפקציוניזם: מחקרים, משמעויות ומסקנות',
+        ogDescription: 'מה באמת אומרים המחקרים הישנים והחדשים על פרפקציוניזם, הצלחה, הימנעות, כישלון, זוגיות ושביעות רצון.',
+        robots: 'index,follow'
+      },
+      eyebrow: 'מאמר עומק · Coaching Psychology · Perfectionism',
+      heroTitle: 'פרפקציוניזם: מה המחקר באמת אומר, ולמה "אני פשוט פרפקציוניסטית" זה לפעמים הסבר חסר',
+      heroSubtitle: 'לא עוד קלישאה על סטנדרטים גבוהים. אלא הבחנה בין Perfectionistic Strivings לבין Perfectionistic Concerns, ומה זה עושה לביצועים, ליחסים, לקריירה, להימנעות ולתחושת הערך.',
+      leadText: 'אם נכנסים ישר לעובי הקורה: המחקר כבר מזמן לא רואה בפרפקציוניזם תכונה אחת. הוא רואה מערכת. לפעמים היא דוחפת להישגיות, סדר ודיוק. לפעמים אותה מערכת בדיוק מייצרת חרדה, דחיינות, שחיקה, קושי בקבלת החלטות, יחסים טעונים ופחד כרוני מטעות. לכן השאלה האמיתית היא לא "האם אני פרפקציוניסטית", אלא איזה סוג של perfectionism מנהל אותי, באילו הקשרים, ובאיזה מחיר.',
+      worldLabel: 'קואוצ׳ינג',
+      collectionLabel: 'מאמרים',
+      metaItems: ['16–20 דקות קריאה', 'עודכן באפריל 2026', 'Research synthesis עד 2025'],
+      quickNav: [
+        { id: 'section-1', label: 'להפסיק לדבר על פרפקציוניזם כאילו הוא דבר אחד' },
+        { id: 'section-2', label: 'המחקרים הישנים: איך התחום נבנה' },
+        { id: 'section-3', label: 'המחקרים החדשים: מה התחדד ומה נשבר' },
+        { id: 'section-4', label: 'מי מצליח יותר באמת' },
+        { id: 'section-5', label: 'פרפקציוניזם, הימנעות וכישלון' },
+        { id: 'section-6', label: 'זוגיות, עבודה ושביעות רצון' },
+        { id: 'section-7', label: 'מי לא נחשב פרפקציוניסט' },
+        { id: 'section-8', label: 'המסקנה הפרקטית ליומיום' }
+      ],
+      blocks: [
+        {
+          type: 'section',
+          id: 'section-1',
+          label: 'section 01',
+          title: 'להפסיק לדבר על פרפקציוניזם כאילו הוא דבר אחד',
+          richParagraph: 'אחת הטעויות הכי שכיחות בשפה היומיומית היא לקרוא לכל שילוב של רצינות, סטנדרטים גבוהים, יסודיות או קושי לשחרר בשם אחד: Perfectionism. אבל מחקרי אישיות ו־clinical psychology כבר שנים מפרידים בין שני צירים מרכזיים: Perfectionistic Strivings — שאיפה לסטנדרטים גבוהים, סדר, ארגון וחתירה למצוינות; ו־Perfectionistic Concerns — פחד מטעות, ספק עצמי, ביקורת עצמית נוקשה ותחושה שהערך האישי תלוי בתוצאה.',
+          regularParagraph: 'ההבחנה הזאת משנה הכול. כי אדם יכול להיות תובעני כלפי עצמו בלי להיות לכוד בחרדת כישלון, ואדם אחר יכול להיראות "שאפתן" מבחוץ, כשבפנים מה שמניע אותו הוא בעיקר פחד. חלק גדול מהבלבול הציבורי נולד מזה שמדביקים את אותה מילה לשני מנגנונים פסיכולוגיים שונים למדי.',
+          bullets: [
+            'Self-Oriented Perfectionism: דרישות גבוהות מעצמי.',
+            'Socially Prescribed Perfectionism: תחושה שאחרים דורשים ממני להיות מושלמת.',
+            'Other-Oriented Perfectionism: דרישות פרפקציוניסטיות מאחרים.',
+            'Concern over Mistakes, Doubts about Actions, Personal Standards — ממדים שחזרו שוב ושוב במדדים הקלאסיים.'
+          ],
+          split: [
+            {
+              title: 'הקונצנזוס המחקרי',
+              text: 'לא כל סטנדרט גבוה הוא פתולוגיה. הבעיה מתחילה כשביצוע טוב מפסיק להיות מטרה, והופך לתנאי לזכאות בסיסית לערך, שקט או אהבה.'
+            },
+            {
+              title: 'המחלוקת המחקרית',
+              text: 'יש ויכוח עד כמה החלק ה"מסתגל" של perfectionistic strivings באמת מסתגל, או שהוא רק נראה טוב כל עוד הסביבה מתגמלת ביצועים.'
+            }
+          ]
+        },
+        {
+          type: 'section',
+          id: 'section-2',
+          label: 'section 02',
+          title: 'המחקרים הישנים: איך התחום נבנה',
+          richParagraph: 'הספרות המוקדמת נטתה לראות בפרפקציוניזם תופעה קלינית יחסית אחידה. כבר בכתיבה המוקדמת של Hamachek הופיעה ההבחנה בין "normal" לבין "neurotic" perfectionism: לא אם הסטנדרט גבוה, אלא האם האדם מסוגל ליהנות מעבודה טובה דיה, או שהוא נשבר מכל פער בין אידיאל למציאות.',
+          regularParagraph: 'בשנות ה־80 וה־90 התחום התייצב סביב כלים מדידים. Frost ועמיתיו בנו מודל שדיבר על Concern over Mistakes, Doubts about Actions, Personal Standards, Parental Expectations ו־Organization. Hewitt ו־Flett בנו מסגרת שזכתה להשפעה עצומה: Self-Oriented, Socially Prescribed ו־Other-Oriented Perfectionism. מכאן המחקר עבר מ"רושם קליני" למבנים שניתן לבדוק מול דיכאון, חרדה, OCD, הפרעות אכילה, שחיקה והישגים.',
+          bullets: [
+            'הדור הישן של המחקר לא שאל רק "מי עובד קשה", אלא "מה קורה כשיש טעות".',
+            'כבר מוקדם היה ברור ש־Socially Prescribed Perfectionism קשור לעומס רגשי כבד יותר.',
+            'גם במדגמים של סטודנטים, ספורטאים ואנשי מקצוע חזר דפוס דומה: תגובתיות קיצונית לכישלון קטנה יותר מנבאת מצוקה יותר מאשר גובה הסטנדרט לבדו.'
+          ],
+          split: [
+            {
+              title: 'סיפורים אמיתיים שעלו מהספרות הקלינית',
+              text: 'הדמויות עצמן כמעט תמיד אנונימיות, אבל התבנית חזרה: סטודנטית שלא מגישה עבודה כי היא עוד לא "ברמה", מתמחה שעובד שעות מיותרות כדי לא להיחשף כלא מספיק טובה, ובת זוג שמפרשת כל אי-הסכמה כהוכחה שמשהו בה פגום.'
+            },
+            {
+              title: 'למה זה חשוב',
+              text: 'המחקר לא תיאר רק "אנשים מסודרים". הוא תיאר אנשים שהטעות אצלם איננה מידע — היא איום זהותי.'
+            }
+          ]
+        },
+        {
+          type: 'section',
+          id: 'section-3',
+          label: 'section 03',
+          title: 'המחקרים החדשים: מה התחדד ומה נשבר',
+          richParagraph: 'מטא־אנליזות ומחקרים מהעשורים האחרונים חידדו תמונה יותר מורכבת: Perfectionistic Concerns מראים קשר יציב וחזק יחסית למצוקה נפשית, חרדה, דיכאון, Rumination, דחיינות, שחיקה, אי־שביעות רצון ופגיעות אחרי כישלון. Perfectionistic Strivings נראים בחלק מהמחקרים קשורים לביצועים גבוהים יותר, למצפוניות ולמוטיבציה — אבל בדרך כלל היתרון הזה נחלש או נעלם כשמבודדים את רכיב הדאגה, הפחד והביקורת העצמית.',
+          regularParagraph: 'זה המקום שבו גם נולדה מחלוקת אמיתית. חוקרים מסוימים טענו שהצד ה"אדפטיבי" של perfectionism הוא למעשה פשוט conscientiousness עם יחסי ציבור גרועים. אחרים טענו שלא, ושיש בכל זאת משהו ייחודי בשאיפה המושלמת. בפועל, ההסכמה הרחבה יותר היום היא שהשילוב קובע: סטנדרטים גבוהים בלי ערך עצמי מותנה יכולים לתפקד לא רע; סטנדרטים גבוהים יחד עם Shame, self-criticism ו־conditional self-worth כבר נראים אחרת לגמרי.',
+          bullets: [
+            'הקשר החזק והעקבי ביותר הוא בין Socially Prescribed Perfectionism לבין distress.',
+            'Self-Critical perfectionism זוהה שוב ושוב כגורם סיכון חוצה־הקשרים.',
+            'התחום נע לכיוון transdiagnostic view: פרפקציוניזם כמנגנון שמזין כמה סוגי קושי, לא רק אבחנה אחת.'
+          ]
+        },
+        {
+          type: 'special',
+          title: 'שורה תחתונה מחקרית, בלי סיסמאות',
+          content: 'כשמישהו אומר "אני פרפקציוניסט", זה עדיין לא אומר כמעט כלום.\nצריך לשאול: האם הוא מציב רף גבוה ומתקדם, או שהוא קורס מול כל סיכוי לאי־שלמות?\nהאם הוא לומד מטעות, או מפרש טעות כהשפלה?\nהאם הוא עושה עבודה טובה, או נמנע מהגשה, מהכרעה, מחשיפה ומניסיון — ואז קורא לזה סטנדרטים?'
+        },
+        {
+          type: 'section',
+          id: 'section-4',
+          label: 'section 04',
+          title: 'אז מי מצליח יותר באמת: פרפקציוניסטים או לא?',
+          richParagraph: 'התשובה הלא נוחה היא: תלוי איזה פרפקציוניזם, ותלוי איך מגדירים הצלחה. אם הצלחה נמדדת רק בציונים, תפוקה, שליטה בפרטים או דחיפה להישג — לפעמים אנשים עם רכיב גבוה של Strivings נראים מצוינים. אבל אם מודדים גם מחיר: זמן אבוד, קושי לשתף פעולה, ירידה ביצירתיות, עומס רגשי, עייפות, הימנעות מסיכונים וחוסר הנאה — התמונה מתהפכת.',
+          regularParagraph: 'במילים אחרות, יש פרפקציוניסטים שנראים מצליחים מאוד כלפי חוץ, אבל מנהלים מערכת פנימית יקרה מאוד. ויש אנשים לא־פרפקציוניסטים שמפיקים תוצאות טובות יותר לאורך זמן דווקא כי הם מסוגלים להגיש, לטעות, ללמוד, לשנות כיוון ולהמשיך לנוע. כלומר: resilience הרבה פעמים מנצח perfectionism.',
+          bullets: [
+            'ביצוע גבוה לטווח קצר אינו הוכחה לבריאות של המנגנון.',
+            'חדשנות, למידה וניסוי נפגעים כשהטעות נתפסת כאיום ולא כחלק מהתהליך.',
+            'מי שמצליח לאורך זמן הוא לא בהכרח מי ששונא טעויות יותר, אלא מי שמסוגל לעמוד בהן בלי להתפרק.'
+          ],
+          split: [
+            {
+              title: 'הישגיות אמיתית',
+              text: 'יכולת להתמיד, לשפר, לשאת אי־ודאות, לקבל פידבק ולבצע תיקונים.'
+            },
+            {
+              title: 'הישגיות פרפקציוניסטית',
+              text: 'יכולת להחזיק שליטה גבוהה כל עוד הסיכון לטעות מנוהל באופן קיצוני.'
+            }
+          ]
+        },
+        {
+          type: 'section',
+          id: 'section-5',
+          label: 'section 05',
+          title: 'פרפקציוניזם, הימנעות וכישלון: כאן הסיפור נהיה אישי מאוד',
+          richParagraph: 'השאלה שלך — האם יש אנשים שמגדירים את עצמם כפרפקציוניסטים כשבעצם הם נמנעים מהחלטות קשות או אמיצות — נוגעת בלב הספרות. כן, לא מעט פעמים "פרפקציוניזם" הוא השם המכובס של avoidance. במקום להגיד "אני מפחדת להיבחן, להיחשף, לבחור ולהסתכן", יותר נעים להגיד "יש לי סטנדרטים גבוהים".',
+          regularParagraph: 'הדפוס מוכר: עוד מחקר לפני החלטה, עוד תיקון לפני שליחה, עוד חידוד לפני פרסום, עוד המתנה לפני שיחה קשה. בפועל לא מדובר תמיד באהבת איכות, אלא באי־יכולת לסבול את האפשרות שהבחירה תהיה חלקית, שהביצוע לא יהיה מושלם, או שהזהות תספוג מכה. כאן נוצר קשר ישיר בין perfectionism לבין procrastination, indecision, self-handicapping ואפילו failure to launch.',
+          bullets: [
+            'כישלון מפחיד יותר כשמשמעותו איננה "לא הצלחתי" אלא "אני לא שווה".',
+            'הימנעות שומרת זמנית על הדימוי העצמי, ולכן היא ממכרת.',
+            'פרפקציוניזם יכול ליצור כישלון בדיוק דרך הניסיון האובססיבי להימנע ממנו.'
+          ],
+          split: [
+            {
+              title: 'הפרדוקס',
+              text: 'מי שמנסה להיכשל פחות בכל מחיר, לעיתים מתאמן פחות על התאוששות, גמישות והעזה — ולכן נשבר יותר כשמשהו לא הולך.'
+            },
+            {
+              title: 'מה רואים ביומיום',
+              text: 'אנשים חכמים מאוד, עם פוטנציאל גבוה, שנתקעים לא כי חסר להם שכל או כישרון, אלא כי כל תוצאה שאיננה מושלמת מרגישה להם מסוכנת מדי.'
+            }
+          ]
+        },
+        {
+          type: 'quote',
+          quote: 'הרבה אנשים לא סובלים מאהבת שלמות. הם סובלים מפחד עמוק להיראות אנושיים.',
+          cite: 'שורת סיכום בסגנון שיר אורן'
+        },
+        {
+          type: 'section',
+          id: 'section-6',
+          label: 'section 06',
+          title: 'מה הקשר לזוגיות רומנטית, לקריירה ולשביעות רצון',
+          richParagraph: 'בזוגיות, פרפקציוניזם יכול להופיע בכמה מסלולים: ציפיות מוגזמות מעצמי כבן או בת זוג, ציפיות מוגזמות מהאחר, רגישות גבוהה לביקורת, וקושי לשאת פגיעוּת. כשהקשר הופך לבמה להוכחת ערך, אינטימיות נפגעת. Socially Prescribed Perfectionism במיוחד נקשר יותר לקונפליקט, חוסר ביטחון, Shame ותחושה ש"אסור לי לאכזב".',
+          regularParagraph: 'בקריירה, המנגנון עשוי לייצר גם הישגים וגם תקיעות. הוא עוזר במקצועות שבהם יש תגמול גבוה לדיוק, הכנה ושליטה בפרטים. אבל הוא פוגע כשצריך מהירות, ניסוי, הנהגה תחת עמימות, האצלת סמכויות, יצירתיות ושיתופי פעולה. עובדים פרפקציוניסטים נתפסים לעיתים כאיכותיים מאוד — עד שהמערכת משלמת על bottleneck, שחיקה, מיקרו־מנג'מנט וקושי לשחרר.',
+          bullets: [
+            'בזוגיות: יותר ביקורת, יותר פירוש של אכזבה ככישלון כולל, פחות מרחב לטעות אנושית.',
+            'בקריירה: יתרון חלקי בדיוק, חיסרון פוטנציאלי במהירות, חדשנות ושיתוף.',
+            'בשביעות רצון מהחיים: הפער בין "טוב מאוד" ל"עדיין לא מספיק" נוטה להישאר פתוח.'
+          ],
+          split: [
+            {
+              title: 'למה שביעות רצון נפגעת',
+              text: 'כי נקודת הסיום זזה כל הזמן. הישג לא נספג כהצלחה אלא כבסיס לדרישה הבאה.'
+            },
+            {
+              title: 'למה היחסים נפגעים',
+              text: 'כי כששלמות היא תנאי לשקט, גם אני וגם מי שמולי מרגישים כל הזמן תחת הערכה.'
+            }
+          ]
+        },
+        {
+          type: 'section',
+          id: 'section-7',
+          label: 'section 07',
+          title: 'ומה עם מי שלא נכללים כפרפקציוניסטים?',
+          richParagraph: 'לא להיות פרפקציוניסט זה לא אומר להיות רשלן, בינוני או חסר שאיפות. חלק מהאנשים פשוט מונעים יותר מ־mastery, curiosity, craftsmanship או practicality. הם רוצים לעשות טוב, אבל לא קושרים כל חריגה לערך העצמי שלהם. לכן לעיתים דווקא הם שורדים טוב יותר מצבי אי־ודאות, שינוי, למידה ציבורית ופידבק קשה.',
+          regularParagraph: 'יש גם אנשים עם סטנדרטים נמוכים מדי או אדישות אמיתית. זה כבר סיפור אחר. אבל חשוב לא לבלבל בין non-perfectionism לבין ויתור. אדם לא־פרפקציוניסט יכול להיות מחויב מאוד, רציני מאוד ואיכותי מאוד — פשוט בלי הפולחן של חוסר הטעות.',
+          bullets: [
+            'לא כל מי שאינו פרפקציוניסט הוא "זורם" או לא אכפתי.',
+            'יש איכות גבוהה שלא נשענת על חרדה.',
+            'יש אחריות מקצועית שלא נשענת על Shame.'
+          ]
+        },
+        {
+          type: 'section',
+          id: 'section-8',
+          label: 'section 08',
+          title: 'המסקנה הפרקטית ליומיום: מה לבדוק אצל עצמך באמת',
+          richParagraph: 'השאלה הפרקטית איננה "איך להפסיק להיות פרפקציוניסטית". היא: איזה חלק בך דורש איכות, ואיזה חלק דורש חסינות מהשפלה. ברגע שמבדילים בין השניים, אפשר לשמור על רמה גבוהה בלי להפוך כל טעות לכתב אישום.',
+          regularParagraph: 'בדיקה טובה מתחילה בארבע שאלות: כשאני דוחה — האם אני משפרת, או נמנעת? כשאני מתקנת — האם זה באמת מעלה איכות, או רק מוריד חרדה? כשאני מצליחה — האם אני מרגישה סיפוק, או עוברת ישר ליעד הבא? וכשאני נכשלת — האם אני לומדת, או קורסת לזהות של "לא מספיק"? אם התשובות נוטות לצד השני, לא בטוח שהבעיה היא שאיפות גבוהות. יכול להיות שהבעיה היא מערכת פנימית שלא נותנת לך להיות אנושית.',
+          bullets: [
+            'להחזיק סטנדרט בלי להחזיק את עצמך בגרון.',
+            'להפריד בין איכות לבין הימנעות.',
+            'להתאמן על הגשה, על בחירה ועל תיקון — לא רק על מניעה.',
+            'ללמוד לזהות מתי "אני עוד לא מוכנה" הוא אמת, ומתי הוא מיתוג אלגנטי לפחד.'
+          ]
+        },
+        {
+          type: 'special',
+          title: 'היכן יש קונצנזוס, והיכן עדיין יש ויכוח',
+          content: 'יש קונצנזוס די רחב ש־Perfectionistic Concerns קשורים יותר למצוקה, דיכאון, חרדה, דחיינות ושחיקה.\nיש גם קונצנזוס ש־Socially Prescribed Perfectionism הוא רכיב בעייתי במיוחד.\nהוויכוח הפתוח יותר הוא עד כמה Perfectionistic Strivings הם באמת "אדפטיביים", או עד כמה הם פשוט מדד מצפוניות שנצבע בשפה של שלמות.\nבפועל, ברוב החיים עצמם, ההבדל הקריטי הוא האם אפשר להיות מצוינת בלי להיות מותנית.'
+        }
+      ],
+      cta: {
+        title: 'רוצה לעשות סדר בין סטנדרט גבוה לבין מערכת שמחזיקה אותך קצר?',
+        text: 'אם את מזהה אצלך שילוב של דרישות גבוהות, תקיעות, דחיינות, עייפות מהכול או קושי להכריע — זה לא חייב להישאר ברמת התובנה.\nאפשר לפרק יחד את המנגנון, להבין מה ממנו משרת אותך ומה ממנו מנהל אותך.',
+        primaryText: 'למוצר לצאת מהערפל',
+        primaryHref: '/coaching/products/90-minutes-out-of-fog/',
+        secondaryText: 'לעוד מאמרי קואוצ׳ינג',
+        secondaryHref: '/coaching/articles/'
+      },
+      footerNote: 'Article #001 · Version 1'
+    };
+  </script>
+  <div class="page-shell">
+    <main class="article-wrap">
+      <div class="topbar">
+        <div class="breadcrumb">
+          <a href="#" id="breadcrumb-main"></a>
+          <span>/</span>
+          <a href="#" id="breadcrumb-section"></a>
+          <span>/</span>
+          <strong id="breadcrumb-current"></strong>
+        </div>
+      </div>
+      <section class="hero">
+        <div class="eyebrow" id="eyebrow"></div>
+        <h1 id="hero-title"></h1>
+        <p class="hero-subtitle" id="hero-subtitle"></p>
+        <div class="hero-meta" id="hero-meta"></div>
+        <div class="lead-card"><p id="lead-text"></p></div>
+        <nav class="toc" aria-label="תוכן עניינים"><p class="toc-title">ניווט מהיר בתוך הדף</p><ul class="toc-list" id="toc-list"></ul></nav>
+      </section>
+      <div class="article-body" id="article-body"></div>
+      <section class="cta-block">
+        <h3 id="cta-title"></h3>
+        <p id="cta-text"></p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" id="cta-primary" href="#"></a>
+          <a class="btn btn-secondary" id="cta-secondary" href="#"></a>
+        </div>
+      </section>
+      <p class="footer-note" id="footer-note"></p>
+    </main>
+  </div>
+  <script>
+    const $ = (selector) => document.querySelector(selector);
+    const bodyRoot = $('#article-body');
+    function ensureMeta(name, content, attr = 'name') {
+      if (!content) return;
+      let el = document.head.querySelector(`meta[${attr}="${name}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(attr, name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    }
+    function setBaseContent() {
+      document.title = PAGE.pageTitle;
+      $('#eyebrow').textContent = PAGE.eyebrow;
+      $('#hero-title').textContent = PAGE.heroTitle;
+      $('#hero-subtitle').textContent = PAGE.heroSubtitle;
+      $('#lead-text').textContent = PAGE.leadText;
+      $('#breadcrumb-main').textContent = PAGE.breadcrumbMainLabel;
+      $('#breadcrumb-main').href = PAGE.breadcrumbMainHref;
+      $('#breadcrumb-section').textContent = PAGE.breadcrumbSectionLabel;
+      $('#breadcrumb-section').href = PAGE.breadcrumbSectionHref;
+      $('#breadcrumb-current').textContent = PAGE.breadcrumbCurrentLabel;
+      $('#cta-title').textContent = PAGE.cta.title;
+      $('#cta-text').textContent = PAGE.cta.text;
+      $('#cta-primary').textContent = PAGE.cta.primaryText;
+      $('#cta-primary').href = PAGE.cta.primaryHref;
+      $('#cta-secondary').textContent = PAGE.cta.secondaryText;
+      $('#cta-secondary').href = PAGE.cta.secondaryHref;
+      $('#footer-note').textContent = PAGE.footerNote;
+      ensureMeta('description', PAGE.meta?.description);
+      ensureMeta('keywords', PAGE.meta?.keywords);
+      ensureMeta('robots', PAGE.meta?.robots);
+      ensureMeta('og:title', PAGE.meta?.ogTitle, 'property');
+      ensureMeta('og:description', PAGE.meta?.ogDescription, 'property');
+      const heroMeta = $('#hero-meta');
+      PAGE.metaItems.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'meta-pill';
+        el.textContent = item;
+        heroMeta.appendChild(el);
+      });
+    }
+    function renderTOC() {
+      const toc = $('#toc-list');
+      PAGE.quickNav.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="#${item.id}">${item.label}</a>`;
+        toc.appendChild(li);
+      });
+    }
+    function renderSection(block) {
+      const section = document.createElement('section');
+      section.className = 'section-card';
+      if (block.id) section.id = block.id;
+      let html = `${block.label ? `<p class="section-label">${block.label}</p>` : ''}<h2>${block.title || ''}</h2>${block.richParagraph ? `<p class="rich-paragraph">${block.richParagraph}</p>` : ''}${block.regularParagraph ? `<p class="regular-paragraph">${block.regularParagraph}</p>` : ''}`;
+      if (Array.isArray(block.bullets) && block.bullets.length) html += `<ul class="bullets">${block.bullets.map(item => `<li>${item}</li>`).join('')}</ul>`;
+      if (Array.isArray(block.split) && block.split.length) html += `<div class="split-highlight">${block.split.map(item => `<div><h4>${item.title || ''}</h4><p>${item.text || ''}</p></div>`).join('')}</div>`;
+      section.innerHTML = html;
+      bodyRoot.appendChild(section);
+    }
+    function renderSpecial(block) {
+      const section = document.createElement('section');
+      section.className = 'special-block';
+      section.innerHTML = `<h3>${block.title || ''}</h3><p>${block.content || ''}</p>`;
+      bodyRoot.appendChild(section);
+    }
+    function renderQuote(block) {
+      const section = document.createElement('section');
+      section.className = 'quote-block';
+      section.innerHTML = `<blockquote>${block.quote || ''}</blockquote>${block.cite ? `<cite>${block.cite}</cite>` : ''}`;
+      bodyRoot.appendChild(section);
+    }
+    function renderBlocks() {
+      PAGE.blocks.forEach(block => {
+        if (block.type === 'section') renderSection(block);
+        if (block.type === 'special') renderSpecial(block);
+        if (block.type === 'quote') renderQuote(block);
+      });
+    }
+    setBaseContent();
+    renderTOC();
+    renderBlocks();
+  </script>
+</body>
+</html>
