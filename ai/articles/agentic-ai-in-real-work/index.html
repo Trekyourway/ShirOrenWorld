@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agentic AI in real work | Shir Oren</title>
+  <meta name="description" content="A grounded article on agentic AI in real work: where it creates leverage, where it adds friction, and what teams usually ignore." />
+  <link rel="canonical" href="https://shir-oren.vercel.app/ai/articles/agentic-ai-in-real-work/" />
+  <meta property="og:title" content="Agentic AI in real work | Shir Oren" />
+  <meta property="og:description" content="Where agentic AI helps, where it breaks, and what teams usually ignore." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://shir-oren.vercel.app/ai/articles/agentic-ai-in-real-work/" />
+  <link rel="stylesheet" href="/assets/css/site-shell.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div data-site-shell></div>
+
+    <main class="page">
+      <article class="article-body">
+        <header class="article-hero">
+          <p class="eyebrow">AI article</p>
+          <h1 class="page-title">Agentic AI in real work: where it helps, where it breaks</h1>
+          <p class="lede">
+            “Agentic” sounds powerful because it suggests autonomy, initiative, and systems that can move work forward on their own.
+            In practice, the value is real only when the surrounding workflow is structured enough to absorb that autonomy.
+            Otherwise the promise is larger than the result.
+          </p>
+          <div class="article-meta">
+            <span>World: AI</span>
+            <span>Type: Article</span>
+            <span>Angle: Practical implementation judgment</span>
+          </div>
+        </header>
+
+        <section>
+          <h2>What people usually mean by “agentic AI”</h2>
+          <p>
+            In most conversations, the term points to a system that does more than answer a single prompt.
+            It can break work into steps, choose tools, fetch context, call other systems, and continue toward a goal.
+            That sounds impressive, but it hides an important distinction: there is a big difference between a system that can take multiple steps,
+            and a system that can be trusted inside a real workflow with real consequences.
+          </p>
+          <p>
+            The first version is easy to demo. The second version is hard to operationalize.
+          </p>
+        </section>
+
+        <section>
+          <h2>Where it genuinely helps</h2>
+          <ul>
+            <li>When the workflow is repetitive enough to define clear steps, but still costly enough that automation matters.</li>
+            <li>When there is a visible goal, a usable data source, and a stable quality bar.</li>
+            <li>When the output can be checked at meaningful control points instead of only at the very end.</li>
+            <li>When a human owner exists and can decide what happens after the system flags ambiguity or failure.</li>
+          </ul>
+          <p>
+            In those conditions, an agent can reduce mechanical work, improve consistency, and keep a process moving without requiring a person to push every step manually.
+          </p>
+        </section>
+
+        <section>
+          <h2>Where teams fool themselves</h2>
+          <p>
+            Teams often try to use agentic systems to compensate for a workflow that is already unclear, unstable, or poorly owned.
+            That is where things go sideways.
+          </p>
+          <ul>
+            <li>If the process itself is vague, the agent will not create clarity. It will automate confusion.</li>
+            <li>If the inputs are inconsistent, the agent will move faster than the review layer can safely absorb.</li>
+            <li>If no one owns exceptions, retries, and edge cases, the system becomes theatre: impressive until something non-standard happens.</li>
+            <li>If success is defined too loosely, the demo will look good while the real process quietly degrades.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>The hidden cost is not the model call</h2>
+          <p>
+            The visible cost is usually usage, tooling, or implementation. The hidden cost is operational.
+            Once you introduce a more autonomous layer, you also introduce review design, failure routing, logging, fallback paths, and the need to understand what happened when the system makes the wrong move.
+          </p>
+          <p>
+            That is why the right question is rarely “Can we build an agent?” and much more often “Can we support this system once it starts making semi-independent moves inside a real process?”
+          </p>
+        </section>
+
+        <section>
+          <h2>A better evaluation lens</h2>
+          <table class="table-like">
+            <thead>
+              <tr>
+                <th>Question</th>
+                <th>Why it matters</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Is the workflow already understandable?</td>
+                <td>If not, autonomy will magnify existing mess instead of fixing it.</td>
+              </tr>
+              <tr>
+                <td>Where are the review gates?</td>
+                <td>Without control points, you only discover failure after damage has already spread.</td>
+              </tr>
+              <tr>
+                <td>Who owns exceptions?</td>
+                <td>A system without a human owner becomes everyone’s tool and no one’s responsibility.</td>
+              </tr>
+              <tr>
+                <td>What is the rollback path?</td>
+                <td>Teams need a clean way to recover when the agent chooses the wrong action.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>The blunt conclusion</h2>
+          <p>
+            Agentic AI is not fake. It can create real leverage. But its value depends much less on the label and much more on workflow quality, review design, ownership, and operational discipline.
+          </p>
+          <p>
+            Where structure exists, it can remove friction. Where structure is missing, it usually adds a more sophisticated layer of chaos.
+          </p>
+        </section>
+
+        <div class="quote">
+          The hard part is not making an agent act. The hard part is making its actions survivable inside real work.
+        </div>
+      </article>
+
+      <p class="footer-note">This article is the first live third-level AI page used to validate the world-specific header and breadcrumb behavior.</p>
+    </main>
+  </div>
+
+  <script src="/assets/js/site-shell.js" defer></script>
+</body>
+</html>
