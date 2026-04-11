@@ -1,0 +1,10 @@
+{
+  "name": "shir-oren-world",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Auto-generated table of contents build helpers for Shir Oren World",
+  "scripts": {
+    "build:toc": "node build/generate-toc.js",
+    "build": "npm run build:toc"
+  }
+}
