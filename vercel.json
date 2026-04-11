@@ -1,5 +1,8 @@
 {
-      "trailingSlash": true,
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": true,
+  "buildCommand": "node build/generate-toc-pages.js",
+  "outputDirectory": ".",
   "rewrites": [
     { "source": "/coaching", "destination": "/coaching-home.html" },
     { "source": "/coaching/", "destination": "/coaching-home.html" }
