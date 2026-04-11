@@ -1,0 +1,52 @@
+# Coaching Products TOC Page
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מוצרי קואוצ'ינג</title>
+  <script src="/assets/js/auto-toc.js" defer></script>
+  <style>
+    :root {
+      --bg: #0f1713;
+      --panel: rgba(255,255,255,0.04);
+      --line: rgba(255,255,255,0.09);
+      --text: #eef5ef;
+      --muted: rgba(238,245,239,0.72);
+      --accent: #b9d8bf;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: var(--bg); color: var(--text); }
+    .wrap { width: min(1000px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 72px; }
+    .eyebrow { font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+    h1 { margin: 0 0 16px; font-size: clamp(2.2rem, 5vw, 4rem); line-height: 0.95; }
+    .intro { max-width: 60ch; line-height: 1.9; color: var(--muted); margin-bottom: 36px; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 24px; padding: 24px; }
+    .panel-title { font-size: 1rem; margin-bottom: 18px; color: var(--text); }
+    [data-auto-toc] ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+    [data-auto-toc] li ul { margin-top: 12px; padding-inline-start: 18px; gap: 10px; }
+    [data-auto-toc] a { color: var(--accent); text-decoration: none; line-height: 1.7; }
+    [data-auto-toc] a:hover { text-decoration: underline; }
+    .empty { margin-top: 18px; color: var(--muted); line-height: 1.8; font-size: 0.96rem; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="eyebrow">Coaching / Products</div>
+    <h1>מוצרי קואוצ'ינג</h1>
+    <p class="intro">
+      כאן יופיע תוכן העניינים האוטומטי של מוצרי הקואוצ'ינג.
+      מוצרים שנמצאים במבנה התיקיות הנתמך, עם תוכן אמיתי, ושאינם מתחילים ב־<code>draft-</code>, יוצגו כאן.
+    </p>
+    <section class="panel" aria-labelledby="toc-title">
+      <h2 class="panel-title" id="toc-title">תוכן עניינים</h2>
+      <nav data-auto-toc></nav>
+      <p class="empty">
+        אם הרשימה עדיין ריקה, זה אומר שעדיין לא נוסף מוצר published ראשון במבנה הנתמך,
+        או שה־build של יצירת ה־TOC עדיין לא רץ עם הסקריפט המעודכן.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
