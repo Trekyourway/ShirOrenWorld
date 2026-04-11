@@ -1,10 +1,10 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "trailingSlash": true,
-  "buildCommand": "node build/generate-toc-pages.js",
-  "outputDirectory": ".",
-  "rewrites": [
-    { "source": "/coaching", "destination": "/coaching-home.html" },
-    { "source": "/coaching/", "destination": "/coaching-home.html" }
-  ]
+  "name": "shir-oren-world",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Auto-generated table of contents build helpers for Shir Oren World",
+  "scripts": {
+    "build:toc": "node build/generate-site-toc-v3.js",
+    "build": "npm run build:toc"
+  }
 }
