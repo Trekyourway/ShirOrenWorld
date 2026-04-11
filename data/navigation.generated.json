@@ -1,0 +1,91 @@
+{
+  "generatedAt": "2026-04-11T18:25:00.000Z",
+  "worlds": [
+    {
+      "slug": "ai",
+      "title": "AI",
+      "entry": "/ai/",
+      "sections": [
+        {
+          "slug": "articles",
+          "title": "Articles",
+          "entry": "/ai/articles/",
+          "children": [
+            {
+              "title": "Agentic AI בעבודה אמיתית: איפה זה עובד, ואיפה לא",
+              "slug": "/ai/articles/agentic-ai-in-real-work/"
+            }
+          ]
+        },
+        {
+          "slug": "learn",
+          "title": "Learn",
+          "entry": "/ai/learn/",
+          "children": []
+        },
+        {
+          "slug": "tools",
+          "title": "Tools",
+          "entry": "/ai/tools/",
+          "children": []
+        }
+      ]
+    },
+    {
+      "slug": "coaching",
+      "title": "Coaching",
+      "entry": "/coaching/",
+      "sections": [
+        {
+          "slug": "products",
+          "title": "Products",
+          "entry": "/coaching/products/",
+          "children": []
+        },
+        {
+          "slug": "articles",
+          "title": "Articles",
+          "entry": "/coaching/articles/",
+          "children": []
+        },
+        {
+          "slug": "learn",
+          "title": "Learn",
+          "entry": "/coaching/learn/",
+          "children": []
+        },
+        {
+          "slug": "self-check",
+          "title": "Self Check",
+          "entry": "/coaching/self-check/",
+          "children": []
+        }
+      ]
+    },
+    {
+      "slug": "treks",
+      "title": "Treks",
+      "entry": "/treks/",
+      "sections": [
+        {
+          "slug": "articles",
+          "title": "Articles",
+          "entry": "/treks/articles/",
+          "children": []
+        },
+        {
+          "slug": "learn",
+          "title": "Learn",
+          "entry": "/treks/learn/",
+          "children": []
+        },
+        {
+          "slug": "solo-hiking",
+          "title": "Solo Hiking",
+          "entry": "/treks/solo-hiking/",
+          "children": []
+        }
+      ]
+    }
+  ]
+}
