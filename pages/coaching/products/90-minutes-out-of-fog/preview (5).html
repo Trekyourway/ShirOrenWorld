@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>לצאת מהערפל — כיול מצפן פנימי לתנועה</title>
+  <style>
+    :root{
+      --bg-0:#090d14;
+      --bg-1:#101624;
+      --bg-2:#182132;
+      --bg-3:#1f2a3d;
+      --bg-4:#27344a;
+
+      --text:#f7f4ef;
+      --muted:rgba(247,244,239,.76);
+      --soft:rgba(247,244,239,.5);
+
+      --line:rgba(255,255,255,.10);
+      --line-soft:rgba(255,255,255,.05);
+
+      --stone:#d9d4ca;
+      --mist:#efeae2;
+      --mint:#b8cfbf;
+      --champ:#e3c58f;
+
+      --mint-soft:rgba(184,207,191,.14);
+      --champ-soft:rgba(227,197,143,.14);
+      --mist-soft:rgba(239,234,226,.10);
+
+      --alice-rose:#b97c92;
+      --alice-violet:#8577c9;
+      --alice-blue:#7aa1d8;
+      --alice-gold:#d9ba72;
+
+      --shadow:0 24px 80px rgba(0,0,0,.34);
+      --max:1180px;
+      --content-max:820px;
+      --font-heading:"Heebo","Assistant",sans-serif;
+      --font-body:"Assistant","Rubik",Arial,sans-serif;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:var(--font-body);
+      color:var(--text);
+      overflow-x:hidden;
+      background:
+        radial-gradient(circle at 14% 12%, rgba(227,197,143,.05), transparent 18%),
+        radial-gradient(circle at 86% 14%, rgba(184,207,191,.05), transparent 18%),
+        radial-gradient(circle at 20% 56%, rgba(255,255,255,.04), transparent 20%),
+        linear-gradient(180deg,var(--bg-0) 0%,var(--bg-1) 16%,var(--bg-2) 40%,var(--bg-3) 70%,var(--bg-4) 100%);
+      letter-spacing:-0.01em;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,.025), transparent 18%, transparent 82%, rgba(255,255,255,.02)),
+        radial-gradient(circle at center, rgba(255,255,255,.018), transparent 56%);
+      z-index:0;
+    }
+
+    .page{
+      position:relative;
+      isolation:isolate;
+      min-height:100vh;
+    }
+
+    .smoke-layer{
+      position:absolute;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .smoke{
+      position:absolute;
+      border-radius:50%;
+      filter:blur(80px);
+      opacity:.18;
+      mix-blend-mode:screen;
+      animation-timing-function:ease-in-out;
+      animation-iteration-count:infinite;
+      animation-direction:alternate;
+    }
+    .smoke.s1{width:380px;height:220px;top:160px;right:8%;background:rgba(239,234,226,.16);animation:smokeA 18s infinite alternate}
+    .smoke.s2{width:520px;height:280px;top:760px;left:-80px;background:rgba(239,234,226,.14);animation:smokeB 26s infinite alternate}
+    .smoke.s3{width:420px;height:260px;top:1540px;right:16%;background:rgba(184,207,191,.10);animation:smokeC 22s infinite alternate}
+    .smoke.s4{width:560px;height:300px;top:2360px;left:4%;background:rgba(239,234,226,.12);animation:smokeA 24s infinite alternate}
+    .smoke.s5{width:420px;height:260px;top:3240px;right:-60px;background:rgba(227,197,143,.10);animation:smokeB 20s infinite alternate}
+    .smoke.s6{width:520px;height:300px;bottom:160px;left:12%;background:rgba(239,234,226,.12);animation:smokeC 28s infinite alternate}
+
+    .wrap{
+      width:min(var(--max), calc(100% - 40px));
+      margin:0 auto;
+      position:relative;
+      z-index:3;
+      padding:28px 0 120px;
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      padding:10px 0 34px;
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(8px);
+      background:linear-gradient(180deg, rgba(9,13,20,.72), rgba(9,13,20,.25));
+    }
+    .brand{
+      font-family:var(--font-heading);
+      font-weight:800;
+      letter-spacing:.14em;
+      font-size:.86rem;
+      text-transform:uppercase;
+      color:rgba(247,244,239,.92);
+    }
+    nav{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+    nav a{
+      text-decoration:none;
+      color:rgba(247,244,239,.62);
+      font-size:.95rem;
+    }
+    nav a:hover{color:#fff}
+
+    .visual-layer{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      pointer-events:none;
+      opacity:.94;
+    }
+    .visual-layer svg{width:100%;height:100%;display:block}
+    .topo{fill:none;stroke:rgba(255,255,255,.05);stroke-width:1.1}
+    .topo.cool{stroke:rgba(122,161,216,.06)}
+    .topo.warm{stroke:rgba(227,197,143,.05)}
+
+    .trail-shadow{
+      fill:none;stroke:rgba(0,0,0,.32);stroke-width:28;filter:blur(8px);
+      stroke-linecap:round;stroke-linejoin:round;
+    }
+    .trail-base{
+      fill:none;stroke:rgba(214,203,188,.22);stroke-width:16;
+      stroke-linecap:round;stroke-linejoin:round;
+    }
+    .trail-main{
+      fill:none;stroke:rgba(236,228,216,.86);stroke-width:10;
+      stroke-linecap:round;stroke-linejoin:round;
+    }
+    .trail-inner{
+      fill:none;stroke:rgba(255,255,255,.28);stroke-width:2.2;
+      stroke-dasharray:2 16;stroke-linecap:round;opacity:.75;
+    }
+    .trail-branch{
+      fill:none;stroke:rgba(184,207,191,.22);stroke-width:5;
+      stroke-linecap:round;stroke-linejoin:round;
+    }
+    .trail-branch.soft{
+      stroke:rgba(184,207,191,.08);stroke-width:12;filter:blur(4px);
+    }
+    .content-mask{fill:rgba(9,13,20,.96)}
+
+    section{
+      position:relative;
+      min-height:60vh;
+      display:grid;
+      align-items:center;
+      padding:96px 0;
+    }
+
+    .container{
+      max-width:var(--content-max);
+      position:relative;
+      z-index:5;
+    }
+    .container.wide{max-width:1020px}
+    .container.narrow{max-width:700px}
+    .container.left{margin-right:auto}
+    .container.right{margin-left:auto}
+    .container.center{margin-inline:auto;text-align:center}
+    .container.reading .lead,
+    .container.reading p,
+    .container.reading .plain-list > div,
+    .container.reading .plain-list > li{
+      max-width:56ch;
+    }
+    .container.reading.wide-copy .lead,
+    .container.reading.wide-copy p{
+      max-width:62ch;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:18px;
+      color:rgba(217,212,202,.78);
+      font-size:.82rem;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+    .eyebrow::before{
+      content:"";
+      width:34px;height:1px;
+      background:linear-gradient(90deg, transparent, rgba(227,197,143,.85));
+    }
+
+    h1,h2,h3{
+      font-family:var(--font-heading);
+      color:#fff;
+      letter-spacing:-0.05em;
+    }
+    h1{
+      font-size:clamp(3.2rem, 6vw, 6.6rem);
+      line-height:.88;
+      max-width:7.5ch;
+      margin-bottom:18px;
+    }
+    h2{
+      font-size:clamp(2rem, 4vw, 4.2rem);
+      line-height:.94;
+      margin-bottom:18px;
+      max-width:10ch;
+    }
+    h3{
+      font-size:1.45rem;
+      line-height:1.14;
+      margin-bottom:12px;
+    }
+
+    p, li{
+      color:var(--muted);
+      line-height:2;
+      font-size:1rem;
+    }
+
+    .lead{
+      font-size:1.08rem;
+      max-width:52ch;
+      line-height:2.02;
+    }
+    .lead + .lead{margin-top:16px}
+    .spaced > * + *{margin-top:18px}
+    .spaced-tight > * + *{margin-top:10px}
+
+    .big-lines{
+      font-family:var(--font-heading);
+      color:#fff;
+      font-size:clamp(1.3rem, 2.2vw, 1.65rem);
+      line-height:1.8;
+      letter-spacing:-0.04em;
+      margin-top:24px;
+      max-width:18ch;
+    }
+
+    .quote-block{
+      position:relative;
+      padding:34px 0 0;
+      max-width:760px;
+    }
+    .quote-block::before{
+      content:"";
+      position:absolute;
+      top:0;right:0;
+      width:80px;height:1px;
+      background:linear-gradient(90deg, rgba(227,197,143,.9), transparent);
+    }
+    .quote-block p{
+      font-size:clamp(1.35rem, 2.2vw, 1.7rem);
+      color:#fff;
+      line-height:1.9;
+      letter-spacing:-0.03em;
+      max-width:22ch;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:28px;
+    }
+    .btn{
+      min-height:54px;
+      padding:0 22px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      font-weight:700;
+      border:1px solid transparent;
+      transition:.24s ease;
+      white-space:nowrap;
+      position:relative;
+      overflow:hidden;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{
+      color:#161b24;
+      background:linear-gradient(135deg, #f5efe2, #e3c58f);
+      box-shadow:0 14px 28px rgba(227,197,143,.14);
+    }
+    .btn-primary::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.28) 50%, transparent 80%);
+      transform:translateX(-120%);
+      transition:.7s ease;
+    }
+    .btn-primary:hover::after{transform:translateX(120%)}
+    .btn-secondary{
+      color:var(--text);
+      background:rgba(255,255,255,.045);
+      border-color:var(--line);
+      backdrop-filter:blur(8px);
+    }
+    .btn-ghost{
+      color:var(--mint);
+      background:transparent;
+      border-color:rgba(184,207,191,.18);
+    }
+
+    .band{
+      position:relative;
+      padding:42px 0;
+    }
+    .band::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line-soft);
+      background:
+        linear-gradient(90deg, transparent, rgba(255,255,255,.018), transparent),
+        radial-gradient(circle at 20% 50%, rgba(227,197,143,.05), transparent 22%);
+      pointer-events:none;
+    }
+
+    .soft-panel{
+      padding:28px 30px;
+      border:1px solid var(--line-soft);
+      border-radius:30px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.022));
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+    }
+    .soft-panel.alt{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.022)),
+        radial-gradient(circle at top left, rgba(184,207,191,.08), transparent 24%);
+    }
+    .soft-panel.warm{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.022)),
+        radial-gradient(circle at top right, rgba(227,197,143,.10), transparent 26%);
+    }
+    .soft-panel.cool{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.022)),
+        radial-gradient(circle at bottom left, rgba(122,161,216,.10), transparent 26%);
+    }
+
+    .number-flow{
+      display:grid;
+      gap:24px;
+      counter-reset:steps;
+      max-width:820px;
+    }
+    .number-item{
+      position:relative;
+      padding-right:86px;
+      min-height:62px;
+      max-width:760px;
+    }
+    .number-item::before{
+      counter-increment:steps;
+      content:counter(steps);
+      position:absolute;
+      right:0;
+      top:0;
+      width:58px;height:58px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-family:var(--font-heading);
+      font-size:1.35rem;
+      color:#fff;
+      background:linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:var(--shadow);
+    }
+    .number-item h3{margin-bottom:8px}
+    .number-item p{max-width:56ch}
+
+    .check-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+    .check-block{
+      padding:28px;
+      border-top:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.01));
+      border-radius:24px;
+    }
+    .check-block h3{margin-bottom:14px}
+
+    .plain-list{
+      display:grid;
+      gap:12px;
+      margin-top:8px;
+      padding:0;
+    }
+    .plain-list > div,
+    .plain-list > li{
+      position:relative;
+      padding-right:28px;
+      list-style:none;
+      max-width:58ch;
+    }
+    .plain-list > div::before,
+    .plain-list > li::before{
+      content:"";
+      position:absolute;
+      right:0;
+      top:.78em;
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #f7f4ef 0%, var(--champ) 55%, rgba(227,197,143,.18) 100%);
+      box-shadow:0 0 0 4px rgba(227,197,143,.08),0 0 18px rgba(227,197,143,.08);
+      transform:translateY(-50%);
+    }
+    .plain-list.soft-bullets > div::before,
+    .plain-list.soft-bullets > li::before{
+      background:radial-gradient(circle at 30% 30%, #eef4f0 0%, var(--mint) 58%, rgba(184,207,191,.16) 100%);
+      box-shadow:0 0 0 4px rgba(184,207,191,.07),0 0 18px rgba(184,207,191,.07);
+    }
+    .plain-list.tight{gap:9px}
+    .plain-list.tight > div,
+    .plain-list.tight > li{padding-right:24px}
+
+    .strip{
+      display:grid;
+      gap:14px;
+      max-width:760px;
+    }
+    .strip-item{
+      position:relative;
+      border-top:1px solid var(--line);
+      padding-top:16px;
+      padding-right:20px;
+    }
+    .strip-item::before{
+      content:"";
+      position:absolute;
+      right:0;
+      top:24px;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:linear-gradient(135deg, var(--champ), #f4ead1);
+      box-shadow:0 0 0 4px rgba(227,197,143,.06);
+    }
+
+    .split-two{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:28px;
+      align-items:start;
+    }
+
+    .fog-toggle{
+      max-width:760px;
+      border-radius:34px;
+      border:1px solid rgba(255,255,255,.07);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.018));
+      backdrop-filter:blur(14px);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .fog-toggle summary{
+      list-style:none;
+      cursor:pointer;
+      padding:26px 30px;
+      font-family:var(--font-heading);
+      font-size:clamp(1.35rem,2vw,1.8rem);
+      letter-spacing:-0.04em;
+      color:#fff;
+      position:relative;
+      line-height:1.6;
+    }
+    .fog-toggle summary::-webkit-details-marker{display:none}
+    .fog-toggle summary::after{
+      content:"להרחבה";
+      position:absolute;
+      left:28px;
+      top:28px;
+      font-family:var(--font-body);
+      font-size:.9rem;
+      color:var(--champ);
+      letter-spacing:.08em;
+    }
+    .fog-toggle .details-body{
+      padding:0 30px 30px;
+    }
+
+    .word-flip{
+      display:inline-grid;
+      grid-template-areas:"stack";
+      vertical-align:baseline;
+      margin:0 .2em;
+      color:var(--champ);
+      font-weight:700;
+    }
+    .word-flip > span{
+      grid-area:stack;
+      animation:flipWords 8s infinite;
+      opacity:0;
+      transform:translateY(.45em);
+    }
+    .word-flip > span:nth-child(1){animation-delay:0s}
+    .word-flip > span:nth-child(2){animation-delay:2.6s}
+    .word-flip > span:nth-child(3){animation-delay:5.2s}
+
+    .special-inline{
+      color:var(--champ);
+      font-family:var(--font-heading);
+      font-weight:800;
+      letter-spacing:-0.04em;
+      display:inline-block;
+      padding:0 .25em;
+    }
+
+    .alice-zone .soft-panel{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.022)),
+        radial-gradient(circle at top right, rgba(185,124,146,.14), transparent 26%),
+        radial-gradient(circle at bottom left, rgba(122,161,216,.10), transparent 28%);
+    }
+
+    .alice-copy strong{color:#fff}
+
+    .final-panel{
+      padding-top:28px;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:28px;
+      flex-wrap:wrap;
+    }
+    .final-panel h2{
+      max-width:12ch;
+      margin-bottom:0;
+    }
+    .note{
+      margin-top:14px;
+      color:var(--soft);
+      font-size:.95rem;
+      line-height:1.85;
+    }
+
+    .divider{
+      width:100%;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
+      margin:34px 0;
+    }
+
+    footer{
+      color:rgba(247,244,239,.42);
+      font-size:.9rem;
+      padding-bottom:24px;
+    }
+
+    @keyframes smokeA{
+      0%{transform:translate3d(0,0,0) scale(1)}
+      100%{transform:translate3d(-90px,28px,0) scale(1.18)}
+    }
+    @keyframes smokeB{
+      0%{transform:translate3d(0,0,0) scale(1)}
+      100%{transform:translate3d(110px,-36px,0) scale(1.2)}
+    }
+    @keyframes smokeC{
+      0%{transform:translate3d(0,0,0) scale(1)}
+      100%{transform:translate3d(-48px,-70px,0) scale(1.14)}
+    }
+    @keyframes flipWords{
+      0%,10%{opacity:0;transform:translateY(.45em)}
+      14%,28%{opacity:1;transform:translateY(0)}
+      34%,100%{opacity:0;transform:translateY(-.35em)}
+    }
+
+    @media (max-width: 980px){
+      .split-two,.check-grid{
+        grid-template-columns:1fr;
+      }
+      h1{max-width:9ch}
+      h2{max-width:none}
+      .container.right,.container.left{margin-inline:0}
+    }
+
+    @media (max-width: 640px){
+      .wrap{
+        width:100%;
+        padding:18px 12px 96px;
+      }
+      header{
+        flex-direction:column;
+        align-items:flex-start;
+        position:static;
+        background:none;
+        backdrop-filter:none;
+      }
+      .container,
+      .container.left,
+      .container.right,
+      .container.center,
+      .container.wide,
+      .container.narrow{
+        max-width:100%;
+        width:100%;
+        margin:0;
+      }
+      section{
+        min-height:auto;
+        padding:68px 0;
+      }
+      .btn{width:100%}
+      .cta-row{width:100%}
+      .soft-panel,.check-block,.fog-toggle summary,.fog-toggle .details-body{
+        padding-left:22px;
+        padding-right:22px;
+      }
+      .number-item{
+        padding-right:72px;
+      }
+      .number-item::before{
+        width:48px;
+        height:48px;
+        font-size:1.1rem;
+      }
+      .soft-panel,.check-block{border-radius:22px}
+      h1{font-size:clamp(2.7rem, 13vw, 4.8rem)}
+      h2{font-size:clamp(1.9rem, 10vw, 3rem)}
+      .lead,
+      p,
+      li,
+      .soft-panel p,
+      .strip-item p,
+      .number-item p,
+      .check-block p,
+      .container.reading .lead,
+      .container.reading p,
+      .container.reading .plain-list > div,
+      .container.reading .plain-list > li{
+        max-width:100%;
+        font-size:.98rem;
+        line-height:1.95;
+      }
+      .plain-list > div,
+      .plain-list > li{
+        padding-right:24px;
+      }
+      .plain-list > div::before,
+      .plain-list > li::before{
+        width:8px;
+        height:8px;
+        top:.72em;
+      }
+      .strip-item{
+        padding-right:18px;
+      }
+      .quote-block p{
+        max-width:100%;
+      }
+      .fog-toggle summary::after{
+        position:static;
+        display:block;
+        margin-top:8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *,*::before,*::after{
+        animation:none !important;
+        transition:none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="smoke-layer" aria-hidden="true">
+      <div class="smoke s1"></div>
+      <div class="smoke s2"></div>
+      <div class="smoke s3"></div>
+      <div class="smoke s4"></div>
+      <div class="smoke s5"></div>
+      <div class="smoke s6"></div>
+    </div>
+
+    <div class="visual-layer" aria-hidden="true">
+      <svg viewBox="0 0 1440 8200" preserveAspectRatio="none">
+        <path class="topo" d="M1180 240 C1090 190 980 206 918 270 C858 332 868 420 944 470 C1034 528 1182 500 1280 434" />
+        <path class="topo cool" d="M1130 200 C1018 152 890 160 806 236 C728 306 726 424 822 496 C924 570 1086 558 1214 488" />
+        <path class="topo warm" d="M1080 150 C936 106 790 122 688 214 C590 304 586 456 706 544 C828 632 1016 626 1166 546" />
+        <path class="topo" d="M320 1180 C430 1134 560 1134 638 1184 C720 1238 734 1312 690 1374 C636 1450 514 1480 392 1460" />
+        <path class="topo cool" d="M270 1122 C406 1062 582 1068 688 1142 C792 1214 812 1330 748 1424 C670 1538 496 1564 318 1528" />
+        <path class="topo warm" d="M228 1062 C394 988 610 1000 740 1090 C870 1180 892 1340 808 1462 C706 1610 492 1642 254 1592" />
+        <path class="topo" d="M1088 2200 C1170 2160 1284 2174 1338 2232 C1386 2286 1382 2362 1322 2404 C1254 2450 1142 2440 1066 2394" />
+        <path class="topo cool" d="M1020 2140 C1132 2088 1288 2104 1362 2180 C1424 2242 1422 2354 1346 2420 C1264 2490 1102 2482 994 2422" />
+        <path class="topo warm" d="M950 2080 C1090 2012 1288 2024 1380 2120 C1458 2198 1458 2346 1364 2434 C1264 2526 1062 2522 922 2444" />
+        <path class="topo" d="M280 3280 C372 3238 478 3238 550 3280 C620 3320 634 3388 600 3442 C554 3512 446 3540 334 3522" />
+        <path class="topo cool" d="M220 3222 C340 3164 494 3168 592 3230 C690 3292 710 3400 656 3482 C586 3592 436 3622 268 3582" />
+        <path class="topo warm" d="M168 3168 C320 3092 520 3100 646 3182 C770 3262 794 3408 726 3510 C640 3638 442 3674 212 3620" />
+        <path class="topo" d="M1060 4200 C1164 4156 1262 4172 1314 4232 C1364 4292 1352 4368 1284 4412 C1214 4460 1100 4458 1026 4412" />
+        <path class="topo cool" d="M992 4142 C1130 4082 1280 4098 1358 4180 C1432 4258 1424 4388 1332 4464 C1242 4542 1080 4546 964 4472" />
+        <path class="topo warm" d="M930 4084 C1090 4012 1288 4026 1384 4130 C1472 4226 1464 4404 1354 4492 C1248 4578 1042 4582 904 4488" />
+        <path class="topo" d="M260 5420 C366 5368 500 5366 586 5416 C672 5468 694 5550 648 5620 C588 5712 442 5742 300 5704" />
+        <path class="topo cool" d="M206 5360 C342 5292 528 5296 648 5368 C768 5442 796 5562 734 5662 C652 5790 462 5826 252 5770" />
+        <path class="topo warm" d="M160 5300 C322 5218 548 5228 690 5316 C832 5402 860 5562 782 5682 C678 5840 448 5884 204 5818" />
+        <path class="topo" d="M1034 6660 C1144 6610 1276 6626 1342 6698 C1404 6766 1398 6868 1318 6922 C1232 6980 1100 6968 1014 6902" />
+        <path class="topo cool" d="M970 6600 C1108 6538 1284 6552 1372 6640 C1452 6720 1448 6862 1348 6938 C1242 7018 1068 7010 946 6928" />
+        <path class="topo warm" d="M910 6540 C1070 6468 1288 6480 1392 6588 C1488 6686 1482 6864 1364 6958 C1244 7052 1038 7050 892 6952" />
+
+        <path class="trail-shadow" d="M1112 176 C1008 218, 926 286, 850 374 C782 452, 770 540, 830 604 C890 668, 992 714, 1036 804 C1080 894, 1026 986, 892 1068 C752 1156, 578 1238, 466 1338 C366 1426, 356 1518, 430 1598 C506 1680, 660 1738, 840 1800 C1012 1858, 1108 1928, 1092 2020 C1074 2122, 932 2210, 738 2308 C542 2408, 386 2498, 370 2602 C356 2700, 452 2786, 620 2868 C788 2950, 980 3004, 1084 3076 C1174 3138, 1168 3220, 1048 3308 C930 3396, 740 3478, 564 3570 C424 3642, 368 3722, 412 3808 C464 3910, 640 3996, 860 4076 C1040 4140, 1116 4212, 1066 4304 C1010 4406, 858 4490, 672 4584 C516 4664, 402 4758, 404 4860 C406 4960, 528 5044, 706 5114 C876 5182, 1064 5234, 1122 5312 C1178 5388, 1138 5480, 1002 5570 C862 5662, 668 5750, 504 5842 C398 5902, 370 5986, 424 6072 C482 6164, 650 6248, 868 6328 C1054 6396, 1124 6478, 1068 6572 C1004 6678, 834 6766, 646 6848" />
+        <path class="trail-base" d="M1112 176 C1008 218, 926 286, 850 374 C782 452, 770 540, 830 604 C890 668, 992 714, 1036 804 C1080 894, 1026 986, 892 1068 C752 1156, 578 1238, 466 1338 C366 1426, 356 1518, 430 1598 C506 1680, 660 1738, 840 1800 C1012 1858, 1108 1928, 1092 2020 C1074 2122, 932 2210, 738 2308 C542 2408, 386 2498, 370 2602 C356 2700, 452 2786, 620 2868 C788 2950, 980 3004, 1084 3076 C1174 3138, 1168 3220, 1048 3308 C930 3396, 740 3478, 564 3570 C424 3642, 368 3722, 412 3808 C464 3910, 640 3996, 860 4076 C1040 4140, 1116 4212, 1066 4304 C1010 4406, 858 4490, 672 4584 C516 4664, 402 4758, 404 4860 C406 4960, 528 5044, 706 5114 C876 5182, 1064 5234, 1122 5312 C1178 5388, 1138 5480, 1002 5570 C862 5662, 668 5750, 504 5842 C398 5902, 370 5986, 424 6072 C482 6164, 650 6248, 868 6328 C1054 6396, 1124 6478, 1068 6572 C1004 6678, 834 6766, 646 6848" />
+        <path class="trail-main" d="M1112 176 C1008 218, 926 286, 850 374 C782 452, 770 540, 830 604 C890 668, 992 714, 1036 804 C1080 894, 1026 986, 892 1068 C752 1156, 578 1238, 466 1338 C366 1426, 356 1518, 430 1598 C506 1680, 660 1738, 840 1800 C1012 1858, 1108 1928, 1092 2020 C1074 2122, 932 2210, 738 2308 C542 2408, 386 2498, 370 2602 C356 2700, 452 2786, 620 2868 C788 2950, 980 3004, 1084 3076 C1174 3138, 1168 3220, 1048 3308 C930 3396, 740 3478, 564 3570 C424 3642, 368 3722, 412 3808 C464 3910, 640 3996, 860 4076 C1040 4140, 1116 4212, 1066 4304 C1010 4406, 858 4490, 672 4584 C516 4664, 402 4758, 404 4860 C406 4960, 528 5044, 706 5114 C876 5182, 1064 5234, 1122 5312 C1178 5388, 1138 5480, 1002 5570 C862 5662, 668 5750, 504 5842 C398 5902, 370 5986, 424 6072 C482 6164, 650 6248, 868 6328 C1054 6396, 1124 6478, 1068 6572 C1004 6678, 834 6766, 646 6848" />
+        <path class="trail-inner" d="M1112 176 C1008 218, 926 286, 850 374 C782 452, 770 540, 830 604 C890 668, 992 714, 1036 804 C1080 894, 1026 986, 892 1068 C752 1156, 578 1238, 466 1338 C366 1426, 356 1518, 430 1598 C506 1680, 660 1738, 840 1800 C1012 1858, 1108 1928, 1092 2020 C1074 2122, 932 2210, 738 2308 C542 2408, 386 2498, 370 2602 C356 2700, 452 2786, 620 2868 C788 2950, 980 3004, 1084 3076 C1174 3138, 1168 3220, 1048 3308 C930 3396, 740 3478, 564 3570 C424 3642, 368 3722, 412 3808 C464 3910, 640 3996, 860 4076 C1040 4140, 1116 4212, 1066 4304 C1010 4406, 858 4490, 672 4584 C516 4664, 402 4758, 404 4860 C406 4960, 528 5044, 706 5114 C876 5182, 1064 5234, 1122 5312 C1178 5388, 1138 5480, 1002 5570 C862 5662, 668 5750, 504 5842 C398 5902, 370 5986, 424 6072 C482 6164, 650 6248, 868 6328 C1054 6396, 1124 6478, 1068 6572 C1004 6678, 834 6766, 646 6848" />
+        <path class="trail-branch soft" d="M892 1068 C780 1120, 678 1188, 616 1268 C562 1338, 568 1412, 638 1470" />
+        <path class="trail-branch" d="M892 1068 C780 1120, 678 1188, 616 1268 C562 1338, 568 1412, 638 1470" />
+        <path class="trail-branch soft" d="M738 2308 C646 2360, 574 2432, 554 2508 C538 2574, 562 2642, 620 2688" />
+        <path class="trail-branch" d="M738 2308 C646 2360, 574 2432, 554 2508 C538 2574, 562 2642, 620 2688" />
+        <path class="trail-branch soft" d="M620 2868 C528 2920, 456 2994, 442 3072 C430 3146, 462 3214, 530 3270" />
+        <path class="trail-branch" d="M620 2868 C528 2920, 456 2994, 442 3072 C430 3146, 462 3214, 530 3270" />
+        <path class="trail-branch soft" d="M706 5114 C614 5168, 544 5234, 528 5310 C512 5384, 544 5450, 612 5500" />
+        <path class="trail-branch" d="M706 5114 C614 5168, 544 5234, 528 5310 C512 5384, 544 5450, 612 5500" />
+
+        <rect class="content-mask" x="100" y="150" width="820" height="700" rx="36" />
+        <rect class="content-mask" x="520" y="1020" width="820" height="840" rx="36" />
+        <rect class="content-mask" x="100" y="1940" width="820" height="760" rx="36" />
+        <rect class="content-mask" x="500" y="2860" width="840" height="780" rx="36" />
+        <rect class="content-mask" x="100" y="3760" width="820" height="930" rx="36" />
+        <rect class="content-mask" x="520" y="4880" width="820" height="820" rx="36" />
+        <rect class="content-mask" x="100" y="5860" width="820" height="1100" rx="36" />
+      </svg>
+    </div>
+
+    <div class="wrap">
+      <header>
+        <div class="brand">לצאת מהערפל</div>
+        <nav>
+          <a href="#hero">ראשי</a>
+          <a href="#what">מה זה</a>
+          <a href="#process">מה קורה בפגישה</a>
+          <a href="#fit">למי זה מתאים</a>
+          <a href="#contact">לשריין מקום</a>
+        </nav>
+      </header>
+
+      <section id="hero">
+        <div class="container left spaced reading">
+          <div class="eyebrow">inner compass / movement / clarity</div>
+          <h1>לצאת מהערפל</h1>
+          <p class="lead">כיול מצפן פנימי לתנועה תוך 90 דקות עוצמתיות</p>
+
+          <p class="lead">
+            יש לך הבנה מסוימת.<br>
+            השקעת זמן, מחשבה. אבל לא משהו תקוע. משהו כואב.<br>
+            ובמציאות — יש קשיים להתמקד, לשים לייזר בנקודות הנכונות ולתרגם אותן לתנועה.
+          </p>
+
+          <p class="lead">
+            מזהה את זה בך?<br>
+            אז זה בשבילך.
+          </p>
+
+          <div class="big-lines">
+            אנשים אינטליגנטיים ומודעים,<br>
+            פרפקציוניסטיים לפעמים ושאפתניים בהחלט —<br>
+            גם הם מוצאים את עצמם בערפל,<br>
+            בצומת או בתקיעות מתמשכת.
+          </div>
+
+          <div class="cta-row">
+            <a href="#opening" class="btn btn-primary">להמשיך לקרוא</a>
+            <a href="#contact" class="btn btn-secondary">לשריין מקום</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="opening">
+        <div class="container right spaced reading">
+          <p class="lead">
+            הם ניסו כבר לעשות סדר לבד, אבל במקום בהירות נוצרו פיזור,<br>
+            שחיקה וסטגנציה.
+          </p>
+
+          <p class="lead">
+            הם צריכים מיקוד מקצועי<br>
+            שיחלץ את המהות וייתן התחלה ברורה לתנועה.
+          </p>
+
+          <div class="quote-block">
+            <p>
+              זה אומר שלא צריך עוד<br>
+              הסברים על החיים.<br>
+              גם לא עוד הרצאה,<br>
+              מוטיבציות ריקות,<br>
+              משפטי השראה.
+            </p>
+          </div>
+
+          <p class="lead">
+            יש להם כבר ערמות כאלה.. זה לא מספיק.
+          </p>
+
+          <p class="lead">
+            צריך עזרה בזיהוי המוקד,<br>
+            לבחור כיוון,<br>
+            ולהתחיל להתקדם מעלה<br>
+            בלי להמשיך להסתובב במעגלים.
+          </p>
+
+          <p class="lead"><span class="special-inline">← האם זה את.ה?</span></p>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="container center narrow">
+          <div class="fog-toggle">
+            <summary>
+              אם את.ה כבר מצוי בשלב שבו כבר ברור לך שאי אפשר להמשיך ככה,<br>
+              אבל עדיין לא ברור לך מה נכון לשנות,<br>
+              איך לקרוא למה שקורה,<br>
+              ואיפה להתחיל והראש עמוס,
+            </summary>
+            <div class="details-body spaced-tight">
+              <p>אז יאללה.</p>
+              <p>
+                בוא נצלול להסברים ותשובות כדי שתוכל.י<br>
+                לשריין לך 90 דקות עוצמתיות ליציאה מהערפל.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="what">
+        <div class="container left spaced reading">
+          <div class="eyebrow">what is it</div>
+          <h2>מה זה?</h2>
+
+          <div class="soft-panel warm spaced">
+            <p class="lead">
+              פגישת מיקוד ופריצת כיוון<br>
+              אישית.<br>
+              ממוקדת.
+            </p>
+
+            <p class="lead">
+              למי שמרגיש שמשהו לא עובד,<br>
+              שיש בו יותר,<br>
+              אבל כרגע הוא לא מצליח להתמיד כיוון, בהירות או תנועה<br>
+              "זה לא מחזיק מים".
+            </p>
+
+            <p class="lead">
+              בפגישה נבין מה באמת תקוע,<br>
+              נדייק מה באמת כואב ומה הכי נכון לטפל,<br>
+              במה נכון 'לגעת' קודם,<br>
+              ונבנה התחלה ברורה - לתזוזה,<br>
+              צעדים ראשונים לבניית הדרך שלך.
+            </p>
+          </div>
+
+          <div class="quote-block">
+            <p>
+              ובסיום?<br>
+              בהירות, כיוון והתחלה של תנועה
+            </p>
+          </div>
+
+          <p class="lead">זה לא לתהליך עומק ולא לשירות ביצוע.</p>
+        </div>
+      </section>
+
+      <section id="familiar">
+        <div class="container right spaced reading">
+          <div class="eyebrow">does this sound like you</div>
+          <h2>האדם הזה מוכר לך?</h2>
+
+          <div class="strip">
+            <div class="strip-item"><p>זה ש…</p></div>
+            <div class="strip-item"><p>מרגיש שמשהו בחיים או בכיוון שלו לא יושב נכון.</p></div>
+            <div class="strip-item"><p>לא בהכרח יודע להגדיר בדיוק מה הבעיה שמרחיקה אותו מלקבל החלטה או להתקדם.</p></div>
+            <div class="strip-item"><p>מחפש לבד סדר, תשובות, החלטה, בהירות.</p></div>
+            <div class="strip-item"><p>נוטה להפוך את החיפוש הזה לעוד פרויקט: רשימות, בדיקות, מחקר, התחלה של דברים בלי סיום.</p></div>
+            <div class="strip-item"><p>חווה שחיקה, תסכול, תחושת מעגליות וסטגנציה.</p></div>
+            <div class="strip-item"><p>מסיים ימים בתחושה שהיה מלא עומס אבל בלי תזוזה אמיתית.</p></div>
+            <div class="strip-item"><p>חווה כאוס כלשהו בחיים. בתחום אחד או יותר.</p></div>
+            <div class="strip-item"><p>צריך זווית חיצונית מקצועית כדי לזהות מוקד, לקבל החלטה, ולהתחיל. לנוע, להתקדם בדרך שלך.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="outcome">
+        <div class="container left spaced reading">
+          <div class="eyebrow">practically</div>
+          <h2>עם מה תצא בסיום התהליך, פרקטית?</h2>
+
+          <p class="lead">בסוף המפגש תצא/י עם שלושה דברים ברורים:</p>
+
+          <div class="number-flow">
+            <div class="number-item">
+              <h3>הבנה מה באמת תקוע</h3>
+            </div>
+            <div class="number-item">
+              <h3>החלטה על מה נכון לשים עליו פוקוס עכשיו</h3>
+            </div>
+            <div class="number-item">
+              <h3>2–4 צעדים ראשונים שאפשר להתחיל לבצע כמיני תכנית עבודה.</h3>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="soft-panel alt spaced-tight">
+            <p>אבל זה לא הכל.</p>
+            <p>אני יודעת שקסם לא קורה בשנייה.</p>
+            <p>
+              אני יודעת שהכאב עמוק,<br>
+              למרות שזה מרגיש מביך להודות בזה,<br>
+              למרות שיש נסיון שלך לגמד את זה,<br>
+              אבל - <span class="special-inline">אל!</span> - יש פה קושי אמיתי.
+            </p>
+            <p>אז אני איתך. לפני הפגישה ואחרי הפגישה.. עוד קצת למטה, יש פירוט.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="time">
+        <div class="container right spaced reading">
+          <div class="eyebrow">timing</div>
+          <h2>כמה זמן?</h2>
+
+          <p class="lead">90 דקות.</p>
+
+          <div class="soft-panel cool spaced-tight">
+            <p>לפני המפגש- אשלח לך שאלון.</p>
+            <p>כן, אבל קצר באמת. לא שאלון כבד.</p>
+            <p>
+              נראה לך שהמצב שלך מורכב מדי למפגש אחד?<br>
+              גם אם החיים שלך כרגע מרגישים סבוכים,<br>
+              לא צריך לפתור הכול כדי למצוא התחלה נכונה.<br>
+              המטרה שלנו היא לא לפתור את כל החיים בבת אחת,<br>
+              אלא לזהות את המוקד שממנו נכון להתחיל.
+            </p>
+            <p>אפשר תמיד להמשיך לתהליך המורחב או פגישה בודדת.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="process">
+        <div class="container left spaced reading wide-copy">
+          <div class="eyebrow">during the session</div>
+          <h2>במהלך הפגישה</h2>
+
+          <div class="number-flow">
+            <div class="number-item">
+              <h3>זיהוי של הציר המרכזי</h3>
+              <p>
+                ה"מה". הקושי, בעייה, כאב. הגורם שמרחיק אותך מללכת בדרך שלך.<br>
+                סדר בבלאגן! זה מה שהולך לקרות. אנחנו נפגוש יותר ממשהו אחד שמפריע לך.<br>
+                נפגוש חסמים מוכרים לך, אבל גם כאלה שפחות.<br>
+                הרי שלא נולדת אתמול והחיים עם עצמך הפגישו אותך עם אילו תובנות.<br>
+                ועדיין, לעיתים יש הפתעות בחלק הזה מבחינת התובנות שעולות.<br>
+                זה חלק מהקסם.
+              </p>
+            </div>
+
+            <div class="number-item">
+              <h3>מיקוד</h3>
+              <p>
+                על מה נכון לעבוד קודם, ומה כרגע לא.<br>
+                איפה באמת יש מנוף? איפה באמת נכון לתת פוקוס, משאבים, אנרגיה?<br>
+                כיוון התחלתי ברור- איפה להתחיל כדי לייצר תנועה ולא עוד סיבוב וראש בקיר?<br>
+                נעבור להחלטה ונעסוק גם ב"למה" חזק, כדי שלא יתפורר רגע אחרי.
+              </p>
+            </div>
+
+            <div class="number-item">
+              <h3>תוכנית עבודה התחלתית - הצעדים הראשונים שלך</h3>
+              <p>
+                מה שנספיק…<br>
+                2–4 צעדים ראשונים,<br>
+                קונקרטיים ותבנית שתוכל להמשיך עצמאית.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="after">
+        <div class="container right spaced reading alice-zone">
+          <div class="eyebrow">after the session</div>
+          <h2>מה יקרה אחרי הפגישה?</h2>
+
+          <div class="soft-panel spaced alice-copy">
+            <p>
+              קלף הדרך שלך. זה תוצר מוחשי.<br>
+              כדי שבפגישה- המשימות לא יהיו על ראשך.
+            </p>
+
+            <div class="plain-list soft-bullets">
+              <div>מה זיהינו</div>
+              <div>מה מוקד העבודה</div>
+              <div>למה? המוטיבציה הייחודית שלך. זה מה שיעזור לך ואישי על בסיס פגישתנו.</div>
+              <div>הצעדים הראשונים שלך</div>
+              <div>כלים ספציפיים שאבחר עבורך כדי שיעזרו לך להתמיד.</div>
+              <div>שלך להמשך</div>
+            </div>
+
+            <p><strong>אפשר לעצב את זה כמו קלף.</strong></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="doubt">
+        <div class="container left spaced reading">
+          <div class="eyebrow">still unsure?</div>
+          <h2>עדיין בספק אם זה מתאים לך?<br>נראה לך שהגזמתי?</h2>
+
+          <div class="soft-panel warm spaced">
+            <p>הנה מה שהולך לקרות</p>
+
+            <p>
+              זו לא תהיה עוד “שיחה טובה" או "מרחב נעים לדבר".<br>
+              זה לא "שיחת הכרות"<br>
+              ולא יהיה לשקוע בעבר עד אינסוף עם הנהון ושיקוף בסיסי.
+            </p>
+
+            <p>
+              יש מהלך סשן ברור,<br>
+              למרות ובגלל, שהתהליך הוא קצר יחסית.<br>
+              העבודה היא לא לפי תבנית קבועה אלא לפי המצב,<br>
+              הערכים, האילוצים והשלב הספציפי שלך.
+            </p>
+
+            <p>
+              אני לא "מלבישה" עלייך שיטה,<br>
+              אלא מזהה מה נכון לך עכשיו,<br>
+              מתוך המציאות שלך,<br>
+              הערכים שלך,<br>
+              האילוצים שלך ומה שממש מעכב וכואב לך אישית
+            </p>
+
+            <p>
+              אני יודעת לזהות מהר את הציר המרכזי בתוך עומס, פיזור ובלבול,
+              ולתרגם אותו לכיוון מעשי. השילוב בין עומק, מיקוד וחשיבה תכל'ס הוא בדיוק מה שהמפגש הזה נשען עליו.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="truth">
+        <div class="container right spaced reading">
+          <div class="quote-block">
+            <p>
+              לכן חשוב גם להבין-<br>
+              שלא נתקן את כל מה שלא עובד בהכרח<br>
+              ולא תהיה מהפכה תוך 90 דקות.<br>
+              יהיה שקר לרמוז לכך אפילו.<br>
+              אבל יהיה שינוי עם ערך עבורך ומשמעותי.<br>
+              זו השאיפה שלי.
+            </p>
+          </div>
+
+          <p class="lead">אני לא באה רק להקשיב או לעודד.</p>
+        </div>
+      </section>
+
+      <section id="before">
+        <div class="container left spaced reading">
+          <div class="eyebrow">before the meeting</div>
+          <h2>מה צריך להיות לי לפני הפגישה?</h2>
+
+          <div class="check-grid">
+            <div class="check-block">
+              <h3>פשוט, צריך להגיע עם</h3>
+              <div class="plain-list soft-bullets tight">
+                <div>רצון כנה להסתכל על מה שלא עובד</div>
+                <div>נכונות לדבר בכנות</div>
+                <div>פתיחות לזה שלא נפתור הכול, אבל כן נמצא כיוון</div>
+              </div>
+            </div>
+
+            <div class="check-block">
+              <h3>ממש לא צריך שיהיה לך</h3>
+              <div class="plain-list tight">
+                <div>תשובות מסודרות</div>
+                <div>מטרה מנוסחת היטב</div>
+                <div>בהירות</div>
+                <div>“נאום” מי אני, למה באתי- מושלמים</div>
+                <div>ידיעה מה בדיוק הבעיה</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quote-block">
+            <p>
+              זה חשוב מאוד. כי אם עובר לך עכשיו בראש<br>
+              “יש לי בלאגן מדי בשביל השלב הזה.<br>
+              נראה לי שקודם כדאי שאעשה סדר ואז נראה…..”<br>
+              ממש לא!<br>
+              בדיוק בשביל זה יצרתי את המוצר הזה.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="mess">
+        <div class="container right spaced reading">
+          <p class="lead">
+            אין צורך להגיע עם תשובות מסודרות או עם בהירות מלאה.<br>
+            כן כדאי להגיע עם נכונות לעצור רגע,<br>
+            להסתכל בכנות על מה שלא עובד,<br>
+            ולתת מקום למה שמבקש כיוון.
+          </p>
+
+          <p class="lead">
+            אם יש משהו שמעסיק אותך,<br>
+            חוזר על עצמו,<br>
+            שואב ממך אנרגיה<br>
+            או משאיר אותך בערפל
+            <span class="special-inline">←←←←</span>
+            זה מספיק כדי להתחיל.
+          </p>
+
+          <div class="soft-panel alt spaced">
+            <p>
+              כאשר יש רצון אמיתי שלך - שמשהו יתקדם/ישתנה/יתפתח-<br>
+              בך,<br>
+              במציאות החיצונית,<br>
+              בעיצוב המטרה…
+            </p>
+
+            <p>
+              זה לא משנה מה המטרה הספציפית,<br>
+              אבל העיקר זה להבין -<br>
+              ששלב הבלאגן הוא שלב מסוכן.
+            </p>
+
+            <p class="lead">
+              למה?<br>
+              זה שלב אינהרנטי בדרך ואנשים בשלב הזה מחפשים:
+              <span class="word-flip"><span>סדר</span><span>החלטה</span><span>בהירות</span></span>
+            </p>
+
+            <div class="plain-list">
+              <div>תשובות</div>
+              <div>החלטה</div>
+              <div>בהירות</div>
+            </div>
+
+            <p>
+              ואז ניגשים לעשות מחקר, רשימת משימות, תחילת בדיקות.<br>
+              הכל הופך להיות פרוייקט.<br>
+              הרשימות מעוצבות, מתחילות להתפזר בכמה מקומות.<br>
+              מתחילים משהו, לא מסיימים.<br>
+              נשמע לך מוכר?
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="price">
+        <div class="container left spaced reading">
+          <div class="eyebrow">there is a cost</div>
+          <h2>יש לזה מחיר</h2>
+
+          <div class="soft-panel cool spaced">
+            <p>
+              המחיר של אי-פעולה עכשיו-<br>
+              כל עוד אין מוקד, ברור ובמקרה הטוב- ניסיונות לטיפול בסימפטום,<br>
+              האנרגיה ממשיכה להישרף על ניסיונות להבין לבד.<br>
+              נוצרת שחיקה, תסכול.
+            </p>
+
+            <p>
+              יש מעגליות כלשהי שמזינה את זה.<br>
+              לומדים עוד משהו חדש,<br>
+              פותחים עוד ענף,<br>
+              מרגישים שיש התקדמות,<br>
+              אבל המציאות בקושי זזה או אפילו קופאת.
+            </p>
+
+            <p>
+              וזה אומר בעצם-<br>
+              לא רק שהמצב הוא סטגנציה,<br>
+              אלא שההרגשה והחוויה היא לצערי וגם לצערך-<br>
+              כשלון חוזר<br>
+              "לא הולך לי"<br>
+              "הסתיים עוד יום ולא ברור ממש מה עשיתי, אבל כל היום לא נחתי".
+            </p>
+
+            <p>
+              זה מה שקורה שמחפשים "רק" לעשות עוד קצת סדר לבד.<br>
+              אם לא עשית סדר וחלף חודש - סימן אדום לפנינו!<br>
+              הדחייה לא באמת שומרת עלייך,<br>
+              היא פשוט מאריכה את המעגל.
+            </p>
+          </div>
+
+          <div class="quote-block">
+            <p>
+              לפעמים הצעד הכי נכון הוא לעצור עכשיו,<br>
+              לדייק, ואז להתקדם.<br>
+              וכאן נדרשת החלטה שלך לשים STOP.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="others">
+        <div class="container right spaced reading">
+          <div class="eyebrow">not just talking to someone close</div>
+          <h2>ניסית כבר שיחה עם אדם קרוב?</h2>
+
+          <p class="lead">
+            שיחה עם אדם קרוב יכולה לעזור להרגיש פחות לבד
+            וכנראה שכבר מיצית את 'לדבר עם חברה או אפילו GPT ושאר הצ'טים'.
+          </p>
+
+          <p class="lead">
+            אבל לעיתים קרובות הראש שלנו כל כך עמוס<br>
+            שאנחנו ממעטים להפגש עם אחרים<br>
+            או חוששים להעמיס על אחרים.<br>
+            התוצאה לרוב היא שמתרחקים,<br>
+            או לא "תופסים מקום" במפגשים איתם.
+          </p>
+
+          <div class="quote-block">
+            <p>
+              והנזק המצטבר?<br>
+              נכון.<br>
+              עוד קושי. עוד לבד. עוד עומס.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="why-session">
+        <div class="container left spaced reading">
+          <div class="eyebrow">why this session</div>
+          <h2>לצאת מהערפל - ב־90 דקות</h2>
+
+          <p class="lead">
+            מתמקד במטרה אחת:<br>
+            לחלץ מתוך הרעש את המהות,<br>
+            לזהות מוקד אמיתי,<br>
+            לקבל החלטה,<br>
+            ולבנות התחלה מעשית.
+          </p>
+
+          <div class="soft-panel warm spaced">
+            <p>
+              זה לא רק לדבר<br>
+              זה לעבוד בצורה ממוקדת על כיוון,
+            </p>
+
+            <p>
+              עם מישהי שמבינה ומומחית בלזקק,<br>
+              למפות ולראות מתוך העומס את מה שחשוב.
+            </p>
+
+            <p>
+              עם מישהי שבעצמה מתמודדת עם זה ועדיין- בוחרת את הדרך שלה.<br>
+              לוקחת החלטות אמיצות, מחושבות, מנהלת את הסיכונים, בונה, יוצרת ועושה.<br>
+              אני.
+            </p>
+
+            <p>
+              גם אני יודעת שלפעמים,<br>
+              אני לבד- אעשה לעצמי יותר נזק מתועלת.
+            </p>
+
+            <p>
+              זה לא אומר שתהיה פגישת מנוחה של זימונים ודמיון מודרך.<br>
+              לא, זה פשוט לא האמצעי שמתאים לסיטואציה שלך.<br>
+              את זה אפשר לעשות במסגרת תהליך ארוך יותר.
+            </p>
+
+            <p>
+              תהיה פגישה שמצריכה הפשלת שרוולים,<br>
+              ואני סמוכה ובטוחה שידוע לך כבר - שככה מגיעים לתוצאות. ;)<br>
+              אמהמה.. אנחנו נעשה את זה ביחד,<br>
+              נכון, מדוייק.<br>
+              בקצב טוב, שנכון לך.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="cowork">
+        <div class="container right spaced reading">
+          <div class="soft-panel alt spaced">
+            <p>
+              אם כבר יש לך בהירות מסויימת וכל מה שחסר הוא רק לעשות
+              <span class="special-inline">←</span>
+              מה שמתאים לך זה
+              <span class="special-inline">←</span>
+              מוצר: "Cowork".
+            </p>
+            <p>
+              פה פשוט עושים תכנית, פעולה - ביחד, לפי מה שאת.ה תכתיב
+              <span class="special-inline">← לקרוא עוד.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="90min">
+        <div class="container left spaced reading">
+          <div class="soft-panel cool spaced">
+            <p>
+              כיוון שמדובר במפגש מרוכז של 90 דקות<br>
+              זה דורש משנינו פוקוס והמון חיוביות.
+            </p>
+
+            <p>
+              "אבל מה אם ייפתח פה משהו גדול מדי ל־90 דקות?"<br>
+              אז לא טיפול עומק, לא נפתור הכול.<br>
+              אנחנו לא פותחים הכול רק כדי לפתוח.
+            </p>
+
+            <p>
+              המטרה היא לזהות את מה שחשוב ורלוונטי עכשיו,<br>
+              להישאר ממוקדים,<br>
+              ולתת לזה מסגרת שמקדמת ולא מציפה.<br>
+              אם יעלה משהו עמוק יותר,<br>
+              נדע גם לזהות את זה בכנות<br>
+              ותמיד אפשר להמשיך לתהליך עומק.<br>
+              זה היופי, בדרך הזו- לא מתחייבים,<br>
+              אבל כן מתקדמים משמעותית.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="agile">
+        <div class="container right spaced reading">
+          <div class="eyebrow">agile thinking</div>
+          <h2>לא משנה כמה הדבר מורכב</h2>
+
+          <p class="lead">
+            אנחנו לא חיים בעידן ש"לעשות סדר" משמעותו פרוייקט שאין תוצאות במהלכו.<br>
+            בעולמות המוצר ופיתוח (יאללה- הייטק)- זה נקרא "אג'ייל".
+          </p>
+
+          <div class="soft-panel warm spaced">
+            <p>
+              תהליך איטראטיבי מהיר שנקרא סייקל.
+            </p>
+            <p>
+              בכל תהליך כזה צריך לראות תוצר,<br>
+              ולו הקטן ביותר,<br>
+              שנועד לתת ערך- של התקדמות.
+            </p>
+            <p>
+              ולכן, גם בפרוייקט ענק- לא מחכים חודשים כדי לראות התקדמות,<br>
+              כי אז ההשקעה, החיים, הולכים לפח ולא חוזרים<br>
+              אם גילינו אחרי חודש שזה לא נכון.
+            </p>
+            <p>
+              ההפך הוא הנכון- מדייקים בצורה בטוחה,<br>
+              מנוהלת שוב ושוב לפי אותו תהליך,<br>
+              מבנה, שעובד, שהוכח<br>
+              ובכל תהליך מעגלי כזה (הסייקל שלנו) רואים התקדמות קטנה.<br>
+              בתהליך מלא יש מקום ומרחב להעמיק ו'להפוך כל אבן'.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="fit">
+        <div class="container left spaced reading">
+          <div class="quote-block">
+            <p>
+              וכאן- נעשה את גרסת הבזק תוך זיקוק ומיקוד - מדוייק אלייך.
+            </p>
+          </div>
+
+          <div class="plain-list">
+            <div>למי שמרגיש שמשהו בחיים/בדרך/בכיוון לא יושב נכון.</div>
+            <div>למי שקשה לו להחליט, להתפקס ולהתקדם.</div>
+            <div>למי שיש רצון אמיתי שמשהו יזוז.</div>
+            <div>למי שלא צריך עדיין פתרון לכל החיים, אלא נקודת התחלה נכונה.</div>
+          </div>
+
+          <div class="divider"></div>
+
+          <p class="lead">
+            זה ממש הגיוני.<br>
+            גם אדם איכותי שנשחק מלנסות לפענח לבד.
+          </p>
+
+          <p class="lead">
+            אנשים שאפתניים, חכמים לא אמורים להיות טובים בהכל,<br>
+            בעיקר שהם רוצים המון,<br>
+            לעיתים פועלים בהרבה מקומות<br>
+            ולפעמים פשוט- התעצבו פנימית,<br>
+            דייקו את עצמם והתפתחו רוחנית,<br>
+            אישית, מקצועית, מנטלית- YOU NAME IT<br>
+            אבל עדיין נמצאים על דרך קודמת.. ואז נוצר דיסוננס.
+          </p>
+
+          <p class="lead">
+            אז מה עושים?<br>
+            עשית כבר הרבה.<br>
+            אבל לבד - זה פשוט לא מספיק לפעמים.<br>
+            וזה טבעי לחלוטין. הגיע הזמן להתקדם.
+          </p>
+        </div>
+      </section>
+
+      <section id="options">
+        <div class="container right spaced reading">
+          <div class="eyebrow">your options</div>
+          <h2>יש לך כמה אפשרויות</h2>
+
+          <div class="soft-panel alt spaced">
+            <div class="plain-list">
+              <div>תהליך מקיף, עמוק, יסודי. 12-14 מפגשים.</div>
+              <div>תהליך עוצמתי ממוקד- תוך 90 דקות: כיוון. נמצא את המסלול ונתחיל בתכנית מעשית לצעוד בו בבטחה.</div>
+            </div>
+            <p>
+              לא תמיד צריך להתחיל מתהליך ארוך כדי להתקדם נכון.<br>
+              לפעמים מה שחסר הוא לא עוד עומק,<br>
+              אלא בהירות, מיקוד והחלטה ראשונה.<br>
+              בדיוק בשביל זה נבנה המפגש הזה.
+            </p>
+          </div>
+
+          <div class="soft-panel cool spaced">
+            <p>לא בטוחה? החלופה</p>
+            <p>נסי בינתיים את Lead magnet. או המאמרים שלנו להכיר את עצמך טוב יותר.</p>
+            <div class="cta-row">
+              <a href="#" class="btn btn-secondary">Lead Magnet Easy</a>
+              <a href="#contact" class="btn btn-ghost">המוצר הנוכחי</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="extra">
+        <div class="container left spaced reading">
+          <div class="eyebrow">what else will you get</div>
+          <h2>עם מה עוד אצא אחרי התהליך בפגישה?</h2>
+
+          <div class="plain-list soft-bullets">
+            <div>כלים.</div>
+            <div>תלמד לפרק "מהר".</div>
+            <div>בתהליך בזק- תחווה את הגישה ואופן הכנת תכנית עבודה יישומית פרקטית.</div>
+            <div>יכולת- להמשיך את התכנית עבודה.</div>
+            <div>קלף הדרך שלך.</div>
+          </div>
+
+          <div class="quote-block">
+            <p>
+              "ומה אם גם אחרי הפגישה אני לא באמת אצליח ליישם?"
+            </p>
+          </div>
+
+          <p class="lead">
+            זה חשש מאוד הגיוני,<br>
+            במיוחד לרבים שחווים את הכאב הממשי של בלבול,<br>
+            עומס, תקיעות מסויימות לצד עשייה כלשהי<br>
+            והתשובה שלי:
+          </p>
+
+          <p class="lead">
+            המטרה היא לא רק שתבין/י מה קורה,<br>
+            אלא שתצא/י עם צעדים מספיק קטנים, ברורים וישימים<br>
+            כדי שאפשר יהיה להתחיל.<br>
+            קלף הדרך נועד לעזור לך להחזיק את הכיוון גם אחרי שהפגישה נגמרת.
+          </p>
+        </div>
+      </section>
+
+      <section id="who">
+        <div class="container right spaced reading wide-copy">
+          <div class="eyebrow">who it is for</div>
+          <h2>למי זה מתאים?</h2>
+
+          <div class="soft-panel warm spaced">
+            <p>
+              אנשים שמרגישים שיש בהם יותר,<br>
+              אבל תקועים בערפל ולא מצליחים להפוך מודעות לתנועה.
+            </p>
+            <p>
+              אנשים חכמים, מודעים ומתפקדים,<br>
+              שנמצאים בתקופה של ערפל פנימי או צומת,<br>
+              מרגיש שמשהו לא עובד ושיש בהם יותר —<br>
+              אבל לא מצליחים לבד להבין מה הבעיה המרכזית,<br>
+              על מה נכון לעבוד קודם,<br>
+              ואיך להתחיל להתקדם באופן עקבי,<br>
+              להתמיד בלי להתפזר שוב ולהשיג מטרות,<br>
+              לקבל החלטות ולקחת בחירות אמינות.
+            </p>
+            <p>מי שמבין שעוד ניסיון לעשות סדר לבד רק יעמיק את המעגל.</p>
+            <p>מי שמבין שהגיע הזמן להיעזר במישהי שתדע:</p>
+            <div class="plain-list">
+              <div>לחלץ מתוך הבלאגן את המהות</div>
+              <div>לעשות סדר בלי לחפור חודשים</div>
+              <div>לזקק מוקד</div>
+              <div>להפוך ערפל להתחלה של תנועה.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="alice-story">
+        <div class="container left spaced reading wide-copy alice-zone">
+          <div class="eyebrow">your language / alice / path</div>
+          <h2>לכבוש פסגות בחיים ובהרים</h2>
+
+          <div class="soft-panel spaced alice-copy">
+            <p>
+              אני מחזיקה בערך לפיו חופש הוא היכולת לבחור,<br>
+              מתוך מסוגלות, עצמאות וחיבור לפנימי.<br>
+              לכבוש פסגות בחיים ובהרים.<br>
+              דרך מסע חיי וגם מסעות הסולו טרקניג שלי, למדתי המון.
+            </p>
+
+            <p>
+              על קצה המזלג.<br>
+              יש דרך ויש דרך.
+            </p>
+
+            <p><strong>מה זה אומר?</strong></p>
+
+            <p>אדם על מסלול בדרך שכבר לא שלו- ירגיש… יפעל..</p>
+            <p>אדם על מסלול בדרך שלו- ירגיש… יפעל…</p>
+
+            <p>
+              ולעבור מדרך אחת לאחרת זה לא מהלך פשוט.<br>
+              ההחלטה עצמה אינה פשוטה.<br>
+              אבל עוד לפני כן,<br>
+              ההרגשה שמשהו לא יושב טוב,<br>
+              זה הנקודה שבה הכל מתחיל.
+            </p>
+
+            <p>
+              אם נתעלם מההרגשה הזאת- היא תחזור. זו הבטחה.<br>
+              היא תחזור ככה ויותר חזק ויותר חזק.<br>
+              עד שיהיה משבר. שיכריח לשנות כיוון.
+            </p>
+
+            <p>
+              כאן אני עוזרת לך למצוא את נקודת ההתחלה.<br>
+              יש המון שבילים, לא כל אחד נכון ל- עכשיו.<br>
+              לא כל אחד בכלל מתאים לך.<br>
+              לפעמים צריך לצעוד בשביל אחד לפני שעוברים לאחד אחר<br>
+              ולפעמים מדובר בכלל בשיקול זמן,<br>
+              בניצחונות,<br>
+              בצורך לבנות שריר קודם,<br>
+              לחזק אותו ואח"כ לתת לו משקל כבד.
+            </p>
+
+            <p>
+              כאן הרבה אנשים מתבלבל.<br>
+              אם הגעת לכאן,<br>
+              כנראה שקשה לך להחליט.<br>
+              קשה לך להתקדם.<br>
+              קשה לך להתפקס.<br>
+              יש כשירות, יש ידע,<br>
+              והיי, אולי הינך - בעצמך- מטפל!<br>
+              אבל מה לעשות, לפעמים פשוט קשה לבד.<br>
+              לפעמים צריך זווית חיצונית. עם מומחיות, נסיון, ידע וכלים.
+            </p>
+
+            <p>אנחנו נכייל את המצפן הפנימי תוך מיקוד.</p>
+
+            <p>
+              בתהליך אימון אישי מלא אנחנו עושים את זה תוך הסתכלות רחבה ודואגים להפוך כל אבן.<br>
+              אבל כאן נתמקד בזיהוי המוקד,<br>
+              השורש שממש פוגם בתפקוד שלך,<br>
+              מפריע ברמה היומיומית<br>
+              ואני אתמוך בך כדי שתהיה לך מסוגלות לקבל להחלטה שנאמנה לניצוץ שבך,<br>
+              לדרך שעליה הינך רוצה לצעוד.<br>
+              זו שהיא שלך ובחיבור לערכים שלך,<br>
+              למצב העדכני,<br>
+              לאילוצים- ולמציאות.
+            </p>
+
+            <div class="quote-block">
+              <p>
+                את ההר לא כובשים ביום!<br>
+                אבל עם התמדה, למידה, עשייה ונחישות- בהחלט כובשים.<br>
+                אז כאן נכייל את המצפן ונשים אותך על תחילת המסלול.
+              </p>
+            </div>
+
+            <p>לפעמים זה פשוט מספיק. ולפעמים ממשיכים לתהליך עומק ייעודי.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="not-fit">
+        <div class="container right spaced reading">
+          <div class="eyebrow">who it is not for</div>
+          <h2>למי זה לא מתאים</h2>
+
+          <div class="soft-panel cool spaced">
+            <p>המפגש הזה פחות מתאים:</p>
+            <div class="plain-list">
+              <div>למי שרוצה פתרון קסם בשעה אחת, או תשובה מוחלטת לכל תחומי החיים.</div>
+              <div>למי שנמצא.ת כרגע במצב רגשי או נפשי שמצריך טיפול מקצועי מסוג אחר, עמוק, ארוך יותר לרבות תהליכי ליווי ותמיכה.</div>
+              <div>למי שרוצה מישהי שתסדר לה את כל החיים ב 90 דקות. יהיה שקר מצידי להצהיר דבר כזה.</div>
+            </div>
+            <p>
+              אם יש לך בהירות לגבי מה את רוצה<br>
+              או שידוע לך (אפילו פחות או יותר) מה הצעד הבא,<br>
+              וכל מה שחסר לך הוא רק ביצוע טכני —<br>
+              כנראה שזה לא המפגש הנכון עבורך.
+            </p>
+            <p>
+              למי שכבר יש כיוון ומתקשה בשלב הביצוע או אפילו התכנון
+              <span class="special-inline">←</span>
+              Cowork זה הדבר בשבילך.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container wide">
+          <div class="final-panel">
+            <div>
+              <h2>אם משהו לא יושב נכון — לא חייבים להמשיך להסתובב במעגלים.</h2>
+              <p>
+                לצאת מהערפל מתמקד במטרה אחת:<br>
+                לחלץ מתוך הרעש את המהות,<br>
+                לזהות מוקד אמיתי,<br>
+                לקבל החלטה,<br>
+                ולבנות התחלה מעשית.
+              </p>
+              <div class="note">
+                90 דקות · שאלון קצר לפני המפגש · קלף דרך בסיום · אפשרות להמשיך לתהליך עומק
+              </div>
+            </div>
+
+            <div class="cta-row">
+              <a href="#" class="btn btn-primary">לשריין מקום</a>
+              <a href="#" class="btn btn-secondary">יש לי שאלה לפני</a>
+              <a href="#options" class="btn btn-ghost">אולי מתאים לי משהו אחר</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        landing draft — updated with elegant bullets, tighter line breaks, and full mobile width
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
