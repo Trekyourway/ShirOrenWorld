@@ -1,49 +1,125 @@
-<!doctype html>
-<html lang="en" dir="ltr">
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Where automation actually breaks | Shir Oren AI</title>
-  <meta name="description" content="A sample AI article page with elegant collapsible sticky nav." />
-  <link rel="canonical" href="https://shir-oren.vercel.app/ai/articles/where-automation-actually-breaks/" />
-  <link rel="stylesheet" href="/assets/css/ai-floating-nav.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI סוכנים בעבודה אמיתית – שיר אורן</title>
+  <meta
+    name="description"
+    content="מאמר הסוקר את היתרונות והחסרונות של שימוש בסוכני AI בעבודה אמיתית."
+  />
+  <link rel="stylesheet" href="../../nav.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #ffffff;
+    }
+    main {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 {
+      margin-top: 1.5rem;
+    }
+  </style>
 </head>
 <body>
-  <div class="page-shell">
-    <button class="floating-nav-toggle" data-floating-nav-toggle aria-label="Toggle AI navigation" aria-expanded="false"><span class="floating-nav-toggle__bars"></span></button>
-    <div class="floating-nav-overlay" data-floating-nav-overlay></div>
-    <aside class="floating-nav-panel" data-floating-nav-panel>
-      <div class="floating-nav-world"><a class="floating-nav-world__title" href="/ai/">AI World</a><a class="floating-nav-world__back" href="/">Back to worlds</a></div>
-      <hr class="floating-nav-divider" />
-      <ul class="floating-nav-sections">
-        <li class="floating-nav-section"><button class="floating-nav-section-toggle" data-nav-section-toggle data-section-entry="/ai/articles" aria-controls="nav-articles" aria-expanded="false"><span class="caret">▶</span><span>Articles</span><span class="floating-nav-count">(3)</span></button><ul class="floating-nav-children" id="nav-articles"><li><a href="/ai/articles/retrieval-before-reasoning/">Retrieval before reasoning</a></li><li><a href="/ai/articles/human-in-the-loop-design/">Human-in-the-loop design</a></li><li><a href="/ai/articles/where-automation-actually-breaks/">Where automation actually breaks</a></li></ul></li>
-        <li class="floating-nav-section"><button class="floating-nav-section-toggle" data-nav-section-toggle data-section-entry="/ai/learn" aria-controls="nav-learn" aria-expanded="false"><span class="caret">▶</span><span>Learn</span><span class="floating-nav-count">(2)</span></button><ul class="floating-nav-children" id="nav-learn"><li><a href="/ai/learn/llm-foundations/">LLM foundations</a></li><li><a href="/ai/learn/evaluation-basics/">Evaluation basics</a></li></ul></li>
-        <li class="floating-nav-section"><button class="floating-nav-section-toggle" data-nav-section-toggle data-section-entry="/ai/tools" aria-controls="nav-tools" aria-expanded="false"><span class="caret">▶</span><span>Tools</span><span class="floating-nav-count">(2)</span></button><ul class="floating-nav-children" id="nav-tools"><li><a href="/ai/tools/agent-stack-evaluator/">Agent stack evaluator</a></li><li><a href="/ai/tools/prompt-risk-checklist/">Prompt risk checklist</a></li></ul></li>
+  <button id="nav-toggle" aria-label="פתח תפריט">&#9776;</button>
+  <div id="side-nav">
+    <nav>
+      <ul>
+        <li><a href="/ai">בינה</a></li>
+        <li>
+          <details open>
+            <summary>מאמרים</summary>
+            <ul>
+              <li><a href="/ai/articles/agentic-ai-in-real-work" class="active">AI סוכנים בעבודה</a></li>
+              <li><a href="/ai/articles/sample-article">מאמר לדוגמה</a></li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary>למידה</summary>
+            <ul>
+              <li><a href="/ai/learn/sample">דף למידה לדוגמה</a></li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary>כלים</summary>
+            <ul>
+              <li><a href="/ai/tools/sample-tool">כלי לדוגמה</a></li>
+            </ul>
+          </details>
+        </li>
       </ul>
-    </aside>
-    <main class="main-wrap">
-      <p class="eyebrow">AI article</p>
-      <h1 class="page-title">Where automation actually breaks</h1>
-      <p class="lede">Automation rarely breaks at the obvious demo steps. It breaks where ownership, edge cases, and silent assumptions were never designed properly.</p>
-      <section class="section-block">
-        <h2>The failure is usually structural</h2>
-        <p>People love blaming the model or the tool. Sometimes that is true. But a lot of broken automation is just a broken process moving faster.</p>
-        <h3>Common breakpoints</h3>
-        <ul>
-          <li>No one owns exceptions</li>
-          <li>Input quality was assumed, not checked</li>
-          <li>The rollback path was never designed</li>
-          <li>Teams measured speed but not correctness</li>
-        </ul>
-      </section>
-      <section class="section-block">
-        <h2>The practical test</h2>
-        <p>If this automation fails at 4:30 PM on a busy day, who notices, who decides, and what happens next? If the answer is vague, the system is not ready.</p>
-      </section>
-      <section class="quote-block">A fragile process with AI on top is still a fragile process. It just fails with more confidence.</section>
-      <p class="page-footnote">AI sample page using the floating sticky nav pattern.</p>
-    </main>
+    </nav>
   </div>
-  <script src="/assets/js/ai-floating-nav.js" defer></script>
+  <main>
+    <article>
+      <h1>AI סוכנים בעבודה אמיתית: איפה זה עובד, איפה לא</h1>
+      <p>
+        AI סוכנים הם אחד הנושאים המדוברים ביותר בתעשייה כיום. כמו כל גל
+        הייפ, חשוב להפריד בין רעש לפרקטיקה אמיתית. במאמר זה נסקור מתי שימוש
+        בסוכנים אוטומטיים עובד היטב, ומתי כדאי להשאיר את ההחלטות לבני אדם.
+      </p>
+      <h2>מה בעצם עובד היום</h2>
+      <p>התחומים שבהם סוכנים מספקים את התוצאות הטובות ביותר הם בעלי מבנה ברור.</p>
+      <h3>חילוץ והמרה של נתונים</h3>
+      <p>
+        כאשר המשימה היא מובנית – לדוגמה: "חלץ את כל מספרי החשבוניות מקובצי
+        PDF" – ניתן להשיג תוצאות אמינות. מרחב הפעולה מוגבל וההצלחה ניתנת
+        למדידה.
+      </p>
+      <h3>אוטומציה שגרתית</h3>
+      <p>
+        תזמון פגישות, שליחת תזכורות וקטגוריזציה של מיילים. מדובר במשימות עם
+        קריטריונים ברורים שבהן השלכות הטעות נמוכות.
+      </p>
+      <h3>חקר וסינתזה</h3>
+      <p>
+        סוכנים מסוגלים לחפש, לקרוא ולסכם מידע באופן אמין. בהקשר זה ראינו
+        את ההדגמות המרשימות ביותר – סוכן שחוקר נושא ומפיק דוח מסודר.
+      </p>
+      <h2>איפה זה נכשל</h2>
+      <p>
+        האתגרים צצים בתחומים שבהם נדרש שיקול דעת אנושי, יצירתיות או הבנה עמוקה
+        של ההקשר.
+      </p>
+      <h3>החלטות יצירתיות</h3>
+      <p>
+        כאשר ההנחיה היא מעורפלת, לדוגמה "כתוב מחדש את הטקסט כדי שיהיה
+        פרימיום יותר", הסוכן יכול להציע אפשרויות אך לא לבחור את המתאימה – זה
+        דורש טעם וקונטקסט אנושי.
+      </p>
+      <h3>חשיבה רב-שלבית מורכבת</h3>
+      <p>
+        תהליכים הכוללים עשרות החלטות מקושרות מבלבלים את המודל. הטעות
+        המצטברת גורמת לכך שבשלב מתקדם יותר הוא כבר סוטה מהמסלול.
+      </p>
+      <h3>טיפול בסיטואציות חדשות</h3>
+      <p>
+        כאשר נתקלים בבעיה שלא נראתה בנתוני האימון, הסבירות להלוצינציה עולה. המודל
+        לא יודע כיצד לנהוג, ולכן התוצאה לרוב לא אמינה.
+      </p>
+      <h2>השיעור האמיתי</h2>
+      <p>
+        סוכני AI אינם תחליף לאדם אלא תוספת שמאפשרת להוריד את העומס מהחלקים
+        המכניים של העבודה. שילוב נכון שלהם מאפשר לבני האדם להתמקד
+        בשיקול דעת, יצירתיות ואסטרטגיה.
+      </p>
+      <h2>מה לבנות</h2>
+      <p>
+        אם אתם שוקלים לשלב סוכנים אוטונומיים במוצר או בתהליך שלכם, התחילו
+        במשימות מובנות וברורות, השאירו את האדם בלופ בכל שלב משמעותי, מדדו
+        הצלחה במפורש והשקיעו במנגנוני חיפוש וחזזור טובים.
+      </p>
+    </article>
+  </main>
+  <script src="../../nav.js" defer></script>
 </body>
 </html>
