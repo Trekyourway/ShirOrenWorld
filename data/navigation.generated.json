@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-11T18:25:00.000Z",
+  "generatedAt": "2026-04-12T20:48:15.482Z",
   "worlds": [
     {
       "slug": "ai",
@@ -12,8 +12,20 @@
           "entry": "/ai/articles/",
           "children": [
             {
-              "title": "Agentic AI בעבודה אמיתית: איפה זה עובד, ואיפה לא",
+              "title": "AI סוכנים בעבודה אמיתית – שיר אורן",
               "slug": "/ai/articles/agentic-ai-in-real-work/"
+            },
+            {
+              "title": "AI סוכנים בעבודה אמיתית – שיר אורן",
+              "slug": "/ai/articles/where-automation-actually-breaks/"
+            },
+            {
+              "title": "Human-in-the-loop design | Shir Oren AI",
+              "slug": "/ai/articles/human-in-the-loop-design/"
+            },
+            {
+              "title": "Retrieval before reasoning | Shir Oren AI",
+              "slug": "/ai/articles/retrieval-before-reasoning/"
             }
           ]
         },
@@ -46,7 +58,12 @@
           "slug": "articles",
           "title": "Articles",
           "entry": "/coaching/articles/",
-          "children": []
+          "children": [
+            {
+              "title": "פרפקציוניזם: מחקרים, משמעויות ומסקנות",
+              "slug": "/coaching/articles/perfectionism-research-meaning-and-outcomes/"
+            }
+          ]
         },
         {
           "slug": "learn",
