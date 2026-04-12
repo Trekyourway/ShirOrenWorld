@@ -99,6 +99,15 @@
     heading.insertAdjacentElement('afterend', badge);
   }
 
+  function applyArticleTitle(articleEntry, articleInfo) {
+    if (!articleInfo || !articleInfo.title) return;
+    document.title = articleInfo.title;
+    const heading = articleEntry.querySelector('h1, .page-title');
+    if (heading) {
+      heading.textContent = articleInfo.title;
+    }
+  }
+
   function injectArticleToc(articleEntry) {
     const existingToc = articleEntry.querySelector('[data-article-toc]');
     const headings = Array.from(articleEntry.querySelectorAll('h2, h3'));
@@ -404,6 +413,7 @@
       const articleMeta = worldVariables.articleMeta && worldVariables.articleMeta[articleSlug];
       const articleEntry = document.querySelector('main article, main.main-wrap');
       if (articleEntry) {
+        applyArticleTitle(articleEntry, articleMeta);
         injectArticleVersionBadge(articleEntry, articleMeta);
         injectArticleToc(articleEntry);
       }

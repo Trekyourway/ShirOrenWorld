@@ -4,6 +4,7 @@ const path = require('path');
 const projectRoot = process.cwd();
 const configPath = path.join(projectRoot, 'data', 'site-map.config.json');
 const outputPath = path.join(projectRoot, 'data', 'navigation.generated.json');
+const variablesPath = path.join(projectRoot, 'data', 'site-shell.variables.json');
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -14,6 +15,20 @@ function safeReadDir(dirPath) {
     return fs.readdirSync(dirPath, { withFileTypes: true });
   } catch {
     return [];
+  }
+}
+
+function getArticleMetaTitles() {
+  try {
+    const variables = readJson(variablesPath);
+    const articleMeta = variables.worlds.ai.articleMeta || {};
+    return Object.fromEntries(
+      Object.entries(articleMeta)
+        .filter(([, value]) => value && value.title)
+        .map(([slug, value]) => [slug, value.title])
+    );
+  } catch {
+    return {};
   }
 }
 
@@ -39,7 +54,7 @@ function readHtmlTitle(filePath) {
   return null;
 }
 
-function getChildrenForSection(worldSlug, section) {
+function getChildrenForSection(worldSlug, section, articleMetaTitles) {
   if (!section.discoverChildren) return [];
 
   const sectionDir = path.join(projectRoot, worldSlug, section.slug);
@@ -49,7 +64,10 @@ function getChildrenForSection(worldSlug, section) {
     .filter((entry) => !entry.name.startsWith('draft-'))
     .map((entry) => {
       const childPath = path.join(sectionDir, entry.name, 'index.html');
-      const title = readHtmlTitle(childPath) || slugToTitle(entry.name);
+      const dynamicTitle = worldSlug === 'ai' && section.slug === 'articles'
+        ? articleMetaTitles[entry.name]
+        : null;
+      const title = dynamicTitle || readHtmlTitle(childPath) || slugToTitle(entry.name);
       return {
         title,
         slug: `/${worldSlug}/${section.slug}/${entry.name}/`
@@ -60,6 +78,7 @@ function getChildrenForSection(worldSlug, section) {
 
 function buildNavigation() {
   const config = readJson(configPath);
+  const articleMetaTitles = getArticleMetaTitles();
 
   return {
     generatedAt: new Date().toISOString(),
@@ -71,7 +90,7 @@ function buildNavigation() {
         slug: section.slug,
         title: section.title,
         entry: section.entry,
-        children: getChildrenForSection(world.slug, section)
+        children: getChildrenForSection(world.slug, section, articleMetaTitles)
       }))
     }))
   };
