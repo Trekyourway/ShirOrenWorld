@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מאמר לדוגמה – עולם הבינה</title>
+  <meta
+    name="description"
+    content="דף לדוגמה המשמש לבדיקת מערכת הניווט הדינמית לעולמות הבינה המלאכותית."
+  />
+  <link rel="stylesheet" href="../../nav.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #ffffff;
+    }
+    main {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <button id="nav-toggle" aria-label="פתח תפריט">&#9776;</button>
+  <div id="side-nav">
+    <nav>
+      <ul>
+        <li><a href="/ai">בינה</a></li>
+        <li>
+          <details open>
+            <summary>מאמרים</summary>
+            <ul>
+              <li><a href="/ai/articles/agentic-ai-in-real-work">AI סוכנים בעבודה</a></li>
+              <li><a href="/ai/articles/sample-article" class="active">מאמר לדוגמה</a></li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary>למידה</summary>
+            <ul>
+              <li><a href="/ai/learn/sample">דף למידה לדוגמה</a></li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary>כלים</summary>
+            <ul>
+              <li><a href="/ai/tools/sample-tool">כלי לדוגמה</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <main>
+    <article>
+      <h1>מאמר לדוגמה</h1>
+      <p>
+        זהו דף לדוגמה שנועד להראות כיצד הניווט הדינמי עובד עבור מאמרים
+        מרובי רמות. ניתן להוסיף כאן כל תוכן שתרצו – טקסט, כותרות,
+        תמונות ועוד. העיקר הוא שהניווט בצד נשאר עקבי ומציג את ההיררכיה
+        המלאה.
+      </p>
+    </article>
+  </main>
+  <script src="../../nav.js" defer></script>
+</body>
+</html>
