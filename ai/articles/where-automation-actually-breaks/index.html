@@ -8,17 +8,18 @@
     name="description"
     content="מאמר הסוקר את היתרונות והחסרונות של שימוש בסוכני AI בעבודה אמיתית."
   />
-  <link rel="stylesheet" href="../../nav.css" />
+  <link rel="stylesheet" href="/assets/css/site-shell.css" />
   <style>
     body {
       margin: 0;
       font-family: sans-serif;
-      padding: 2rem;
       background: #ffffff;
+      color: #111;
     }
     main {
       max-width: 700px;
       margin: 0 auto;
+      padding: 2rem 1rem 4rem;
     }
     h1, h2, h3 {
       margin-top: 1.5rem;
@@ -26,39 +27,7 @@
   </style>
 </head>
 <body>
-  <button id="nav-toggle" aria-label="פתח תפריט">&#9776;</button>
-  <div id="side-nav">
-    <nav>
-      <ul>
-        <li><a href="/ai">בינה</a></li>
-        <li>
-          <details open>
-            <summary>מאמרים</summary>
-            <ul>
-              <li><a href="/ai/articles/agentic-ai-in-real-work" class="active">AI סוכנים בעבודה</a></li>
-              <li><a href="/ai/articles/sample-article">מאמר לדוגמה</a></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details>
-            <summary>למידה</summary>
-            <ul>
-              <li><a href="/ai/learn/sample">דף למידה לדוגמה</a></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details>
-            <summary>כלים</summary>
-            <ul>
-              <li><a href="/ai/tools/sample-tool">כלי לדוגמה</a></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </nav>
-  </div>
+  <div data-site-shell></div>
   <main>
     <article>
       <h1>AI סוכנים בעבודה אמיתית: איפה זה עובד, איפה לא</h1>
@@ -120,6 +89,6 @@
       </p>
     </article>
   </main>
-  <script src="../../nav.js" defer></script>
+  <script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,21 @@
+{
+  "worlds": {
+    "ai": {
+      "entry": "/ai/",
+      "brand": {
+        "label": "עולם הבינה המלאכותית",
+        "logoText": "AI"
+      },
+      "homeLink": {
+        "href": "/",
+        "label": "חזרה לאתר הראשי"
+      },
+      "sectionTitles": {
+        "articles": "מאמרים",
+        "learn": "למידה",
+        "tools": "כלים"
+      },
+      "mobileMenuTitle": "ניווט עולם AI"
+    }
+  }
+}
