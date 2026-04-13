@@ -1,9 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": true,
-  "outputDirectory": ".",
-  "rewrites": [
-    { "source": "/coaching", "destination": "/coaching-home.html" },
-    { "source": "/coaching/", "destination": "/coaching-home.html" }
-  ]
+  "outputDirectory": "."
 }
