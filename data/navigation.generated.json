@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-13T19:37:43.333Z",
+  "generatedAt": "2026-04-13T20:26:28.079Z",
   "worlds": [
     {
       "slug": "ai",
@@ -78,12 +78,12 @@
           "entry": "/coaching/products/",
           "children": [
             {
-              "title": "90 Minutes Out of Fog | קואוצ'ינג",
-              "slug": "/coaching/products/90-minutes-out-of-fog/"
+              "title": "Cowork | Doing the work.",
+              "slug": "/coaching/products/co-work/"
             },
             {
-              "title": "Co-Work | קואוצ'ינג",
-              "slug": "/coaching/products/co-work/"
+              "title": "לצאת מהערפל — כיול מצפן פנימי לתנועה",
+              "slug": "/coaching/products/90-minutes-out-of-fog/"
             }
           ]
         },
