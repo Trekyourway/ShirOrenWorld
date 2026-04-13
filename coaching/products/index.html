@@ -3,45 +3,44 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Coaching Products</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f1713;
-      color: #eef5ef;
-    }
-    .loading, .error {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      text-align: center;
-      line-height: 1.7;
-    }
-    a { color: #b9d8bf; }
-  </style>
+  <title>מוצרי קואוצ'ינג | שיר אורן</title>
+  <meta name="description" content="דפי המוצר של עולם הקואוצ'ינג: Co-Work ו-90 Minutes Out of Fog." />
+  <link rel="canonical" href="https://shir-oren.vercel.app/coaching/products/" />
+  <meta property="og:title" content="מוצרי קואוצ'ינג | שיר אורן" />
+  <meta property="og:description" content="שירותי קואוצ'ינג בשני מסלולים שונים, עם דפי מוצר מלאים." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://shir-oren.vercel.app/coaching/products/" />
+  <link rel="stylesheet" href="/assets/css/site-shell.css" />
 </head>
 <body>
-  <div class="loading" id="status">טוען את עמוד המוצרים...</div>
-  <script>
-    (async function () {
-      try {
-        const res = await fetch('/pages/coaching/products/toc-index.md', { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to fetch source file: ' + res.status);
-        const text = await res.text();
-        const doctypeIndex = text.indexOf('<!DOCTYPE html>');
-        const htmlIndex = text.indexOf('<html');
-        const start = doctypeIndex >= 0 ? doctypeIndex : htmlIndex;
-        if (start < 0) throw new Error('No HTML markup was found inside pages/coaching/products/toc-index.md');
-        const html = text.slice(start);
-        document.open();
-        document.write(html);
-        document.close();
-      } catch (err) {
-        document.body.innerHTML = '<div class="error">לא הצלחתי לטעון את התוכן מתוך <code>/pages/coaching/products/toc-index.md</code>.<br><br><a href="/pages/coaching/products/toc-index.md">לפתיחת קובץ המקור</a><br><br>' + String(err.message || err) + '</div>';
-      }
-    })();
-  </script>
+  <div class="page-shell">
+    <div data-site-shell></div>
+    <main class="page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">קואוצ'ינג / מוצרים</p>
+          <h1>מסלולי עבודה איתי</h1>
+          <p class="lede">כאן אפשר לבחור את סוג הליווי שמתאים למצב שלך כרגע.</p>
+        </div>
+      </section>
+      <section class="section-stack">
+        <div class="card-grid">
+          <a class="card link-card" href="/coaching/products/co-work/">
+            <h3>Co-Work — Doing the work</h3>
+            <p>ליווי עשייה ממוקד: לא רק לחשוב, אלא לזוז בפועל עם מסגרת שמחזיקה תנועה.</p>
+          </a>
+          <a class="card link-card" href="/coaching/products/90-minutes-out-of-fog/">
+            <h3>90 Minutes Out of Fog</h3>
+            <p>פגישה ממוקדת כיול מצפן פנימי: לצאת מערפל להחלטה נאמנה וברורה.</p>
+          </a>
+          <a class="card link-card" href="/coaching/learn/">
+            <h3>ללמוד על הדרך (Spark / Welcome)</h3>
+            <p>עמוד המסע הכבד והארוך עם השפה והאסתטיקה המלאה — לפני בחירת מוצר.</p>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>

@@ -3,45 +3,64 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Coaching</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f1713;
-      color: #eef5ef;
-    }
-    .loading, .error {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      text-align: center;
-      line-height: 1.7;
-    }
-    a { color: #b9d8bf; }
-  </style>
+  <title>Coaching | שיר אורן</title>
+  <meta name="description" content="עולם הקואוצ'ינג של שיר אורן: בהירות, תנועה ותהליך ממוקד למי שרוצים לצאת מתקיעות ולבנות מסלול ריאלי." />
+  <link rel="canonical" href="https://shir-oren.vercel.app/coaching/" />
+  <meta property="og:title" content="Coaching | שיר אורן" />
+  <meta property="og:description" content="קואוצ'ינג ממוקד תכלית: מהעמימות לבחירות ברורות ומסלול פרקטי ליישום." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://shir-oren.vercel.app/coaching/" />
+  <link rel="stylesheet" href="/assets/css/site-shell.css" />
 </head>
 <body>
-  <div class="loading" id="status">טוען את דף הקואוצ'ינג...</div>
-  <script>
-    (async function () {
-      try {
-        const res = await fetch('/pages/coaching/index.md', { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to fetch source file: ' + res.status);
-        const text = await res.text();
-        const doctypeIndex = text.indexOf('<!DOCTYPE html>');
-        const htmlIndex = text.indexOf('<html');
-        const start = doctypeIndex >= 0 ? doctypeIndex : htmlIndex;
-        if (start < 0) throw new Error('No HTML markup was found inside pages/coaching/index.md');
-        const html = text.slice(start);
-        document.open();
-        document.write(html);
-        document.close();
-      } catch (err) {
-        document.body.innerHTML = '<div class="error">לא הצלחתי לטעון את התוכן מתוך <code>/pages/coaching/index.md</code>.<br><br>בדקי שהקובץ קיים ושמכיל HTML תקין.<br><br><a href="/pages/coaching/index.md">לפתיחת קובץ המקור</a><br><br>' + String(err.message || err) + '</div>';
-      }
-    })();
-  </script>
+  <div class="page-shell">
+    <div data-site-shell></div>
+
+    <main class="page">
+      <section class="hero hero--split">
+        <div>
+          <p class="eyebrow">קואוצ'ינג / בהירות / תנועה</p>
+          <h1>פחות ערפל. יותר כיוון שאפשר לחיות לפיו.</h1>
+          <p class="lede">
+            עולם הקואוצ'ינג בנוי לעבודה מעשית עם אנשים שרוצים שינוי אמיתי: להוריד עומס,
+            לחדד החלטות, ולבנות מסלול התקדמות ברור שאפשר ליישם ביומיום.
+          </p>
+          <div class="cta-row">
+            <a class="button" href="/coaching/learn/">ללמוד על הדרך</a>
+            <a class="button button--ghost" href="/coaching/products/">לעבודה איתי — מסלולים</a>
+          </div>
+        </div>
+
+        <aside class="note">
+          <strong>למי זה מתאים?</strong>
+          לאנשים שנמצאים בצומת, בתקיעות, או בעומס מתמשך — ומחפשים תהליך ממוקד שמחבר בין עומק לפרקטיקה.
+        </aside>
+      </section>
+
+      <section class="section-stack">
+        <div class="section-block">
+          <h2 class="section-title">בלוקים להרחבת תוכן</h2>
+          <p class="section-intro">Placeholderים מוכנים להוספת הצעות, סיפורי הצלחה, ותוכן מעמיק.</p>
+        </div>
+
+        <div class="card-grid">
+          <article class="card">
+            <h3>כאב #1: עומס מנטלי</h3>
+            <p>[כאן ייכנס טקסט קצר על עומס, שחיקה, ומה מקבלים בתהליך.]</p>
+          </article>
+          <article class="card">
+            <h3>כאב #2: בלבול כיוון</h3>
+            <p>[כאן ייכנס טקסט על קבלת החלטות, בהירות ומיפוי מסלול.]</p>
+          </article>
+          <article class="card">
+            <h3>כאב #3: דחיינות מתקפלת</h3>
+            <p>[כאן ייכנס טקסט על בניית התמדה וצעדים קטנים שמחזיקים לאורך זמן.]</p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>

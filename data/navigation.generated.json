@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-13T07:08:59.902Z",
+  "generatedAt": "2026-04-13T19:37:43.333Z",
   "worlds": [
     {
       "slug": "ai",
@@ -11,6 +11,14 @@
           "title": "Articles",
           "entry": "/ai/articles/",
           "children": [
+            {
+              "title": "15 שאלות שחובה לשאול על תוצרים שאתם מקבלים מ-AI",
+              "slug": "/ai/articles/15-questions-for-ai-outputs/",
+              "navTitle": "15 שאלות שחובה לשאול על תוצרים שאתם מקבלים מ-AI",
+              "articleNumber": "5817",
+              "versionLabel": "V1",
+              "articleCode": "Q"
+            },
             {
               "title": "AI Guide - מה טוב למה, מתי להשתמש? חובה לקרוא לפני שצוללים V4",
               "slug": "/ai/articles/retrieval-before-reasoning/",
@@ -68,7 +76,16 @@
           "slug": "products",
           "title": "Products",
           "entry": "/coaching/products/",
-          "children": []
+          "children": [
+            {
+              "title": "90 Minutes Out of Fog | קואוצ'ינג",
+              "slug": "/coaching/products/90-minutes-out-of-fog/"
+            },
+            {
+              "title": "Co-Work | קואוצ'ינג",
+              "slug": "/coaching/products/co-work/"
+            }
+          ]
         },
         {
           "slug": "articles",
