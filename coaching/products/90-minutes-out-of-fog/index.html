@@ -701,9 +701,16 @@
         transition:none !important;
       }
     }
+
+    [data-site-shell]{
+      position:relative;
+      z-index:120;
+    }
   </style>
+  <link rel="stylesheet" href="/assets/css/site-shell.css" />
 </head>
 <body>
+  <div data-site-shell></div>
   <div class="page">
     <div class="smoke-layer" aria-hidden="true">
       <div class="smoke s1"></div>
@@ -1680,5 +1687,6 @@
       </footer>
     </div>
   </div>
+  <script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>

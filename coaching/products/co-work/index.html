@@ -1019,9 +1019,16 @@
       .sticky-buy{display:block}
       body{padding-bottom:96px}
     }
+
+    [data-site-shell]{
+      position:relative;
+      z-index:120;
+    }
   </style>
+  <link rel="stylesheet" href="/assets/css/site-shell.css" />
 </head>
 <body>
+  <div data-site-shell></div>
 
   <main>
 
@@ -1511,5 +1518,6 @@
       window.addEventListener('resize', toggleSticky);
     })();
   </script>
+  <script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>
