@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-11T18:25:00.000Z",
+  "generatedAt": "2026-04-13T06:46:34.202Z",
   "worlds": [
     {
       "slug": "ai",
@@ -12,8 +12,36 @@
           "entry": "/ai/articles/",
           "children": [
             {
-              "title": "Agentic AI בעבודה אמיתית: איפה זה עובד, ואיפה לא",
-              "slug": "/ai/articles/agentic-ai-in-real-work/"
+              "title": "AI Guide - מה טוב למה, מתי להשתמש? חובה לקרוא לפני שצוללים V4",
+              "slug": "/ai/articles/retrieval-before-reasoning/",
+              "navTitle": "AI Guide - מה טוב למה, מתי להשתמש? חובה לקרוא לפני שצוללים V4",
+              "articleNumber": "1958",
+              "versionLabel": "V4",
+              "articleCode": "G"
+            },
+            {
+              "title": "Antigravity - לעבוד איתו V2",
+              "slug": "/ai/articles/where-automation-actually-breaks/",
+              "navTitle": "Antigravity - לעבוד איתו V2",
+              "articleNumber": "7264",
+              "versionLabel": "V2",
+              "articleCode": "A"
+            },
+            {
+              "title": "Antigravity & Claude code - Agent vs Employee V2",
+              "slug": "/ai/articles/agentic-ai-in-real-work/",
+              "navTitle": "Antigravity & Claude code - Agent vs Employee V2",
+              "articleNumber": "4831",
+              "versionLabel": "V2",
+              "articleCode": "A"
+            },
+            {
+              "title": "Antigravity_המדריך_המלא V1",
+              "slug": "/ai/articles/human-in-the-loop-design/",
+              "navTitle": "Antigravity_המדריך_המלא V1",
+              "articleNumber": "6402",
+              "versionLabel": "V1",
+              "articleCode": "A"
             }
           ]
         },
@@ -46,7 +74,12 @@
           "slug": "articles",
           "title": "Articles",
           "entry": "/coaching/articles/",
-          "children": []
+          "children": [
+            {
+              "title": "פרפקציוניזם: מחקרים, משמעויות ומסקנות",
+              "slug": "/coaching/articles/perfectionism-research-meaning-and-outcomes/"
+            }
+          ]
         },
         {
           "slug": "learn",
