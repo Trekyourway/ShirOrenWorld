@@ -5,6 +5,8 @@
   "description": "Static site build helpers for Shir Oren World",
   "scripts": {
     "build:navigation": "node build/generate-navigation-from-config.js",
-    "build": "npm run build:navigation"
+    "build": "npm run build:navigation",
+    "validate:critical-routes": "node build/validate-critical-routes-no-loader.js",
+    "test": "npm run build && npm run validate:critical-routes"
   }
 }

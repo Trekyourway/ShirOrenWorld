@@ -1,47 +1,118 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Coaching Articles</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מאמרי קואוצ'ינג</title>
+  <script src="/assets/js/auto-toc.js" defer></script>
   <style>
+    :root {
+      --bg: #0f1713;
+      --panel: rgba(255,255,255,0.04);
+      --line: rgba(255,255,255,0.09);
+      --text: #eef5ef;
+      --muted: rgba(238,245,239,0.72);
+      --accent: #b9d8bf;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #0f1713;
-      color: #eef5ef;
+      background: var(--bg);
+      color: var(--text);
     }
-    .loading, .error {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
+
+    .wrap {
+      width: min(1000px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0 72px;
+    }
+
+    .eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 0.95;
+    }
+
+    .intro {
+      max-width: 60ch;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
       padding: 24px;
-      text-align: center;
+    }
+
+    .panel-title {
+      font-size: 1rem;
+      margin-bottom: 18px;
+      color: var(--text);
+    }
+
+    [data-auto-toc] ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    [data-auto-toc] li ul {
+      margin-top: 12px;
+      padding-inline-start: 18px;
+      gap: 10px;
+    }
+
+    [data-auto-toc] a {
+      color: var(--accent);
+      text-decoration: none;
       line-height: 1.7;
     }
-    a { color: #b9d8bf; }
+
+    [data-auto-toc] a:hover {
+      text-decoration: underline;
+    }
+
+    .empty {
+      margin-top: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.96rem;
+    }
   </style>
 </head>
 <body>
-  <div class="loading" id="status">טוען את עמוד המאמרים...</div>
-  <script>
-    (async function () {
-      try {
-        const res = await fetch('/pages/coaching/articles/toc-index.md', { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to fetch source file: ' + res.status);
-        const text = await res.text();
-        const doctypeIndex = text.indexOf('<!DOCTYPE html>');
-        const htmlIndex = text.indexOf('<html');
-        const start = doctypeIndex >= 0 ? doctypeIndex : htmlIndex;
-        if (start < 0) throw new Error('No HTML markup was found inside pages/coaching/articles/toc-index.md');
-        const html = text.slice(start);
-        document.open();
-        document.write(html);
-        document.close();
-      } catch (err) {
-        document.body.innerHTML = '<div class="error">לא הצלחתי לטעון את התוכן מתוך <code>/pages/coaching/articles/toc-index.md</code>.<br><br>בדקי שהקובץ קיים ושמכיל HTML תקין.<br><br><a href="/pages/coaching/articles/toc-index.md">לפתיחת קובץ המקור</a><br><br>' + String(err.message || err) + '</div>';
-      }
-    })();
-  </script>
+  <main class="wrap">
+    <div class="eyebrow">Coaching / Articles</div>
+    <h1>מאמרי קואוצ'ינג</h1>
+    <p class="intro">
+      כאן יופיע תוכן העניינים האוטומטי של מאמרי הקואוצ'ינג.
+      רק מאמרים שנבנו במבנה התיקיות הנתמך, עם תוכן אמיתי, ושאינם מתחילים ב־<code>draft-</code>, יוצגו כאן.
+    </p>
+
+    <section class="panel" aria-labelledby="toc-title">
+      <h2 class="panel-title" id="toc-title">תוכן עניינים</h2>
+      <nav data-auto-toc></nav>
+      <p class="empty">
+        אם הרשימה עדיין ריקה, זה אומר שעדיין לא נוסף מאמר published ראשון במבנה החדש,
+        או שה־build של יצירת ה־TOC עדיין לא רץ עם ההגדרות המעודכנות.
+      </p>
+    </section>
+  </main>
 </body>
 </html>
