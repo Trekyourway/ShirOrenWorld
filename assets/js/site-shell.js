@@ -150,17 +150,17 @@
     tocToggle.className = 'site-shell__article-toc-toggle';
     tocToggle.setAttribute('aria-expanded', 'false');
     tocToggle.setAttribute('aria-controls', tocId);
-    tocToggle.textContent = 'תוכן עניינים';
+    tocToggle.textContent = 'ניווט במאמר';
 
     const tocPanel = document.createElement('aside');
     tocPanel.className = 'site-shell__article-toc-panel';
     tocPanel.id = tocId;
     tocPanel.innerHTML = `
       <div class="site-shell__article-toc-head">
-        <strong>תוכן עניינים</strong>
+        <strong>ניווט במאמר</strong>
         <button type="button" class="site-shell__article-toc-close" aria-label="סגירה">✕</button>
       </div>
-      <nav class="site-shell__article-toc-links" aria-label="תוכן עניינים פנימי">
+      <nav class="site-shell__article-toc-links" aria-label="ניווט פנימי במאמר">
         ${tocLinksHtml}
       </nav>
     `;
@@ -177,11 +177,14 @@
       tocToggle.setAttribute('aria-expanded', 'false');
       tocPanel.classList.remove('is-open');
       tocOverlay.classList.remove('is-open');
+      document.body.classList.remove('site-shell-article-nav-open');
     }
     function openToc() {
       tocToggle.setAttribute('aria-expanded', 'true');
       tocPanel.classList.add('is-open');
       tocOverlay.classList.add('is-open');
+      document.body.classList.add('site-shell-article-nav-open');
+      document.dispatchEvent(new CustomEvent('site-shell:article-toc-opened'));
     }
 
     tocToggle.addEventListener('click', function () {
@@ -193,6 +196,7 @@
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') closeToc();
     });
+    document.addEventListener('site-shell:mobile-menu-opened', closeToc);
   }
 
   async function readJsonOrFallback(url, fallback) {
@@ -336,6 +340,7 @@
     }
 
     function openMobileMenu() {
+      document.dispatchEvent(new CustomEvent('site-shell:mobile-menu-opened'));
       menuButton.setAttribute('aria-expanded', 'true');
       panel.classList.add('is-open');
       overlay.classList.add('is-open');
@@ -350,6 +355,7 @@
 
     overlay.addEventListener('click', closeMobileMenu);
     if (closeButton) closeButton.addEventListener('click', closeMobileMenu);
+    document.addEventListener('site-shell:article-toc-opened', closeMobileMenu);
 
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') closeMobileMenu();
