@@ -21,6 +21,41 @@
         "articleCodeMeaning": "letters represent catalog / series / topic",
         "versionLabelExample": "V1, V2, V3"
       }
+    },
+    "coaching": {
+      "entry": "/coaching/",
+      "brand": {
+        "label": "עולם הקואוצ'ינג",
+        "logoText": "CO"
+      },
+      "homeLink": {
+        "href": "/",
+        "label": "חזרה לאתר הראשי"
+      },
+      "sectionTitles": {
+        "products": "תהליכים",
+        "articles": "מאמרים",
+        "learn": "למידה",
+        "self-check": "בדיקה עצמית"
+      },
+      "mobileMenuTitle": "ניווט עולם הקואוצ'ינג"
+    },
+    "treks": {
+      "entry": "/treks/",
+      "brand": {
+        "label": "עולם המסעות",
+        "logoText": "TR"
+      },
+      "homeLink": {
+        "href": "/",
+        "label": "חזרה לאתר הראשי"
+      },
+      "sectionTitles": {
+        "articles": "מאמרים",
+        "learn": "למידה",
+        "solo-hiking": "הליכת סולו"
+      },
+      "mobileMenuTitle": "ניווט עולם המסעות"
     }
   }
 }

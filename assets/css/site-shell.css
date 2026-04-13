@@ -1,15 +1,15 @@
 :root {
-  --bg-0: #08110d;
-  --bg-1: #0f1a15;
-  --bg-2: #15241d;
-  --panel: rgba(255, 255, 255, 0.04);
-  --panel-strong: rgba(255, 255, 255, 0.07);
-  --line: rgba(255, 255, 255, 0.11);
-  --text: #eef4ef;
-  --muted: rgba(238, 244, 239, 0.74);
-  --accent: #97bc9d;
-  --accent-strong: #cfe3d2;
-  --shadow: 0 18px 48px rgba(0, 0, 0, 0.26);
+  --bg-0: #eef4ef;
+  --bg-1: #e3ece7;
+  --bg-2: #d6e2db;
+  --panel: rgba(255, 255, 255, 0.72);
+  --panel-strong: rgba(255, 255, 255, 0.9);
+  --line: rgba(33, 57, 43, 0.16);
+  --text: #1a2a22;
+  --muted: rgba(26, 42, 34, 0.76);
+  --accent: #5e8f73;
+  --accent-strong: #3f6f57;
+  --shadow: 0 14px 40px rgba(34, 58, 45, 0.14);
 }
 
 * { box-sizing: border-box; }
@@ -19,9 +19,9 @@ body {
   font-family: "Assistant", "Heebo", "Inter", Arial, sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at top right, rgba(151, 188, 157, 0.12), transparent 22%),
-    radial-gradient(circle at bottom left, rgba(207, 227, 210, 0.09), transparent 24%),
-    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 40%, var(--bg-2) 100%);
+    radial-gradient(circle at top right, rgba(113, 156, 130, 0.24), transparent 26%),
+    radial-gradient(circle at bottom left, rgba(196, 216, 205, 0.34), transparent 30%),
+    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 42%, var(--bg-2) 100%);
   line-height: 1.7;
 }
 img { max-width: 100%; }
@@ -33,7 +33,7 @@ a { color: inherit; }
   top: 0;
   z-index: 80;
   backdrop-filter: blur(16px);
-  background: rgba(8, 17, 13, 0.82);
+  background: rgba(234, 241, 236, 0.92);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .site-shell__inner,
@@ -125,7 +125,7 @@ a { color: inherit; }
   min-width: 280px;
   border-radius: 16px;
   border: 1px solid var(--line);
-  background: rgba(11, 20, 15, 0.98);
+  background: rgba(245, 250, 247, 0.98);
   box-shadow: var(--shadow);
   padding: 8px;
   display: grid;
@@ -212,7 +212,7 @@ a { color: inherit; }
   overflow: auto;
   border-radius: 20px;
   border: 1px solid var(--line);
-  background: rgba(10, 18, 14, 0.98);
+  background: rgba(247, 251, 248, 0.98);
   box-shadow: var(--shadow);
   padding: 14px;
   opacity: 0;
@@ -340,7 +340,7 @@ a { color: inherit; }
   overflow: auto;
   border-radius: 20px;
   border: 1px solid var(--line);
-  background: rgba(10, 18, 14, 0.98);
+  background: rgba(247, 251, 248, 0.98);
   box-shadow: var(--shadow);
   padding: 16px;
   opacity: 0;
