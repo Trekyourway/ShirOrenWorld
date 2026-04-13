@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-13T18:33:53.867Z",
+  "generatedAt": "2026-04-13T19:37:43.333Z",
   "worlds": [
     {
       "slug": "ai",
@@ -76,7 +76,16 @@
           "slug": "products",
           "title": "Products",
           "entry": "/coaching/products/",
-          "children": []
+          "children": [
+            {
+              "title": "90 Minutes Out of Fog | קואוצ'ינג",
+              "slug": "/coaching/products/90-minutes-out-of-fog/"
+            },
+            {
+              "title": "Co-Work | קואוצ'ינג",
+              "slug": "/coaching/products/co-work/"
+            }
+          ]
         },
         {
           "slug": "articles",
