@@ -1,5 +1,5 @@
 (function () {
-  const FALLBACK_NAV = {
+  const NAVIGATION_FALLBACK = {
     worlds: [
       {
         slug: 'ai',
@@ -14,11 +14,21 @@
     ]
   };
 
+  const WORLD_VARIABLES_FALLBACK = {
+    worlds: {
+      ai: {
+        entry: '/ai/',
+        brand: { label: 'עולם הבינה המלאכותית', logoText: 'AI' },
+        homeLink: { href: '/', label: 'חזרה לאתר הראשי' },
+        sectionTitles: { articles: 'מאמרים', learn: 'למידה', tools: 'כלים' },
+        mobileMenuTitle: 'ניווט עולם AI'
+      }
+    }
+  };
+
   function normalizePath(input) {
     let value = String(input || '/').split('#')[0].split('?')[0];
-    if (value !== '/' && value.endsWith('/index.html')) {
-      value = value.replace(/index\.html$/, '');
-    }
+    if (value !== '/' && value.endsWith('/index.html')) value = value.replace(/index\.html$/, '');
     if (!value.startsWith('/')) value = `/${value}`;
     if (value !== '/' && !value.endsWith('/')) value = `${value}/`;
     return value;
@@ -34,12 +44,12 @@
   }
 
   function findCurrentWorld(navigation, currentPath) {
-    return navigation.worlds.find((world) => currentPath === normalizePath(world.entry) || currentPath.startsWith(normalizePath(world.entry)));
+    return navigation.worlds.find((world) => currentPath.startsWith(normalizePath(world.entry)));
   }
 
   function findCurrentSection(world, currentPath) {
     if (!world) return null;
-    return world.sections.find((section) => currentPath === normalizePath(section.entry) || currentPath.startsWith(normalizePath(section.entry)));
+    return world.sections.find((section) => currentPath.startsWith(normalizePath(section.entry)));
   }
 
   function findCurrentChild(section, currentPath) {
@@ -47,88 +57,367 @@
     return section.children.find((child) => currentPath === normalizePath(child.slug));
   }
 
-  function renderLinks(items, currentPath, className) {
-    return items
-      .map((item) => {
-        const isCurrent = currentPath === normalizePath(item.entry || item.slug);
-        return `<a class="${className}${isCurrent ? ` ${className}--current` : ''}" href="${escapeHtml(item.entry || item.slug)}">${escapeHtml(item.title)}</a>`;
+  function sectionDisplayTitle(section, worldVariables) {
+    if (!section) return '';
+    const overrides = (worldVariables && worldVariables.sectionTitles) || {};
+    return overrides[section.slug] || section.title;
+  }
+
+  function childDisplayTitle(child) {
+    return child.title;
+  }
+
+  function getArticleSlug(currentPath) {
+    const match = currentPath.match(/^\/ai\/articles\/([^/]+)\/$/);
+    return match ? match[1] : null;
+  }
+
+  function buildHeadingLinks(headings) {
+    return headings
+      .map((heading, index) => {
+        const text = heading.textContent.trim();
+        if (!text) return null;
+        const level = heading.tagName.toLowerCase();
+        const fallbackId = `toc-${index + 1}`;
+        const id = heading.id || fallbackId;
+        heading.id = id;
+        return { text, id, level };
+      })
+      .filter(Boolean);
+  }
+
+  function injectArticleVersionBadge(articleEntry, articleInfo) {
+    if (!articleInfo || !articleInfo.version || !articleInfo.id) return;
+    const heading = articleEntry.querySelector('h1, .page-title');
+    if (!heading) return;
+
+    const badge = document.createElement('button');
+    badge.type = 'button';
+    badge.className = 'site-shell__article-meta-button';
+    badge.textContent = `${articleInfo.version} · ID ${articleInfo.id}`;
+    badge.setAttribute('aria-label', `גרסת המאמר ${articleInfo.version}, מזהה ${articleInfo.id}`);
+    heading.insertAdjacentElement('afterend', badge);
+  }
+
+  function applyArticleTitle(articleEntry, articleInfo) {
+    if (!articleInfo || !articleInfo.title) return;
+    document.title = articleInfo.title;
+    const heading = articleEntry.querySelector('h1, .page-title');
+    if (heading) {
+      heading.textContent = articleInfo.title;
+    }
+  }
+
+  function injectArticleToc(articleEntry) {
+    const existingToc = articleEntry.querySelector('[data-article-toc]');
+    const headings = Array.from(articleEntry.querySelectorAll('h2, h3'));
+
+    const links = buildHeadingLinks(headings);
+    if (!links.length) return;
+
+    const tocLinksHtml = links
+      .map((item) => `<a class="site-shell__article-toc-link site-shell__article-toc-link--${item.level}" href="#${escapeHtml(item.id)}">${escapeHtml(item.text)}</a>`)
+      .join('');
+
+    if (existingToc) {
+      existingToc.innerHTML = tocLinksHtml;
+      return;
+    }
+
+    const tocId = 'site-shell-article-toc';
+    const tocToggle = document.createElement('button');
+    tocToggle.type = 'button';
+    tocToggle.className = 'site-shell__article-toc-toggle';
+    tocToggle.setAttribute('aria-expanded', 'false');
+    tocToggle.setAttribute('aria-controls', tocId);
+    tocToggle.textContent = 'תוכן עניינים';
+
+    const tocPanel = document.createElement('aside');
+    tocPanel.className = 'site-shell__article-toc-panel';
+    tocPanel.id = tocId;
+    tocPanel.innerHTML = `
+      <div class="site-shell__article-toc-head">
+        <strong>תוכן עניינים</strong>
+        <button type="button" class="site-shell__article-toc-close" aria-label="סגירה">✕</button>
+      </div>
+      <nav class="site-shell__article-toc-links" aria-label="תוכן עניינים פנימי">
+        ${tocLinksHtml}
+      </nav>
+    `;
+
+    const tocOverlay = document.createElement('div');
+    tocOverlay.className = 'site-shell__article-toc-overlay';
+
+    document.body.appendChild(tocOverlay);
+    document.body.appendChild(tocToggle);
+    document.body.appendChild(tocPanel);
+
+    const closeButton = tocPanel.querySelector('.site-shell__article-toc-close');
+    function closeToc() {
+      tocToggle.setAttribute('aria-expanded', 'false');
+      tocPanel.classList.remove('is-open');
+      tocOverlay.classList.remove('is-open');
+    }
+    function openToc() {
+      tocToggle.setAttribute('aria-expanded', 'true');
+      tocPanel.classList.add('is-open');
+      tocOverlay.classList.add('is-open');
+    }
+
+    tocToggle.addEventListener('click', function () {
+      if (tocPanel.classList.contains('is-open')) closeToc();
+      else openToc();
+    });
+    tocOverlay.addEventListener('click', closeToc);
+    if (closeButton) closeButton.addEventListener('click', closeToc);
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeToc();
+    });
+  }
+
+  async function readJsonOrFallback(url, fallback) {
+    try {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+      return await response.json();
+    } catch {
+      return fallback;
+    }
+  }
+
+  function buildDesktopSectionItem(section, isCurrentSection, isCurrentChild, worldVariables) {
+    const title = escapeHtml(sectionDisplayTitle(section, worldVariables));
+    const sectionHref = escapeHtml(section.entry);
+    const hasChildren = Array.isArray(section.children) && section.children.length > 0;
+
+    if (!hasChildren) {
+      return `
+        <li class="site-shell__item">
+          <a class="site-shell__top-link${isCurrentSection ? ' is-current' : ''}" href="${sectionHref}">${title}</a>
+        </li>
+      `;
+    }
+
+    const dropdownId = `site-shell-dropdown-${escapeHtml(section.slug)}`;
+    const childrenHtml = section.children
+      .map((child) => {
+        const isCurrent = isCurrentChild && normalizePath(child.slug) === normalizePath(isCurrentChild.slug);
+        return `
+          <a class="site-shell__dropdown-link${isCurrent ? ' is-current' : ''}" href="${escapeHtml(child.slug)}">
+            ${escapeHtml(childDisplayTitle(child))}
+          </a>
+        `;
       })
       .join('');
+
+    return `
+      <li class="site-shell__item site-shell__item--dropdown${isCurrentSection ? ' is-current-parent' : ''}" data-dropdown-item>
+        <button
+          type="button"
+          class="site-shell__top-button${isCurrentSection ? ' is-current' : ''}"
+          aria-expanded="false"
+          aria-controls="${dropdownId}"
+          data-dropdown-toggle
+        >
+          <span>${title}</span>
+          <span class="site-shell__caret" aria-hidden="true">▾</span>
+        </button>
+        <div class="site-shell__dropdown" id="${dropdownId}" role="menu">
+          ${childrenHtml}
+          <a class="site-shell__dropdown-link site-shell__dropdown-link--section" href="${sectionHref}">לכל ${title}</a>
+        </div>
+      </li>
+    `;
   }
 
-  function renderBreadcrumbs(world, section, child) {
-    const crumbs = [
-      { title: world.title, href: world.entry }
-    ];
+  function buildMobileSectionItem(section, isCurrentSection, isCurrentChild, worldVariables, index) {
+    const title = escapeHtml(sectionDisplayTitle(section, worldVariables));
+    const hasChildren = Array.isArray(section.children) && section.children.length > 0;
 
-    if (section) {
-      crumbs.push({ title: section.title, href: section.entry });
+    if (!hasChildren) {
+      return `<li><a class="site-shell__mobile-link${isCurrentSection ? ' is-current' : ''}" href="${escapeHtml(section.entry)}">${title}</a></li>`;
     }
 
-    if (child) {
-      crumbs.push({ title: child.title, href: child.slug });
-    }
-
-    return crumbs
-      .map((crumb, index) => {
-        const current = index === crumbs.length - 1;
-        if (current) {
-          return `<span class="site-shell__crumb site-shell__crumb--current">${escapeHtml(crumb.title)}</span>`;
-        }
-        return `<a class="site-shell__crumb" href="${escapeHtml(crumb.href)}">${escapeHtml(crumb.title)}</a>`;
+    const groupId = `site-shell-mobile-group-${index}`;
+    const childLinks = section.children
+      .map((child) => {
+        const isCurrent = isCurrentChild && normalizePath(child.slug) === normalizePath(isCurrentChild.slug);
+        return `<a class="site-shell__mobile-child-link${isCurrent ? ' is-current' : ''}" href="${escapeHtml(child.slug)}">${escapeHtml(childDisplayTitle(child))}</a>`;
       })
-      .join('<span class="site-shell__separator">/</span>');
+      .join('');
+
+    return `
+      <li class="site-shell__mobile-group${isCurrentSection ? ' is-current-parent' : ''}">
+        <button type="button" class="site-shell__mobile-group-toggle${isCurrentSection ? ' is-current' : ''}" aria-expanded="false" aria-controls="${groupId}" data-mobile-group-toggle>
+          <span>${title}</span>
+          <span class="site-shell__caret" aria-hidden="true">▾</span>
+        </button>
+        <div class="site-shell__mobile-group-content" id="${groupId}">
+          <a class="site-shell__mobile-child-link site-shell__mobile-child-link--section" href="${escapeHtml(section.entry)}">לכל ${title}</a>
+          ${childLinks}
+        </div>
+      </li>
+    `;
   }
 
-  async function getNavigation() {
-    try {
-      const response = await fetch('/data/navigation.generated.json', { cache: 'no-store' });
-      if (!response.ok) throw new Error(`Navigation request failed: ${response.status}`);
-      return await response.json();
-    } catch (error) {
-      return FALLBACK_NAV;
+  function wireDesktopDropdowns(root) {
+    const dropdownItems = Array.from(root.querySelectorAll('[data-dropdown-item]'));
+    let openItem = null;
+
+    function closeAll() {
+      dropdownItems.forEach((item) => {
+        const button = item.querySelector('[data-dropdown-toggle]');
+        item.classList.remove('is-open');
+        if (button) button.setAttribute('aria-expanded', 'false');
+      });
+      openItem = null;
     }
+
+    dropdownItems.forEach((item) => {
+      const button = item.querySelector('[data-dropdown-toggle]');
+      if (!button) return;
+
+      button.addEventListener('click', function () {
+        const isOpen = item.classList.contains('is-open');
+        closeAll();
+        if (!isOpen) {
+          item.classList.add('is-open');
+          button.setAttribute('aria-expanded', 'true');
+          openItem = item;
+        }
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!openItem) return;
+      if (openItem.contains(event.target)) return;
+      closeAll();
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeAll();
+    });
+  }
+
+  function wireMobileMenu(root) {
+    const menuButton = root.querySelector('[data-mobile-menu-toggle]');
+    const closeButton = root.querySelector('[data-mobile-menu-close]');
+    const overlay = root.querySelector('[data-mobile-menu-overlay]');
+    const panel = root.querySelector('[data-mobile-menu]');
+    const groupToggles = Array.from(root.querySelectorAll('[data-mobile-group-toggle]'));
+
+    if (!menuButton || !overlay || !panel) return;
+
+    function closeMobileMenu() {
+      menuButton.setAttribute('aria-expanded', 'false');
+      panel.classList.remove('is-open');
+      overlay.classList.remove('is-open');
+      document.body.classList.remove('site-shell-mobile-open');
+    }
+
+    function openMobileMenu() {
+      menuButton.setAttribute('aria-expanded', 'true');
+      panel.classList.add('is-open');
+      overlay.classList.add('is-open');
+      document.body.classList.add('site-shell-mobile-open');
+    }
+
+    menuButton.addEventListener('click', function () {
+      const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) closeMobileMenu();
+      else openMobileMenu();
+    });
+
+    overlay.addEventListener('click', closeMobileMenu);
+    if (closeButton) closeButton.addEventListener('click', closeMobileMenu);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeMobileMenu();
+    });
+
+    groupToggles.forEach((toggle) => {
+      const content = root.querySelector(`#${toggle.getAttribute('aria-controls')}`);
+      if (!content) return;
+      toggle.addEventListener('click', function () {
+        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!isExpanded));
+        content.classList.toggle('is-open');
+      });
+    });
   }
 
   async function init() {
     const mount = document.querySelector('[data-site-shell]');
     if (!mount) return;
 
-    const navigation = await getNavigation();
+    const [navigation, variables] = await Promise.all([
+      readJsonOrFallback('/data/navigation.generated.json', NAVIGATION_FALLBACK),
+      readJsonOrFallback('/data/site-shell.variables.json', WORLD_VARIABLES_FALLBACK)
+    ]);
+
     const currentPath = normalizePath(window.location.pathname);
     const world = findCurrentWorld(navigation, currentPath);
+    if (!world || world.slug !== 'ai') return;
 
-    if (!world) return;
-
+    const worldVariables = (variables.worlds && variables.worlds[world.slug]) || WORLD_VARIABLES_FALLBACK.worlds.ai;
     const section = findCurrentSection(world, currentPath);
     const child = findCurrentChild(section, currentPath);
-    const childLinks = section && section.children && section.children.length
-      ? `<nav class="site-shell__children" aria-label="ניווט פנימי">${renderLinks(section.children, currentPath, 'site-shell__child-link')}</nav>`
-      : '';
+
+    const desktopItems = world.sections
+      .map((item) => buildDesktopSectionItem(item, section && item.slug === section.slug, child, worldVariables))
+      .join('');
+
+    const mobileItems = world.sections
+      .map((item, index) => buildMobileSectionItem(item, section && item.slug === section.slug, child, worldVariables, index))
+      .join('');
 
     mount.innerHTML = `
-      <header class="site-shell">
+      <header class="site-shell" dir="rtl">
         <div class="site-shell__inner">
-          <div class="site-shell__top">
-            <div>
-              <a class="site-shell__brand" href="${escapeHtml(world.entry)}">Shir Oren / ${escapeHtml(world.title)}</a>
-              <div class="site-shell__eyebrow">World navigation built from the live site structure</div>
-            </div>
-            <a class="site-shell__main-link" href="/">לעולם הראשי</a>
-          </div>
+          <a class="site-shell__brand" href="${escapeHtml(worldVariables.entry || world.entry)}" aria-label="${escapeHtml(worldVariables.brand.label)}">
+            <span class="site-shell__brand-logo" aria-hidden="true">${escapeHtml(worldVariables.brand.logoText)}</span>
+            <span class="site-shell__brand-text">${escapeHtml(worldVariables.brand.label)}</span>
+          </a>
 
-          <nav class="site-shell__sections" aria-label="Sections">
-            ${renderLinks(world.sections, currentPath, 'site-shell__section-link')}
+          <button class="site-shell__hamburger" type="button" aria-label="פתיחת תפריט" aria-expanded="false" data-mobile-menu-toggle>
+            <span></span>
+          </button>
+
+          <nav class="site-shell__desktop-nav" aria-label="ניווט ראשי">
+            <ul class="site-shell__desktop-list">
+              ${desktopItems}
+            </ul>
           </nav>
 
-          ${childLinks}
-
-          <div class="site-shell__breadcrumbs" aria-label="Breadcrumbs">
-            ${renderBreadcrumbs(world, section, child)}
-          </div>
+          <a class="site-shell__home-link" href="${escapeHtml(worldVariables.homeLink.href)}">${escapeHtml(worldVariables.homeLink.label)}</a>
         </div>
       </header>
+
+      <div class="site-shell__mobile-overlay" data-mobile-menu-overlay></div>
+      <aside class="site-shell__mobile-panel" data-mobile-menu aria-label="${escapeHtml(worldVariables.mobileMenuTitle || 'ניווט')}">
+        <div class="site-shell__mobile-head">
+          <strong>${escapeHtml(worldVariables.mobileMenuTitle || 'ניווט')}</strong>
+          <button type="button" class="site-shell__mobile-close" aria-label="סגירה" data-mobile-menu-close>✕</button>
+        </div>
+        <ul class="site-shell__mobile-list">
+          ${mobileItems}
+        </ul>
+      </aside>
     `;
+
+    wireDesktopDropdowns(mount);
+    wireMobileMenu(mount);
+
+    const articleSlug = getArticleSlug(currentPath);
+    if (articleSlug) {
+      const articleMeta = worldVariables.articleMeta && worldVariables.articleMeta[articleSlug];
+      const articleEntry = document.querySelector('main article, main.main-wrap');
+      if (articleEntry) {
+        applyArticleTitle(articleEntry, articleMeta);
+        injectArticleVersionBadge(articleEntry, articleMeta);
+        injectArticleToc(articleEntry);
+      }
+    }
   }
 
   document.addEventListener('DOMContentLoaded', init);

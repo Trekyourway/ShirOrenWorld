@@ -1,29 +1,20 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Human-in-the-loop design | Shir Oren AI</title>
+  <title>מאמר AI</title>
   <meta name="description" content="A sample AI article page with visible hierarchy and floating sticky nav." />
   <link rel="canonical" href="https://shir-oren.vercel.app/ai/articles/human-in-the-loop-design/" />
-  <link rel="stylesheet" href="/assets/css/ai-floating-nav.css" />
+  <link rel="stylesheet" href="/assets/css/site-shell.css" />
 </head>
 <body>
   <div class="page-shell">
-    <button class="floating-nav-toggle" data-floating-nav-toggle aria-label="Toggle AI navigation" aria-expanded="false"><span class="floating-nav-toggle__bars"></span></button>
-    <div class="floating-nav-overlay" data-floating-nav-overlay></div>
-    <aside class="floating-nav-panel" data-floating-nav-panel>
-      <div class="floating-nav-world"><a class="floating-nav-world__title" href="/ai/">AI World</a><a class="floating-nav-world__back" href="/">Back to worlds</a></div>
-      <hr class="floating-nav-divider" />
-      <ul class="floating-nav-sections">
-        <li class="floating-nav-section"><button class="floating-nav-section-toggle" data-nav-section-toggle data-section-entry="/ai/articles" aria-controls="nav-articles" aria-expanded="false"><span class="caret">▶</span><span>Articles</span><span class="floating-nav-count">(3)</span></button><ul class="floating-nav-children" id="nav-articles"><li><a href="/ai/articles/retrieval-before-reasoning/">Retrieval before reasoning</a></li><li><a href="/ai/articles/human-in-the-loop-design/">Human-in-the-loop design</a></li><li><a href="/ai/articles/where-automation-actually-breaks/">Where automation actually breaks</a></li></ul></li>
-        <li class="floating-nav-section"><button class="floating-nav-section-toggle" data-nav-section-toggle data-section-entry="/ai/learn" aria-controls="nav-learn" aria-expanded="false"><span class="caret">▶</span><span>Learn</span><span class="floating-nav-count">(2)</span></button><ul class="floating-nav-children" id="nav-learn"><li><a href="/ai/learn/llm-foundations/">LLM foundations</a></li><li><a href="/ai/learn/evaluation-basics/">Evaluation basics</a></li></ul></li>
-        <li class="floating-nav-section"><button class="floating-nav-section-toggle" data-nav-section-toggle data-section-entry="/ai/tools" aria-controls="nav-tools" aria-expanded="false"><span class="caret">▶</span><span>Tools</span><span class="floating-nav-count">(2)</span></button><ul class="floating-nav-children" id="nav-tools"><li><a href="/ai/tools/agent-stack-evaluator/">Agent stack evaluator</a></li><li><a href="/ai/tools/prompt-risk-checklist/">Prompt risk checklist</a></li></ul></li>
-      </ul>
-    </aside>
+    <div data-site-shell></div>
+
     <main class="main-wrap">
       <p class="eyebrow">AI article</p>
-      <h1 class="page-title">Human-in-the-loop design</h1>
+      <h1 class="page-title">מאמר AI</h1>
       <p class="lede">The strongest AI systems are usually not the ones that remove people. They are the ones that place people at the right control points.</p>
       <section class="section-block">
         <h2>Human review is not failure</h2>
@@ -38,6 +29,6 @@
       <p class="page-footnote">AI sample page using the floating sticky nav pattern.</p>
     </main>
   </div>
-  <script src="/assets/js/ai-floating-nav.js" defer></script>
+  <script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>

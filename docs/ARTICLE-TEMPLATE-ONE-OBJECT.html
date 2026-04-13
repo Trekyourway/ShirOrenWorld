@@ -87,6 +87,10 @@
       pageType: 'article',
       slug: 'replace-this-slug',
       pageTitle: 'כותרת דפדפן',
+      navTitle: 'כותרת ניווט קצרה',
+      articleNumber: '0042', // 4 digits, globally unique across the entire site
+      versionLabel: 'V1', // current article version label
+      articleCode: 'A', // letters for catalog/series/topic (for example: A, COA, AIA)
       eyebrow: 'מאמר · קואוצ׳ינג · נושא',
       heroTitle: 'כותרת ראשית של המאמר',
       heroSubtitle: 'כותרת משנה קצרה ומדויקת',
@@ -164,6 +168,7 @@
         </div>
       </section>
       <p class="footer-note" id="footer-note"></p>
+      <p class="footer-note" id="article-identity"></p>
     </main>
   </div>
   <script>
@@ -187,6 +192,7 @@
       $('#cta-secondary').textContent = PAGE.cta.secondaryText;
       $('#cta-secondary').href = PAGE.cta.secondaryHref;
       $('#footer-note').textContent = PAGE.footerNote;
+      $('#article-identity').textContent = `מאמר ${PAGE.articleCode}-${PAGE.articleNumber} · גרסה ${PAGE.versionLabel}`;
       const heroMeta = $('#hero-meta');
       PAGE.metaItems.forEach(item => {
         const el = document.createElement('div');

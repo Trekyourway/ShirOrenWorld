@@ -1,0 +1,48 @@
+{
+  "worlds": {
+    "ai": {
+      "entry": "/ai/",
+      "brand": {
+        "label": "עולם הבינה המלאכותית",
+        "logoText": "AI"
+      },
+      "homeLink": {
+        "href": "/",
+        "label": "חזרה לאתר הראשי"
+      },
+      "sectionTitles": {
+        "articles": "מאמרים",
+        "learn": "למידה",
+        "tools": "כלים"
+      },
+      "mobileMenuTitle": "ניווט עולם AI",
+      "articleIdentityConvention": {
+        "articleNumberFormat": "4-digit global unique identifier across all site articles",
+        "articleCodeMeaning": "letters represent catalog / series / topic",
+        "versionLabelExample": "V1, V2, V3"
+      },
+      "articleMeta": {
+        "agentic-ai-in-real-work": {
+          "title": "Antigravity & Claude code - Agent vs Employee V2",
+          "version": "V2",
+          "id": "4831"
+        },
+        "where-automation-actually-breaks": {
+          "title": "Antigravity - לעבוד איתו V2",
+          "version": "V2",
+          "id": "7264"
+        },
+        "retrieval-before-reasoning": {
+          "title": "AI Guide - מה טוב למה, מתי להשתמש? חובה לקרוא לפני שצוללים V4",
+          "version": "V4",
+          "id": "1958"
+        },
+        "human-in-the-loop-design": {
+          "title": "Antigravity_המדריך_המלא V1",
+          "version": "V1",
+          "id": "6402"
+        }
+      }
+    }
+  }
+}
