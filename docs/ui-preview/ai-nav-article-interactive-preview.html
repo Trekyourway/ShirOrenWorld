@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Nav + Article Preview (4 explicit states)</title>
+  <title>AI Header + Article Navigation Preview (interactive)</title>
   <style>
     :root {
       --bg: #f5f7fb;
@@ -15,6 +15,7 @@
       --nav: #0f2547;
       --nav-sub: #173765;
       --chip: #ecf2ff;
+      --danger: #c03131;
     }
     * { box-sizing: border-box; }
     body {
@@ -83,6 +84,11 @@
       font-size: 12px;
       opacity: .95;
     }
+    .world-mode {
+      margin-inline-start: 8px;
+      font-size: 12px;
+      color: #bbf7d0;
+    }
 
     .shell { display: flex; min-height: calc(100% - 58px); }
     .main-nav {
@@ -126,21 +132,56 @@
     .toc h4 { margin: 0 0 10px; font-size: 14px; }
     .toc ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; }
 
-    .mobile-article-nav {
+    .mobile-article-nav-trigger {
       display: none;
+      position: absolute;
+      inset-inline-end: 12px;
+      bottom: 14px;
+      z-index: 2;
+      border: 1px solid rgba(255,255,255,.15);
       background: var(--nav-sub);
       color: #fff;
-      padding: 10px 14px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-weight: 700;
       font-size: 13px;
     }
-    .mobile-article-nav.open + .mobile-drawer { display: block; }
+    .mobile-article-overlay {
+      display: none;
+      position: absolute;
+      inset: 58px 0 0;
+      background: rgba(11,23,44,.65);
+      backdrop-filter: blur(2px);
+      z-index: 3;
+    }
     .mobile-drawer {
       display: none;
-      border-bottom: 1px solid var(--line);
+      position: absolute;
+      inset: auto 8px 62px 8px;
+      max-height: 62%;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
       background: #f5f9ff;
       padding: 12px 14px;
       color: var(--muted);
       font-size: 13px;
+      z-index: 4;
+    }
+    .mobile-drawer-head {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: #0d1f3b;
+    }
+    .close-chip {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      width: 30px;
+      height: 30px;
+      background: #fff;
+      color: var(--danger);
     }
 
     .meta {
@@ -152,15 +193,16 @@
 
     .viewport.mobile .main-nav { display: none; }
     .viewport.mobile .shell { display: block; }
-    .viewport.mobile .mobile-article-nav { display: block; }
+    .viewport.mobile { position: relative; }
+    .viewport.mobile .mobile-article-nav-trigger { display: block; }
     .viewport.mobile .article { display: block; padding: 12px; }
     .viewport.mobile .content { min-height: 520px; }
     .viewport.mobile .toc { display: none; }
   </style>
 </head>
 <body>
-  <h1>AI Navigation + Article Preview</h1>
-  <p>Interactive preview with exactly 4 requested states before implementation.</p>
+  <h1>AI Header + Article Navigation Preview</h1>
+  <p>Interactive mock for header navigation and “ניווט במאמר” behavior before full implementation.</p>
 
   <div class="controls" id="controls"></div>
 
@@ -168,22 +210,27 @@
     <div class="viewport desktop" id="viewport">
       <div class="top">
         <div class="left">
-          <strong id="pageLabel">/ai/</strong>
+          <strong id="pageLabel">/ai/</strong><span class="world-mode" id="modeLabel">מצב עולם</span>
           <span class="pill" id="deviceLabel">desktop</span>
         </div>
         <span id="stateLabel">State</span>
       </div>
 
-      <div class="mobile-article-nav" id="mobileArticleNav">Article navigation</div>
+      <button class="mobile-article-nav-trigger" id="mobileArticleTrigger">ניווט במאמר</button>
+      <div class="mobile-article-overlay" id="mobileOverlay"></div>
       <div class="mobile-drawer" id="mobileDrawer">
-        • Intro<br/>• Why this matters<br/>• Practical checklist<br/>• Summary
+        <div class="mobile-drawer-head">
+          ניווט במאמר
+          <button class="close-chip">✕</button>
+        </div>
+        • מה עובד היום<br/>• חילוץ והמרה של נתונים<br/>• אוטומציה שגרתית<br/>• סיכום
       </div>
 
       <div class="shell">
         <aside class="main-nav" id="mainNav">
           <h3>AI Sections</h3>
           <div class="item">Home</div>
-          <div class="item open" id="articleDropdown">Articles ▼<br/><small>Agentic AI, Retrieval, HITL...</small></div>
+          <div class="item open" id="articleDropdown">Articles ▼<br/><small>Long article title that spans two lines max...</small></div>
           <div class="item">Learn</div>
           <div class="item">Tools</div>
         </aside>
@@ -194,7 +241,7 @@
             <p style="color: var(--muted)">Representative article body with shared shell/navigation behavior.</p>
           </section>
           <aside class="toc" id="desktopToc">
-            <h4>Article navigation</h4>
+            <h4>ניווט במאמר</h4>
             <ul>
               <li>Intro</li>
               <li>Why this matters</li>
@@ -227,6 +274,7 @@
         label: '2) article page mobile + article-nav closed',
         page: '/ai/articles/example/',
         device: 'mobile',
+        mode: 'מצב קריאה',
         stateText: 'article-nav: closed',
         mainNav: false,
         dropdownOpen: false,
@@ -239,6 +287,7 @@
         label: '3) article page mobile + article-nav open',
         page: '/ai/articles/example/',
         device: 'mobile',
+        mode: 'מצב קריאה',
         stateText: 'article-nav: open',
         mainNav: false,
         dropdownOpen: false,
@@ -251,6 +300,7 @@
         label: '4) article page desktop + article navigation visible',
         page: '/ai/articles/example/',
         device: 'desktop',
+        mode: 'מצב קריאה',
         stateText: 'desktop article navigation: visible',
         mainNav: true,
         dropdownOpen: false,
@@ -265,9 +315,11 @@
     const pageLabel = document.getElementById('pageLabel');
     const deviceLabel = document.getElementById('deviceLabel');
     const stateLabel = document.getElementById('stateLabel');
+    const modeLabel = document.getElementById('modeLabel');
     const mainNav = document.getElementById('mainNav');
     const articleDropdown = document.getElementById('articleDropdown');
-    const mobileArticleNav = document.getElementById('mobileArticleNav');
+    const mobileArticleTrigger = document.getElementById('mobileArticleTrigger');
+    const mobileOverlay = document.getElementById('mobileOverlay');
     const mobileDrawer = document.getElementById('mobileDrawer');
     const articleWrap = document.getElementById('articleWrap');
     const desktopToc = document.getElementById('desktopToc');
@@ -277,14 +329,15 @@
       pageLabel.textContent = s.page;
       deviceLabel.textContent = s.device;
       stateLabel.textContent = s.stateText;
+      modeLabel.textContent = s.mode || 'מצב עולם';
       viewport.classList.toggle('mobile', s.device === 'mobile');
       viewport.classList.toggle('desktop', s.device === 'desktop');
 
       mainNav.style.display = s.mainNav ? 'block' : 'none';
       articleDropdown.classList.toggle('open', s.dropdownOpen);
 
-      mobileArticleNav.style.display = s.mobileArticleNav ? 'block' : 'none';
-      mobileArticleNav.classList.toggle('open', s.mobileArticleNavOpen);
+      mobileArticleTrigger.style.display = s.mobileArticleNav ? 'block' : 'none';
+      mobileOverlay.style.display = s.mobileArticleNavOpen ? 'block' : 'none';
       mobileDrawer.style.display = s.mobileArticleNavOpen ? 'block' : 'none';
 
       desktopToc.style.display = s.desktopArticleNavVisible ? 'block' : 'none';
