@@ -66,6 +66,45 @@
       to{transform:translateY(-12px)}
     }
 
+
+
+    .route-header{
+      position:sticky;
+      top:0;
+      z-index:999;
+      backdrop-filter:blur(8px);
+      background:rgba(8,12,18,.58);
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
+    .route-header__inner{
+      width:min(calc(100% - 28px), var(--max));
+      margin-inline:auto;
+      min-height:58px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .route-header__brand{
+      color:rgba(255,255,255,.92);
+      text-decoration:none;
+      font-weight:800;
+      letter-spacing:.04em;
+      font-size:.92rem;
+    }
+    .route-header__nav{display:flex;gap:8px;flex-wrap:wrap;}
+    .route-header__link{
+      color:rgba(255,255,255,.82);
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:999px;
+      padding:7px 12px;
+      font-size:.84rem;
+      line-height:1;
+      transition:.2s ease;
+    }
+    .route-header__link:hover{background:rgba(255,255,255,.1);}
+
     .container{
       width:min(calc(100% - 28px), var(--max));
       margin-inline:auto;
@@ -1022,6 +1061,17 @@
   </style>
 </head>
 <body>
+  <header class="route-header">
+    <div class="route-header__inner">
+      <a class="route-header__brand" href="/coaching/">Shir Oren / Coaching</a>
+      <nav class="route-header__nav" aria-label="ניווט קואוצ'ינג">
+        <a class="route-header__link" href="/coaching/">עולם הקואוצ'ינג</a>
+        <a class="route-header__link" href="/coaching/learn/">ללמוד על הדרך</a>
+        <a class="route-header__link" href="/coaching/products/">מוצרים</a>
+      </nav>
+    </div>
+  </header>
+
 
   <main>
 
