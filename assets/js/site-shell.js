@@ -67,6 +67,134 @@
     return child.title;
   }
 
+  function getWorldVariables(world, variables) {
+    const worldConfig = variables.worlds && variables.worlds[world.slug];
+    const fallback = {
+      entry: world.entry,
+      brand: { label: world.title, logoText: world.title.slice(0, 2).toUpperCase() },
+      homeLink: { href: '/', label: 'חזרה לאתר הראשי' },
+      sectionTitles: {},
+      mobileMenuTitle: `ניווט עולם ${world.title}`
+    };
+
+    if (!worldConfig) return fallback;
+    return {
+      ...fallback,
+      ...worldConfig,
+      brand: { ...fallback.brand, ...(worldConfig.brand || {}) },
+      homeLink: { ...fallback.homeLink, ...(worldConfig.homeLink || {}) },
+      sectionTitles: worldConfig.sectionTitles || {}
+    };
+  }
+
+  function buildHeadingLinks(headings) {
+    return headings
+      .map((heading, index) => {
+        const text = heading.textContent.trim();
+        if (!text) return null;
+        const level = heading.tagName.toLowerCase();
+        const fallbackId = `toc-${index + 1}`;
+        const id = heading.id || fallbackId;
+        heading.id = id;
+        return { text, id, level };
+      })
+      .filter(Boolean);
+  }
+
+  function injectArticleVersionBadge(articleEntry, articleInfo) {
+    if (!articleInfo || !articleInfo.versionLabel || !articleInfo.articleNumber) return;
+    const heading = articleEntry.querySelector('h1, .page-title');
+    if (!heading) return;
+
+    const badge = document.createElement('button');
+    badge.type = 'button';
+    badge.className = 'site-shell__article-meta-button';
+    const identity = articleInfo.articleCode
+      ? `${articleInfo.articleCode}-${articleInfo.articleNumber}`
+      : articleInfo.articleNumber;
+    badge.textContent = `${articleInfo.versionLabel} · ID ${identity}`;
+    badge.setAttribute('aria-label', `גרסת המאמר ${articleInfo.versionLabel}, מזהה ${identity}`);
+    heading.insertAdjacentElement('afterend', badge);
+  }
+
+  function applyArticleTitle(articleEntry, articleInfo) {
+    if (!articleInfo) return;
+    const preferredTitle = articleInfo.navTitle || articleInfo.title;
+    if (!preferredTitle) return;
+    document.title = preferredTitle;
+    const heading = articleEntry.querySelector('h1, .page-title');
+    if (heading) {
+      heading.textContent = preferredTitle;
+    }
+  }
+
+  function injectArticleToc(articleEntry) {
+    const existingToc = articleEntry.querySelector('[data-article-toc]');
+    const headings = Array.from(articleEntry.querySelectorAll('h2, h3'));
+
+    const links = buildHeadingLinks(headings);
+    if (!links.length) return;
+
+    const tocLinksHtml = links
+      .map((item) => `<a class="site-shell__article-toc-link site-shell__article-toc-link--${item.level}" href="#${escapeHtml(item.id)}">${escapeHtml(item.text)}</a>`)
+      .join('');
+
+    if (existingToc) {
+      existingToc.innerHTML = tocLinksHtml;
+      return;
+    }
+
+    const tocId = 'site-shell-article-toc';
+    const tocToggle = document.createElement('button');
+    tocToggle.type = 'button';
+    tocToggle.className = 'site-shell__article-toc-toggle';
+    tocToggle.setAttribute('aria-expanded', 'false');
+    tocToggle.setAttribute('aria-controls', tocId);
+    tocToggle.textContent = 'תוכן עניינים';
+
+    const tocPanel = document.createElement('aside');
+    tocPanel.className = 'site-shell__article-toc-panel';
+    tocPanel.id = tocId;
+    tocPanel.innerHTML = `
+      <div class="site-shell__article-toc-head">
+        <strong>תוכן עניינים</strong>
+        <button type="button" class="site-shell__article-toc-close" aria-label="סגירה">✕</button>
+      </div>
+      <nav class="site-shell__article-toc-links" aria-label="תוכן עניינים פנימי">
+        ${tocLinksHtml}
+      </nav>
+    `;
+
+    const tocOverlay = document.createElement('div');
+    tocOverlay.className = 'site-shell__article-toc-overlay';
+
+    document.body.appendChild(tocOverlay);
+    document.body.appendChild(tocToggle);
+    document.body.appendChild(tocPanel);
+
+    const closeButton = tocPanel.querySelector('.site-shell__article-toc-close');
+    function closeToc() {
+      tocToggle.setAttribute('aria-expanded', 'false');
+      tocPanel.classList.remove('is-open');
+      tocOverlay.classList.remove('is-open');
+    }
+    function openToc() {
+      tocToggle.setAttribute('aria-expanded', 'true');
+      tocPanel.classList.add('is-open');
+      tocOverlay.classList.add('is-open');
+    }
+
+    tocToggle.addEventListener('click', function () {
+      if (tocPanel.classList.contains('is-open')) closeToc();
+      else openToc();
+    });
+    tocOverlay.addEventListener('click', closeToc);
+    if (closeButton) closeButton.addEventListener('click', closeToc);
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeToc();
+    });
+  }
+
   async function readJsonOrFallback(url, fallback) {
     try {
       const response = await fetch(url, { cache: 'no-store' });
@@ -249,9 +377,9 @@
 
     const currentPath = normalizePath(window.location.pathname);
     const world = findCurrentWorld(navigation, currentPath);
-    if (!world || world.slug !== 'ai') return;
+    if (!world) return;
 
-    const worldVariables = (variables.worlds && variables.worlds[world.slug]) || WORLD_VARIABLES_FALLBACK.worlds.ai;
+    const worldVariables = getWorldVariables(world, variables || WORLD_VARIABLES_FALLBACK);
     const section = findCurrentSection(world, currentPath);
     const child = findCurrentChild(section, currentPath);
 
@@ -299,6 +427,17 @@
 
     wireDesktopDropdowns(mount);
     wireMobileMenu(mount);
+
+    const isArticlePage = section && section.slug === 'articles' && child && normalizePath(child.slug) === currentPath;
+    if (isArticlePage) {
+      const articleMeta = child && normalizePath(child.slug) === currentPath ? child : null;
+      const articleEntry = document.querySelector('main article, main.main-wrap');
+      if (articleEntry) {
+        applyArticleTitle(articleEntry, articleMeta);
+        injectArticleVersionBadge(articleEntry, articleMeta);
+        injectArticleToc(articleEntry);
+      }
+    }
   }
 
   document.addEventListener('DOMContentLoaded', init);

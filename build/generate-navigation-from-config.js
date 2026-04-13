@@ -39,6 +39,50 @@ function readHtmlTitle(filePath) {
   return null;
 }
 
+function readArticleMetadata(filePath, slugFallback) {
+  const metadata = {
+    navTitle: null,
+    articleNumber: null,
+    versionLabel: null,
+    articleCode: null
+  };
+
+  try {
+    const source = fs.readFileSync(filePath, 'utf8');
+
+    function readMetaTag(name) {
+      const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const metaPattern = new RegExp(`<meta\\s+name=[\"']${escaped}[\"']\\s+content=[\"']([\\s\\S]*?)[\"']\\s*\\/?>`, 'i');
+      const match = source.match(metaPattern);
+      return match ? match[1].trim() : null;
+    }
+
+    function readPageField(fieldName) {
+      const escaped = fieldName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pattern = new RegExp(`${escaped}\\s*:\\s*['\"]([\\s\\S]*?)['\"]`, 'i');
+      const match = source.match(pattern);
+      return match ? match[1].trim() : null;
+    }
+
+    metadata.navTitle = readMetaTag('article:navTitle') || readPageField('navTitle');
+    metadata.articleNumber = readMetaTag('article:number') || readPageField('articleNumber');
+    metadata.versionLabel = readMetaTag('article:version') || readPageField('versionLabel');
+    metadata.articleCode = readMetaTag('article:code') || readPageField('articleCode');
+  } catch {
+    return {
+      title: slugToTitle(slugFallback)
+    };
+  }
+
+  return {
+    title: metadata.navTitle || readHtmlTitle(filePath) || slugToTitle(slugFallback),
+    navTitle: metadata.navTitle || null,
+    articleNumber: metadata.articleNumber || null,
+    versionLabel: metadata.versionLabel || null,
+    articleCode: metadata.articleCode || null
+  };
+}
+
 function getChildrenForSection(worldSlug, section) {
   if (!section.discoverChildren) return [];
 
@@ -49,11 +93,16 @@ function getChildrenForSection(worldSlug, section) {
     .filter((entry) => !entry.name.startsWith('draft-'))
     .map((entry) => {
       const childPath = path.join(sectionDir, entry.name, 'index.html');
-      const title = readHtmlTitle(childPath) || slugToTitle(entry.name);
-      return {
-        title,
+      const metadata = readArticleMetadata(childPath, entry.name);
+      const child = {
+        title: metadata.title,
         slug: `/${worldSlug}/${section.slug}/${entry.name}/`
       };
+      if (metadata.navTitle) child.navTitle = metadata.navTitle;
+      if (metadata.articleNumber) child.articleNumber = metadata.articleNumber;
+      if (metadata.versionLabel) child.versionLabel = metadata.versionLabel;
+      if (metadata.articleCode) child.articleCode = metadata.articleCode;
+      return child;
     })
     .sort((a, b) => a.title.localeCompare(b.title, 'en'));
 }

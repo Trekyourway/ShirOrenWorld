@@ -15,7 +15,12 @@
         "learn": "למידה",
         "tools": "כלים"
       },
-      "mobileMenuTitle": "ניווט עולם AI"
+      "mobileMenuTitle": "ניווט עולם AI",
+      "articleIdentityConvention": {
+        "articleNumberFormat": "4-digit global unique identifier across all site articles",
+        "articleCodeMeaning": "letters represent catalog / series / topic",
+        "versionLabelExample": "V1, V2, V3"
+      }
     }
   }
 }
