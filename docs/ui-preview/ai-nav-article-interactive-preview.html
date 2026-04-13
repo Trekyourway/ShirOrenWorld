@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Nav + Article Preview (4 explicit states)</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #fff;
+      --line: #dfe6f4;
+      --text: #122033;
+      --muted: #5d6b82;
+      --accent: #276ef1;
+      --nav: #0f2547;
+      --nav-sub: #173765;
+      --chip: #ecf2ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 20px;
+    }
+    h1 { margin: 0 0 8px; font-size: 24px; }
+    p { margin: 0 0 16px; color: var(--muted); }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    button {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      color: var(--text);
+    }
+    button.active {
+      border-color: var(--accent);
+      background: var(--chip);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .stage {
+      width: 100%;
+      max-width: 1200px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      padding: 14px;
+    }
+    .viewport {
+      margin: 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(0,0,0,.04);
+    }
+    .viewport.desktop { width: 100%; max-width: 1100px; min-height: 560px; }
+    .viewport.mobile { width: 390px; min-height: 760px; }
+
+    .top {
+      height: 58px;
+      background: var(--nav);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 14px;
+    }
+    .top .left { display: flex; gap: 10px; align-items: center; }
+    .pill {
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      opacity: .95;
+    }
+
+    .shell { display: flex; min-height: calc(100% - 58px); }
+    .main-nav {
+      width: 280px;
+      background: #f9fbff;
+      border-right: 1px solid var(--line);
+      padding: 14px;
+    }
+    .main-nav h3 { margin: 0 0 8px; font-size: 14px; }
+    .item {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      background: #fff;
+    }
+    .item.open { border-color: #b7cdfa; background: #eef4ff; }
+
+    .article {
+      flex: 1;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 16px;
+    }
+    .article.single { grid-template-columns: 1fr; }
+    .content {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      min-height: 420px;
+      background: #fff;
+    }
+    .toc {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fbfdff;
+    }
+    .toc h4 { margin: 0 0 10px; font-size: 14px; }
+    .toc ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; }
+
+    .mobile-article-nav {
+      display: none;
+      background: var(--nav-sub);
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 13px;
+    }
+    .mobile-article-nav.open + .mobile-drawer { display: block; }
+    .mobile-drawer {
+      display: none;
+      border-bottom: 1px solid var(--line);
+      background: #f5f9ff;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .viewport.mobile .main-nav { display: none; }
+    .viewport.mobile .shell { display: block; }
+    .viewport.mobile .mobile-article-nav { display: block; }
+    .viewport.mobile .article { display: block; padding: 12px; }
+    .viewport.mobile .content { min-height: 520px; }
+    .viewport.mobile .toc { display: none; }
+  </style>
+</head>
+<body>
+  <h1>AI Navigation + Article Preview</h1>
+  <p>Interactive preview with exactly 4 requested states before implementation.</p>
+
+  <div class="controls" id="controls"></div>
+
+  <div class="stage">
+    <div class="viewport desktop" id="viewport">
+      <div class="top">
+        <div class="left">
+          <strong id="pageLabel">/ai/</strong>
+          <span class="pill" id="deviceLabel">desktop</span>
+        </div>
+        <span id="stateLabel">State</span>
+      </div>
+
+      <div class="mobile-article-nav" id="mobileArticleNav">Article navigation</div>
+      <div class="mobile-drawer" id="mobileDrawer">
+        • Intro<br/>• Why this matters<br/>• Practical checklist<br/>• Summary
+      </div>
+
+      <div class="shell">
+        <aside class="main-nav" id="mainNav">
+          <h3>AI Sections</h3>
+          <div class="item">Home</div>
+          <div class="item open" id="articleDropdown">Articles ▼<br/><small>Agentic AI, Retrieval, HITL...</small></div>
+          <div class="item">Learn</div>
+          <div class="item">Tools</div>
+        </aside>
+
+        <main class="article" id="articleWrap">
+          <section class="content">
+            <h2 style="margin-top:0">Article content area</h2>
+            <p style="color: var(--muted)">Representative article body with shared shell/navigation behavior.</p>
+          </section>
+          <aside class="toc" id="desktopToc">
+            <h4>Article navigation</h4>
+            <ul>
+              <li>Intro</li>
+              <li>Why this matters</li>
+              <li>Practical checklist</li>
+              <li>Summary</li>
+            </ul>
+          </aside>
+        </main>
+      </div>
+    </div>
+    <div class="meta" id="meta"></div>
+  </div>
+
+  <script>
+    const states = [
+      {
+        key: 'state1',
+        label: '1) /ai/ desktop + article dropdown open',
+        page: '/ai/',
+        device: 'desktop',
+        stateText: 'article dropdown: open',
+        mainNav: true,
+        dropdownOpen: true,
+        mobileArticleNav: false,
+        mobileArticleNavOpen: false,
+        desktopArticleNavVisible: false
+      },
+      {
+        key: 'state2',
+        label: '2) article page mobile + article-nav closed',
+        page: '/ai/articles/example/',
+        device: 'mobile',
+        stateText: 'article-nav: closed',
+        mainNav: false,
+        dropdownOpen: false,
+        mobileArticleNav: true,
+        mobileArticleNavOpen: false,
+        desktopArticleNavVisible: false
+      },
+      {
+        key: 'state3',
+        label: '3) article page mobile + article-nav open',
+        page: '/ai/articles/example/',
+        device: 'mobile',
+        stateText: 'article-nav: open',
+        mainNav: false,
+        dropdownOpen: false,
+        mobileArticleNav: true,
+        mobileArticleNavOpen: true,
+        desktopArticleNavVisible: false
+      },
+      {
+        key: 'state4',
+        label: '4) article page desktop + article navigation visible',
+        page: '/ai/articles/example/',
+        device: 'desktop',
+        stateText: 'desktop article navigation: visible',
+        mainNav: true,
+        dropdownOpen: false,
+        mobileArticleNav: false,
+        mobileArticleNavOpen: false,
+        desktopArticleNavVisible: true
+      }
+    ];
+
+    const controls = document.getElementById('controls');
+    const viewport = document.getElementById('viewport');
+    const pageLabel = document.getElementById('pageLabel');
+    const deviceLabel = document.getElementById('deviceLabel');
+    const stateLabel = document.getElementById('stateLabel');
+    const mainNav = document.getElementById('mainNav');
+    const articleDropdown = document.getElementById('articleDropdown');
+    const mobileArticleNav = document.getElementById('mobileArticleNav');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const articleWrap = document.getElementById('articleWrap');
+    const desktopToc = document.getElementById('desktopToc');
+    const meta = document.getElementById('meta');
+
+    function renderState(s) {
+      pageLabel.textContent = s.page;
+      deviceLabel.textContent = s.device;
+      stateLabel.textContent = s.stateText;
+      viewport.classList.toggle('mobile', s.device === 'mobile');
+      viewport.classList.toggle('desktop', s.device === 'desktop');
+
+      mainNav.style.display = s.mainNav ? 'block' : 'none';
+      articleDropdown.classList.toggle('open', s.dropdownOpen);
+
+      mobileArticleNav.style.display = s.mobileArticleNav ? 'block' : 'none';
+      mobileArticleNav.classList.toggle('open', s.mobileArticleNavOpen);
+      mobileDrawer.style.display = s.mobileArticleNavOpen ? 'block' : 'none';
+
+      desktopToc.style.display = s.desktopArticleNavVisible ? 'block' : 'none';
+      articleWrap.classList.toggle('single', !s.desktopArticleNavVisible);
+
+      meta.textContent = `Previewing: ${s.label}`;
+
+      [...controls.querySelectorAll('button')].forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.key === s.key);
+      });
+    }
+
+    states.forEach((s, i) => {
+      const btn = document.createElement('button');
+      btn.dataset.key = s.key;
+      btn.textContent = s.label;
+      btn.addEventListener('click', () => renderState(s));
+      controls.appendChild(btn);
+      if (i === 0) renderState(s);
+    });
+  </script>
+</body>
+</html>
