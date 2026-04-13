@@ -41,6 +41,11 @@ a { color: inherit; }
   width: min(1100px, calc(100% - 32px));
   margin: 0 auto;
 }
+.main-wrap {
+  width: min(920px, calc(100% - 56px));
+  margin: 0 auto;
+  padding: 40px 0 72px;
+}
 .site-shell__inner {
   min-height: 78px;
   display: grid;
@@ -398,6 +403,13 @@ a { color: inherit; }
     width: 320px;
     right: auto;
     max-height: calc(100vh - 210px);
+  }
+}
+
+@media (max-width: 640px) {
+  .main-wrap {
+    width: min(100% - 24px, 920px);
+    padding-top: 24px;
   }
 }
 
