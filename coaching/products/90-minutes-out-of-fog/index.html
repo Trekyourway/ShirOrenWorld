@@ -6,29 +6,29 @@
   <title>90 Minutes Out of Fog | קואוצ'ינג</title>
   <meta name="description" content="עמוד מוצר 90 Minutes Out of Fog עם התוכן והעיצוב המקורי." />
   <link rel="canonical" href="https://shir-oren.vercel.app/coaching/products/90-minutes-out-of-fog/" />
+  <meta property="og:title" content="90 Minutes Out of Fog | קואוצ'ינג" />
+  <meta property="og:description" content="עמוד מוצר 90 Minutes Out of Fog עם התוכן והעיצוב המקורי." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://shir-oren.vercel.app/coaching/products/90-minutes-out-of-fog/" />
+  <link rel="stylesheet" href="/assets/css/site-shell.css" />
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #0f1713; color: #eef5ef; }
-    .loading, .error { min-height: 100vh; display: grid; place-items: center; padding: 24px; text-align: center; line-height: 1.7; }
-    a { color: #b9d8bf; }
+    body { margin: 0; }
+    .product-shell { width: min(1200px, calc(100% - 24px)); margin: 0 auto; padding: 16px 0 0; }
+    .product-frame {
+      width: 100%;
+      min-height: calc(100vh - 110px);
+      border: 0;
+      border-radius: 16px;
+      background: transparent;
+      display: block;
+    }
   </style>
 </head>
 <body>
-  <div class="loading">טוען את עמוד 90 דקות מחוץ לערפל...</div>
-  <script>
-    (async function () {
-      try {
-        const res = await fetch('/pages/coaching/products/90-minutes-out-of-fog/index.html', { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to fetch source file: ' + res.status);
-        const text = await res.text();
-        const start = text.indexOf('<!DOCTYPE html>');
-        if (start < 0) throw new Error('No HTML markup was found inside pages/coaching/products/90-minutes-out-of-fog/index.html');
-        document.open();
-        document.write(text.slice(start));
-        document.close();
-      } catch (err) {
-        document.body.innerHTML = '<div class="error">לא הצלחתי לטעון את עמוד 90 דקות מחוץ לערפל.<br><br><a href="/pages/coaching/products/90-minutes-out-of-fog/index.html">לפתיחת קובץ המקור</a><br><br>' + String(err.message || err) + '</div>';
-      }
-    })();
-  </script>
+  <div data-site-shell></div>
+  <main class="product-shell">
+    <iframe class="product-frame" src="/pages/coaching/products/90-minutes-out-of-fog/index.html" title="90 Minutes Out of Fog" loading="eager"></iframe>
+  </main>
+  <script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>
