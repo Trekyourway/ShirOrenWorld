@@ -1,0 +1,330 @@
+/*
+  Product route shell safeguards
+  --------------------------------
+  The coaching product pages have custom, page-specific visual systems.
+  This stylesheet is loaded only on those product routes by site-shell.js.
+  It keeps the shared navigation/header usable without letting the global
+  site-shell theme override the product page art direction.
+*/
+
+body.site-shell-product-route .site-shell {
+  background: rgba(10, 12, 18, 0.76) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18) !important;
+  color: #f8f6f2 !important;
+}
+
+body.site-shell-product-route .site-shell__inner {
+  width: min(1160px, calc(100% - 28px)) !important;
+  min-height: 64px !important;
+}
+
+body.site-shell-product-route .site-shell__brand,
+body.site-shell-product-route .site-shell__top-link,
+body.site-shell-product-route .site-shell__top-button,
+body.site-shell-product-route .site-shell__home-link,
+body.site-shell-product-route .site-shell__hamburger {
+  color: rgba(248, 246, 242, 0.92) !important;
+}
+
+body.site-shell-product-route .site-shell__brand-logo,
+body.site-shell-product-route .site-shell__home-link,
+body.site-shell-product-route .site-shell__hamburger,
+body.site-shell-product-route .site-shell__top-link,
+body.site-shell-product-route .site-shell__top-button {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.035) !important;
+}
+
+body.site-shell-product-route .site-shell__brand-text {
+  font-weight: 800 !important;
+  letter-spacing: 0.01em !important;
+}
+
+body.site-shell-product-route .site-shell__top-link:hover,
+body.site-shell-product-route .site-shell__top-button:hover,
+body.site-shell-product-route .site-shell__top-link.is-current,
+body.site-shell-product-route .site-shell__top-button.is-current,
+body.site-shell-product-route .site-shell__item--dropdown.is-open .site-shell__top-button {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+}
+
+body.site-shell-product-route .site-shell__dropdown,
+body.site-shell-product-route .site-shell__mobile-panel {
+  background: rgba(15, 16, 22, 0.97) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: #f8f6f2 !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34) !important;
+}
+
+body.site-shell-product-route .site-shell__dropdown-link,
+body.site-shell-product-route .site-shell__mobile-link,
+body.site-shell-product-route .site-shell__mobile-group-toggle,
+body.site-shell-product-route .site-shell__mobile-child-link {
+  color: rgba(248, 246, 242, 0.78) !important;
+}
+
+body.site-shell-product-route .site-shell__dropdown-link:hover,
+body.site-shell-product-route .site-shell__dropdown-link.is-current,
+body.site-shell-product-route .site-shell__dropdown-link--section,
+body.site-shell-product-route .site-shell__mobile-link:hover,
+body.site-shell-product-route .site-shell__mobile-link.is-current,
+body.site-shell-product-route .site-shell__mobile-group-toggle:hover,
+body.site-shell-product-route .site-shell__mobile-group-toggle.is-current,
+body.site-shell-product-route .site-shell__mobile-child-link:hover,
+body.site-shell-product-route .site-shell__mobile-child-link.is-current {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+body.site-shell-product-route .site-shell__mobile-overlay {
+  background: rgba(0, 0, 0, 0.64) !important;
+}
+
+body.site-shell-product-route--co-work {
+  margin: 0 !important;
+  font-family: "Heebo", Arial, sans-serif !important;
+  direction: rtl !important;
+  text-align: right !important;
+  color: var(--ink) !important;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(241,184,143,.12), transparent 18%),
+    radial-gradient(circle at 84% 8%, rgba(174,231,220,.10), transparent 16%),
+    radial-gradient(circle at 50% 56%, rgba(255,255,255,.03), transparent 24%),
+    linear-gradient(135deg, var(--bg) 0%, var(--bg2) 48%, var(--bg3) 100%) !important;
+  line-height: 1.42 !important;
+  overflow-x: hidden !important;
+}
+
+body.site-shell-product-route--co-work .container {
+  width: min(calc(100% - 28px), var(--max)) !important;
+  margin-inline: auto !important;
+  position: relative !important;
+  z-index: 2 !important;
+  padding: 0 !important;
+}
+
+body.site-shell-product-route--co-work section {
+  position: relative !important;
+  display: block !important;
+  min-height: initial !important;
+  padding: 74px 0 !important;
+}
+
+body.site-shell-product-route--co-work .hero {
+  min-height: 100svh !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 28px 0 56px !important;
+  gap: initial !important;
+}
+
+body.site-shell-product-route--co-work h1 {
+  font-size: clamp(2.9rem, 7.5vw, 5.8rem) !important;
+  line-height: .9 !important;
+  letter-spacing: -.05em !important;
+  max-width: 9ch !important;
+  margin: 0 0 16px !important;
+  color: var(--ink) !important;
+}
+
+body.site-shell-product-route--co-work .lead {
+  color: var(--muted) !important;
+  font-size: clamp(1.02rem, 1.8vw, 1.14rem) !important;
+  line-height: 1.36 !important;
+  max-width: 720px !important;
+  margin: 0 !important;
+}
+
+body.site-shell-product-route--co-work .section-title {
+  font-size: clamp(1.9rem, 4vw, 3rem) !important;
+  line-height: .98 !important;
+  letter-spacing: -.04em !important;
+  margin: 0 0 12px !important;
+  max-width: 16ch !important;
+  color: var(--ink) !important;
+}
+
+body.site-shell-product-route--co-work .big {
+  font-size: clamp(1.34rem,2.9vw,1.96rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.03em !important;
+  color: var(--ink) !important;
+  font-weight: 800 !important;
+  margin-bottom: 16px !important;
+  max-width: 18ch !important;
+}
+
+body.site-shell-product-route--co-work .quote {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  font-size: clamp(1.38rem,2.75vw,2rem) !important;
+  line-height: 1.22 !important;
+  max-width: 28ch !important;
+  color: var(--ink) !important;
+  font-family: "Cormorant Garamond", "Times New Roman", serif !important;
+  font-weight: 600 !important;
+}
+
+body.site-shell-product-route--co-work .btn {
+  border-radius: 999px !important;
+  text-decoration: none !important;
+}
+
+body.site-shell-product-route--fog {
+  margin: 0 !important;
+  font-family: var(--font-body) !important;
+  color: var(--text) !important;
+  overflow-x: hidden !important;
+  letter-spacing: -0.01em !important;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(227,197,143,.05), transparent 18%),
+    radial-gradient(circle at 86% 14%, rgba(184,207,191,.05), transparent 18%),
+    radial-gradient(circle at 20% 56%, rgba(255,255,255,.04), transparent 20%),
+    linear-gradient(180deg,var(--bg-0) 0%,var(--bg-1) 16%,var(--bg-2) 40%,var(--bg-3) 70%,var(--bg-4) 100%) !important;
+}
+
+body.site-shell-product-route--fog .page {
+  position: relative !important;
+  isolation: isolate !important;
+  min-height: 100vh !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.site-shell-product-route--fog .wrap {
+  width: min(var(--max), calc(100% - 40px)) !important;
+  margin: 0 auto !important;
+  position: relative !important;
+  z-index: 3 !important;
+  padding: 28px 0 120px !important;
+}
+
+body.site-shell-product-route--fog section {
+  position: relative !important;
+  min-height: 60vh !important;
+  display: grid !important;
+  align-items: center !important;
+  padding: 96px 0 !important;
+}
+
+body.site-shell-product-route--fog .container {
+  max-width: var(--content-max) !important;
+  position: relative !important;
+  z-index: 5 !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.site-shell-product-route--fog .container.wide { max-width: 1020px !important; }
+body.site-shell-product-route--fog .container.narrow { max-width: 700px !important; }
+body.site-shell-product-route--fog .container.center { margin-inline: auto !important; text-align: center !important; }
+
+body.site-shell-product-route--fog h1,
+body.site-shell-product-route--fog h2,
+body.site-shell-product-route--fog h3 {
+  font-family: var(--font-heading) !important;
+  color: #fff !important;
+  letter-spacing: -0.05em !important;
+}
+
+body.site-shell-product-route--fog h1 {
+  font-size: clamp(3.2rem, 6vw, 6.6rem) !important;
+  line-height: .88 !important;
+  max-width: 7.5ch !important;
+  margin: 0 0 18px !important;
+}
+
+body.site-shell-product-route--fog h2 {
+  font-size: clamp(2rem, 4vw, 4.2rem) !important;
+  line-height: .94 !important;
+  margin: 0 0 18px !important;
+  max-width: 10ch !important;
+}
+
+body.site-shell-product-route--fog h3 {
+  font-size: 1.45rem !important;
+  line-height: 1.14 !important;
+  margin: 0 0 12px !important;
+}
+
+body.site-shell-product-route--fog p,
+body.site-shell-product-route--fog li {
+  color: var(--muted) !important;
+  line-height: 2 !important;
+  font-size: 1rem !important;
+}
+
+body.site-shell-product-route--fog .lead {
+  font-size: 1.08rem !important;
+  max-width: 52ch !important;
+  line-height: 2.02 !important;
+  color: var(--muted) !important;
+  margin: 0 !important;
+}
+
+body.site-shell-product-route--fog .cta-row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 14px !important;
+  margin-top: 28px !important;
+}
+
+body.site-shell-product-route--fog .btn {
+  min-height: 54px !important;
+  padding: 0 22px !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  border: 1px solid transparent !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 980px) {
+  body.site-shell-product-route--co-work .hero { min-height: auto !important; }
+  body.site-shell-product-route--co-work h1,
+  body.site-shell-product-route--co-work .section-title,
+  body.site-shell-product-route--co-work .big,
+  body.site-shell-product-route--co-work .quote { max-width: none !important; }
+  body.site-shell-product-route--fog h1 { max-width: 9ch !important; }
+  body.site-shell-product-route--fog h2 { max-width: none !important; }
+}
+
+@media (max-width: 700px) {
+  body.site-shell-product-route--co-work section { padding: 48px 0 !important; }
+  body.site-shell-product-route--co-work .container { width: min(calc(100% - 20px), var(--max)) !important; }
+  body.site-shell-product-route--co-work .hero { padding-top: 14px !important; padding-bottom: 34px !important; }
+  body.site-shell-product-route--co-work h1 { font-size: clamp(2.3rem, 12vw, 3.4rem) !important; line-height: .92 !important; margin-bottom: 12px !important; }
+}
+
+@media (max-width: 640px) {
+  body.site-shell-product-route .site-shell__inner { width: min(100% - 20px, 1160px) !important; }
+  body.site-shell-product-route--fog .wrap { width: 100% !important; padding: 18px 12px 96px !important; }
+  body.site-shell-product-route--fog section { min-height: auto !important; padding: 68px 0 !important; }
+  body.site-shell-product-route--fog .container,
+  body.site-shell-product-route--fog .container.wide,
+  body.site-shell-product-route--fog .container.narrow,
+  body.site-shell-product-route--fog .container.center {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  body.site-shell-product-route--fog h1 { font-size: clamp(2.7rem, 13vw, 4.8rem) !important; }
+  body.site-shell-product-route--fog h2 { font-size: clamp(1.9rem, 10vw, 3rem) !important; }
+  body.site-shell-product-route--fog .lead,
+  body.site-shell-product-route--fog p,
+  body.site-shell-product-route--fog li {
+    max-width: 100% !important;
+    font-size: .98rem !important;
+    line-height: 1.95 !important;
+  }
+}
